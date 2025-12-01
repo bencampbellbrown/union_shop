@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
+import 'package:union_shop/src/layout_constants.dart';
+import 'package:union_shop/widgets/newsletter_widget.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -24,53 +26,43 @@ class UnionShopApp extends StatelessWidget {
       initialRoute: '/',
       // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
-                          if (isNarrow) {
-                            // narrow: logo left, icons remain, menu icon opens popup with all nav links
-                            return Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () => navigateToHome(context),
-                                  child: Image.network(
-                                    'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
-                                    height: 18,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Container(
-                                        color: Colors.grey[300],
-                                        width: 18,
-                                        height: 18,
-                                        child: const Center(
-                                          child: Icon(Icons.image_not_supported, color: Colors.grey),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                const Spacer(),
-                                // keep the icon buttons visible on narrow screens
-                                iconRow,
-                                // popup menu exposes all nav links (About routes to /about)
-                                PopupMenuButton<String>(
-                                  icon: const Icon(Icons.menu, color: Colors.grey),
-                                  onSelected: (value) {
-                                    if (value == 'About') {
-                                      navigateToAbout(context);
-                                    } else {
-                                      placeholderCallbackForButtons();
-                                    }
-                                  },
-                                  itemBuilder: (ctx) => const [
-                                    PopupMenuItem(value: 'Home', child: Text('Home')),
-                                    PopupMenuItem(value: 'Shop', child: Text('Shop')),
-                                    PopupMenuItem(value: 'The Print Shack', child: Text('The Print Shack')),
-                                    PopupMenuItem(value: 'SALE!', child: Text('SALE!')),
-                                    PopupMenuItem(value: 'About', child: Text('About')),
-                                    PopupMenuItem(value: 'UPSU.net', child: Text('UPSU.net')),
-                                  ],
-                                ),
-                              ],
-                            );
-                          }
+      routes: {
+        '/product': (context) => const ProductPage(),
+        '/about': (context) => const AboutPage(),
+      },
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  void navigateToHome(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+  }
+
+  void navigateToProduct(BuildContext context) {
+    Navigator.pushNamed(context, '/product');
+  }
+
+  void navigateToAbout(BuildContext context) {
+    Navigator.pushNamed(context, '/about');
+  }
+
+  void placeholderCallbackForButtons() {
+    // This is the event handler for buttons that don't work yet
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // (debug removed) Header will adapt to narrow screens by collapsing icon row
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Header
+            Container(
               height: 100,
               color: Colors.white,
               child: Column(
@@ -93,7 +85,7 @@ class UnionShopApp extends StatelessWidget {
                       child: LayoutBuilder(
                         builder: (ctx, headerConstraints) {
                           final bool isNarrow =
-                              headerConstraints.maxWidth < 720;
+                              headerConstraints.maxWidth < kHeaderCompactWidth;
 
                           // right-side icons shown on wide layouts
                           Widget iconRow = Row(
@@ -131,13 +123,13 @@ class UnionShopApp extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               TextButton(
-                                onPressed: placeholderCallbackForButtons,
+                                onPressed: () => navigateToHome(context),
                                 child: const Text('Home',
                                     style: TextStyle(color: Colors.grey)),
                               ),
                               const SizedBox(width: 12),
                               TextButton(
-                                onPressed: placeholderCallbackForButtons,
+                                onPressed: () => navigateToProduct(context),
                                 child: const Text('Shop',
                                     style: TextStyle(color: Colors.grey)),
                               ),
@@ -169,7 +161,7 @@ class UnionShopApp extends StatelessWidget {
                           );
 
                           if (isNarrow) {
-                            // narrow: logo left, ABOUT centered, menu icon on right
+                            // narrow: logo left, icons + menu on the right
                             return Row(
                               children: [
                                 GestureDetector(
@@ -191,19 +183,75 @@ class UnionShopApp extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                                Expanded(
-                                  child: Center(
-                                    child: TextButton(
-                                      onPressed: () => navigateToAbout(context),
-                                      child: const Text('ABOUT',
-                                          style: TextStyle(color: Colors.grey)),
+                                const Expanded(child: SizedBox()),
+                                // keep icons visible, menu at end
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.search,
+                                          size: 18, color: Colors.grey),
+                                      padding: const EdgeInsets.all(8),
+                                      constraints: const BoxConstraints(
+                                          minWidth: 32, minHeight: 32),
+                                      onPressed: placeholderCallbackForButtons,
                                     ),
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.menu,
-                                      size: 20, color: Colors.grey),
-                                  onPressed: placeholderCallbackForButtons,
+                                    IconButton(
+                                      icon: const Icon(Icons.person_outline,
+                                          size: 18, color: Colors.grey),
+                                      padding: const EdgeInsets.all(8),
+                                      constraints: const BoxConstraints(
+                                          minWidth: 32, minHeight: 32),
+                                      onPressed: placeholderCallbackForButtons,
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(
+                                          Icons.shopping_bag_outlined,
+                                          size: 18,
+                                          color: Colors.grey),
+                                      padding: const EdgeInsets.all(8),
+                                      constraints: const BoxConstraints(
+                                          minWidth: 32, minHeight: 32),
+                                      onPressed: placeholderCallbackForButtons,
+                                    ),
+                                    PopupMenuButton<String>(
+                                      icon: const Icon(Icons.menu,
+                                          size: 20, color: Colors.grey),
+                                      onSelected: (value) {
+                                        switch (value) {
+                                          case 'home':
+                                            navigateToHome(context);
+                                            break;
+                                          case 'shop':
+                                            navigateToProduct(context);
+                                            break;
+                                          case 'about':
+                                            navigateToAbout(context);
+                                            break;
+                                          default:
+                                            placeholderCallbackForButtons();
+                                        }
+                                      },
+                                      itemBuilder: (ctx) => const [
+                                        PopupMenuItem(
+                                            value: 'home', child: Text('Home')),
+                                        PopupMenuItem(
+                                            value: 'shop', child: Text('Shop')),
+                                        PopupMenuItem(
+                                            value: 'print',
+                                            child: Text('The Print Shack')),
+                                        PopupMenuItem(
+                                            value: 'sale',
+                                            child: Text('SALE!')),
+                                        PopupMenuItem(
+                                            value: 'about',
+                                            child: Text('About')),
+                                        PopupMenuItem(
+                                            value: 'upsu',
+                                            child: Text('UPSU.net')),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ],
                             );
@@ -531,45 +579,8 @@ class UnionShopApp extends StatelessWidget {
                                     color: Colors.black87)),
                             const SizedBox(height: 8),
 
-                            // Email input box
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey.shade400),
-                                color: Colors.white,
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Email address',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-
-                            // Subscribe button (non-functional)
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: placeholderCallbackForButtons,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF4d2963),
-                                  foregroundColor: Colors.white,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.zero),
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 12),
-                                ),
-                                child: const Text(
-                                  'SUBSCRIBE',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      letterSpacing: 1),
-                                ),
-                              ),
-                            ),
+                            // Newsletter widget handles input + subscribe
+                            NewsletterWidget(maxWidth: kFooterLeftMax),
                           ],
                         ),
                       ],
@@ -794,7 +805,11 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        Navigator.pushNamed(context, '/product', arguments: {
+          'title': title,
+          'price': price,
+          'imageUrl': imageUrl,
+        });
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
