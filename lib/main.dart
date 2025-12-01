@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
+import 'package:union_shop/about_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -23,7 +24,10 @@ class UnionShopApp extends StatelessWidget {
       initialRoute: '/',
       // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
-      routes: {'/product': (context) => const ProductPage()},
+      routes: {
+        '/product': (context) => const ProductPage(),
+        '/about': (context) => const AboutPage(),
+      },
     );
   }
 }
@@ -37,6 +41,10 @@ class HomeScreen extends StatelessWidget {
 
   void navigateToProduct(BuildContext context) {
     Navigator.pushNamed(context, '/product');
+  }
+
+  void navigateToAbout(BuildContext context) {
+    Navigator.pushNamed(context, '/about');
   }
 
   void placeholderCallbackForButtons() {
@@ -170,12 +178,30 @@ class HomeScreen extends StatelessWidget {
                               }
 
                               // narrow screen: show single menu icon
-                              return IconButton(
-                                icon: const Icon(Icons.menu,
-                                    size: 20, color: Colors.grey),
-                                onPressed: placeholderCallbackForButtons,
+                              return Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.menu,
+                                        size: 20, color: Colors.grey),
+                                    onPressed: placeholderCallbackForButtons,
+                                  ),
+                                  // ABOUT button (narrow layout still exposes it)
+                                  TextButton(
+                                    onPressed: () => navigateToAbout(context),
+                                    child: const Text('ABOUT',
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 12)),
+                                  ),
+                                ],
                               );
                             },
+                          ),
+                          // ABOUT button for wide layout (appears to the right)
+                          TextButton(
+                            onPressed: () => navigateToAbout(context),
+                            child: const Text('ABOUT',
+                                style: TextStyle(color: Colors.grey)),
                           ),
                         ],
                       ),
@@ -204,7 +230,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.7),
+                          color: Colors.black.withOpacity(0.7),
                         ),
                       ),
                     ),
@@ -516,20 +542,20 @@ class HomeScreen extends StatelessWidget {
                     );
                   }
 
-                  // Wide layout: keep original row but make left shrinkable to avoid overflow
+                  // Wide layout: use flex proportions (4 / 4 / 2) and cap the left column width
                   return Align(
                     alignment: Alignment.centerLeft,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Flexible(
-                          fit: FlexFit.loose,
-                          child: SizedBox(
-                            width: boxWidth,
-                            child: const Column(
+                          flex: 4,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: boxWidth),
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Opening Hours',
                                   style: TextStyle(
                                     fontFamily: 'NotoSans',
@@ -538,52 +564,51 @@ class HomeScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
-                                SizedBox(height: 12),
-                                Text(
+                                const SizedBox(height: 12),
+                                const Text(
                                   ' Winter Break Closure Dates ',
                                   style: TextStyle(
                                     fontFamily: 'NotoSans',
                                     fontWeight: FontWeight.w700,
-                                    // Ensure emojis fall back to the color emoji font
                                     fontFamilyFallback: ['NotoColorEmoji'],
                                   ),
                                 ),
-                                SizedBox(height: 8),
-                                Text('Closing 4pm 19/12/2025',
+                                const SizedBox(height: 8),
+                                const Text('Closing 4pm 19/12/2025',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontStyle: FontStyle.italic)),
-                                SizedBox(height: 4),
-                                Text('Reopening 10am 05/01/2026',
+                                const SizedBox(height: 4),
+                                const Text('Reopening 10am 05/01/2026',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontStyle: FontStyle.italic)),
-                                SizedBox(height: 4),
-                                Text('Last post date: 12pm on 18/12/2025',
+                                const SizedBox(height: 4),
+                                const Text('Last post date: 12pm on 18/12/2025',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontStyle: FontStyle.italic)),
-                                SizedBox(height: 12),
-                                Divider(color: Colors.black26),
-                                SizedBox(height: 12),
-                                Text('(Term Time)',
+                                const SizedBox(height: 12),
+                                const Divider(color: Colors.black26),
+                                const SizedBox(height: 12),
+                                const Text('(Term Time)',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontWeight: FontWeight.w700)),
-                                SizedBox(height: 6),
-                                Text('Monday - Friday 10am - 4pm',
+                                const SizedBox(height: 6),
+                                const Text('Monday - Friday 10am - 4pm',
                                     style: TextStyle(fontFamily: 'NotoSans')),
-                                SizedBox(height: 12),
-                                Text(
+                                const SizedBox(height: 12),
+                                const Text(
                                     '(Outside of Term Time / Consolidation Weeks)',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontWeight: FontWeight.w700)),
-                                SizedBox(height: 6),
-                                Text('Monday - Friday 10am - 3pm',
+                                const SizedBox(height: 6),
+                                const Text('Monday - Friday 10am - 3pm',
                                     style: TextStyle(fontFamily: 'NotoSans')),
-                                SizedBox(height: 12),
-                                Text('Purchase online 24/7',
+                                const SizedBox(height: 12),
+                                const Text('Purchase online 24/7',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontWeight: FontWeight.w600)),
@@ -592,7 +617,8 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 32),
-                        Expanded(
+                        Flexible(
+                          flex: 4,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -654,8 +680,8 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 32),
-                        SizedBox(
-                          width: constraints.maxWidth > 720 ? 240 : 160,
+                        Flexible(
+                          flex: 2,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -739,7 +765,8 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
+          AspectRatio(
+            aspectRatio: 1.0,
             child: Image.network(
               imageUrl,
               fit: BoxFit.cover,
