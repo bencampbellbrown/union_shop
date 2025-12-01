@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:union_shop/product_page.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class UnionShopApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
+        textTheme: GoogleFonts.notoSansTextTheme(),
       ),
       home: const HomeScreen(),
       // By default, the app starts at the '/' route, which is the HomeScreen
@@ -326,57 +328,66 @@ class HomeScreen extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: SizedBox(
                       width: boxWidth,
-                      child: const Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Opening Hours',
-                            style: TextStyle(
+                            style: GoogleFonts.notoSans(
                               color: Colors.black87,
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
-                          SizedBox(height: 12),
+                          const SizedBox(height: 12),
 
                           // Winter break / important dates block
                           Text(
                             '❄️ Winter Break Closure Dates ❄️',
-                            style: TextStyle(fontWeight: FontWeight.w700),
+                            style: GoogleFonts.notoSans(
+                              fontWeight: FontWeight.w700,
+                            ).copyWith(fontFamilyFallback: ['NotoColorEmoji']),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text('Closing 4pm 19/12/2025',
-                              style: TextStyle(fontStyle: FontStyle.italic)),
-                          SizedBox(height: 4),
+                              style: GoogleFonts.notoSans(
+                                  fontStyle: FontStyle.italic)),
+                          const SizedBox(height: 4),
                           Text('Reopening 10am 05/01/2026',
-                              style: TextStyle(fontStyle: FontStyle.italic)),
-                          SizedBox(height: 4),
+                              style: GoogleFonts.notoSans(
+                                  fontStyle: FontStyle.italic)),
+                          const SizedBox(height: 4),
                           Text('Last post date: 12pm on 18/12/2025',
-                              style: TextStyle(fontStyle: FontStyle.italic)),
-                          SizedBox(height: 12),
+                              style: GoogleFonts.notoSans(
+                                  fontStyle: FontStyle.italic)),
+                          const SizedBox(height: 12),
 
-                          // dashed separator
-                          Text('----------------------------------------',
-                              style: TextStyle(color: Colors.black26)),
-                          SizedBox(height: 12),
+                          // separator
+                          Divider(color: Colors.black26),
+                          const SizedBox(height: 12),
 
                           // Term time hours
                           Text('(Term Time)',
-                              style: TextStyle(fontWeight: FontWeight.w700)),
-                          SizedBox(height: 6),
-                          Text('Monday - Friday 10am - 4pm'),
-                          SizedBox(height: 12),
+                              style: GoogleFonts.notoSans(
+                                  fontWeight: FontWeight.w700)),
+                          const SizedBox(height: 6),
+                          Text('Monday - Friday 10am - 4pm',
+                              style: GoogleFonts.notoSans()),
+                          const SizedBox(height: 12),
 
                           // Outside term time hours
                           Text('(Outside of Term Time / Consolidation Weeks)',
-                              style: TextStyle(fontWeight: FontWeight.w700)),
-                          SizedBox(height: 6),
-                          Text('Monday - Friday 10am - 3pm'),
-                          SizedBox(height: 12),
+                              style: GoogleFonts.notoSans(
+                                  fontWeight: FontWeight.w700)),
+                          const SizedBox(height: 6),
+                          Text('Monday - Friday 10am - 3pm',
+                              style: GoogleFonts.notoSans()),
+                          const SizedBox(height: 12),
 
                           // Online purchase note
                           Text('Purchase online 24/7',
-                              style: TextStyle(fontWeight: FontWeight.w600)),
+                              style: GoogleFonts.notoSans(
+                                  fontWeight: FontWeight.w600)),
                         ],
                       ),
                     ),
