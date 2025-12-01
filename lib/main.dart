@@ -303,9 +303,9 @@ class HomeScreen extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: SizedBox(
                       width: boxWidth,
-                      child: Column(
+                      child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'Opening Hours',
                             style: TextStyle(
