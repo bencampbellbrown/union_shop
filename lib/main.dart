@@ -151,12 +151,7 @@ class HomeScreen extends StatelessWidget {
                                 child: const Text('About',
                                     style: TextStyle(color: Colors.grey)),
                               ),
-                              const SizedBox(width: 12),
-                              TextButton(
-                                onPressed: placeholderCallbackForButtons,
-                                child: const Text('UPSU.net',
-                                    style: TextStyle(color: Colors.grey)),
-                              ),
+                              // UPSU.net removed from wide navigation
                             ],
                           );
 
@@ -246,9 +241,6 @@ class HomeScreen extends StatelessWidget {
                                         PopupMenuItem(
                                             value: 'about',
                                             child: Text('About')),
-                                        PopupMenuItem(
-                                            value: 'upsu',
-                                            child: Text('UPSU.net')),
                                       ],
                                     ),
                                   ],
