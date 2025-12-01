@@ -43,6 +43,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // (debug removed) Header will adapt to narrow screens by collapsing icon row
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -92,65 +94,86 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           const Spacer(),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 600),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.search,
-                                    size: 18,
-                                    color: Colors.grey,
+                          LayoutBuilder(
+                            builder: (ctx, headerConstraints) {
+                              final screenWidth =
+                                  MediaQuery.of(context).size.width;
+                              // breakpoint: show full icon row on wider screens
+                              if (screenWidth > 480) {
+                                return ConstrainedBox(
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 600),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.search,
+                                          size: 18,
+                                          color: Colors.grey,
+                                        ),
+                                        padding: const EdgeInsets.all(8),
+                                        constraints: const BoxConstraints(
+                                          minWidth: 32,
+                                          minHeight: 32,
+                                        ),
+                                        onPressed:
+                                            placeholderCallbackForButtons,
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.person_outline,
+                                          size: 18,
+                                          color: Colors.grey,
+                                        ),
+                                        padding: const EdgeInsets.all(8),
+                                        constraints: const BoxConstraints(
+                                          minWidth: 32,
+                                          minHeight: 32,
+                                        ),
+                                        onPressed:
+                                            placeholderCallbackForButtons,
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.shopping_bag_outlined,
+                                          size: 18,
+                                          color: Colors.grey,
+                                        ),
+                                        padding: const EdgeInsets.all(8),
+                                        constraints: const BoxConstraints(
+                                          minWidth: 32,
+                                          minHeight: 32,
+                                        ),
+                                        onPressed:
+                                            placeholderCallbackForButtons,
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.menu,
+                                          size: 18,
+                                          color: Colors.grey,
+                                        ),
+                                        padding: const EdgeInsets.all(8),
+                                        constraints: const BoxConstraints(
+                                          minWidth: 32,
+                                          minHeight: 32,
+                                        ),
+                                        onPressed:
+                                            placeholderCallbackForButtons,
+                                      ),
+                                    ],
                                   ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.person_outline,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.shopping_bag_outlined,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.menu,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
-                                ),
-                              ],
-                            ),
+                                );
+                              }
+
+                              // narrow screen: show single menu icon
+                              return IconButton(
+                                icon: const Icon(Icons.menu,
+                                    size: 20, color: Colors.grey),
+                                onPressed: placeholderCallbackForButtons,
+                              );
+                            },
                           ),
                         ],
                       ),
