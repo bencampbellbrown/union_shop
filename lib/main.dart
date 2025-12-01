@@ -293,12 +293,54 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               color: Colors.grey[50],
               padding: const EdgeInsets.all(24),
-              child: const Text(
-                'Placeholder Footer',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 900),
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Opening Hours',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Monday'),
+                              Text('Tuesday'),
+                              Text('Wednesday'),
+                              Text('Thursday'),
+                              Text('Friday'),
+                              Text('Saturday'),
+                              Text('Sunday'),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text('09:00 – 17:00', style: TextStyle(color: Colors.black54)),
+                              Text('09:00 – 17:00', style: TextStyle(color: Colors.black54)),
+                              Text('09:00 – 17:00', style: TextStyle(color: Colors.black54)),
+                              Text('09:00 – 17:00', style: TextStyle(color: Colors.black54)),
+                              Text('09:00 – 17:00', style: TextStyle(color: Colors.black54)),
+                              Text('10:00 – 16:00', style: TextStyle(color: Colors.black54)),
+                              Text('Closed', style: TextStyle(color: Colors.black54)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
