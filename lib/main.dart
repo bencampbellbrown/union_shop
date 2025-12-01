@@ -328,74 +328,74 @@ class HomeScreen extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: SizedBox(
                       width: boxWidth,
-                      child: Column(
+                      child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Opening Hours',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: 'NotoSans',
                               color: Colors.black87,
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
 
                           // Winter break / important dates block
                           Text(
-                            '❄️ Winter Break Closure Dates ❄️',
-                            style: const TextStyle(
+                            ' Winter Break Closure Dates ',
+                            style: TextStyle(
                               fontFamily: 'NotoSans',
                               fontWeight: FontWeight.w700,
                               // Ensure emojis fall back to the color emoji font
                               fontFamilyFallback: ['NotoColorEmoji'],
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8),
                           Text('Closing 4pm 19/12/2025',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontFamily: 'NotoSans',
                                   fontStyle: FontStyle.italic)),
-                          const SizedBox(height: 4),
+                          SizedBox(height: 4),
                           Text('Reopening 10am 05/01/2026',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontFamily: 'NotoSans',
                                   fontStyle: FontStyle.italic)),
-                          const SizedBox(height: 4),
+                          SizedBox(height: 4),
                           Text('Last post date: 12pm on 18/12/2025',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontFamily: 'NotoSans',
                                   fontStyle: FontStyle.italic)),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
 
                           // separator
                           Divider(color: Colors.black26),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
 
                           // Term time hours
                           Text('(Term Time)',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontFamily: 'NotoSans',
                                   fontWeight: FontWeight.w700)),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           Text('Monday - Friday 10am - 4pm',
-                              style: const TextStyle(fontFamily: 'NotoSans')),
-                          const SizedBox(height: 12),
+                              style: TextStyle(fontFamily: 'NotoSans')),
+                          SizedBox(height: 12),
 
                           // Outside term time hours
                           Text('(Outside of Term Time / Consolidation Weeks)',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontFamily: 'NotoSans',
                                   fontWeight: FontWeight.w700)),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           Text('Monday - Friday 10am - 3pm',
-                              style: const TextStyle(fontFamily: 'NotoSans')),
-                          const SizedBox(height: 12),
+                              style: TextStyle(fontFamily: 'NotoSans')),
+                          SizedBox(height: 12),
 
                           // Online purchase note
                           Text('Purchase online 24/7',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontFamily: 'NotoSans',
                                   fontWeight: FontWeight.w600)),
                         ],
