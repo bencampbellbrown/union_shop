@@ -13,6 +13,3 @@ Suggested sources:
 After adding these files, run:
 
 flutter pub get
-flutter run
-
-If you prefer, I can add the font files to the repo for you if you provide them or allow me to fetch them.
