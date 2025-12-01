@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
+import 'package:union_shop/auth_page.dart';
 // layout constants and newsletter widget are used elsewhere; imports removed here to avoid unused import warnings
 import 'package:union_shop/widgets/site_scaffold.dart';
 
@@ -29,6 +30,7 @@ class UnionShopApp extends StatelessWidget {
       routes: {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutPage(),
+        '/auth': (context) => const AuthPage(),
       },
     );
   }

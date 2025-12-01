@@ -68,7 +68,9 @@ class SiteScaffold extends StatelessWidget {
                               padding: const EdgeInsets.all(8),
                               constraints: const BoxConstraints(
                                   minWidth: 32, minHeight: 32),
-                              onPressed: _placeholder,
+                              tooltip: 'Account',
+                              onPressed: () =>
+                                  Navigator.pushNamed(ctx, '/auth'),
                             ),
                             IconButton(
                               icon: const Icon(Icons.shopping_bag_outlined,
