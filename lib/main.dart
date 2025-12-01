@@ -223,36 +223,38 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AspectRatio(
-            aspectRatio: 1.0,
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey[300],
-                  child: const Center(
-                    child: Icon(Icons.image_not_supported, color: Colors.grey),
-                  ),
-                );
-              },
+          // Image should flex to available space so text below doesn't push
+          // the tile beyond its grid cell. Using Flexible/Expanded ensures
+          // the image shrinks when the grid cell height is limited.
+          Expanded(
+            child: ClipRRect(
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey[300],
+                    child: const Center(
+                      child:
+                          Icon(Icons.image_not_supported, color: Colors.grey),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 4),
-              Text(
-                title,
-                style: const TextStyle(fontSize: 14, color: Colors.black),
-                maxLines: 2,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                price,
-                style: const TextStyle(fontSize: 13, color: Colors.grey),
-              ),
-            ],
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 14, color: Colors.black),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 6),
+          Text(
+            price,
+            style: const TextStyle(fontSize: 13, color: Colors.grey),
           ),
         ],
       ),
