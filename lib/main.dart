@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:union_shop/product_page.dart';
 
 void main() {
@@ -16,7 +15,8 @@ class UnionShopApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
-        textTheme: GoogleFonts.notoSansTextTheme(),
+        // Use the bundled Noto fonts (configured in pubspec.yaml) via
+        // TextStyle with `fontFamily` and `fontFamilyFallback`.
       ),
       home: const HomeScreen(),
       // By default, the app starts at the '/' route, which is the HomeScreen
@@ -333,7 +333,8 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Opening Hours',
-                            style: GoogleFonts.notoSans(
+                            style: const TextStyle(
+                              fontFamily: 'NotoSans',
                               color: Colors.black87,
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
@@ -344,21 +345,27 @@ class HomeScreen extends StatelessWidget {
                           // Winter break / important dates block
                           Text(
                             '❄️ Winter Break Closure Dates ❄️',
-                            style: GoogleFonts.notoSans(
+                            style: const TextStyle(
+                              fontFamily: 'NotoSans',
                               fontWeight: FontWeight.w700,
-                            ).copyWith(fontFamilyFallback: ['NotoColorEmoji']),
+                              // Ensure emojis fall back to the color emoji font
+                              fontFamilyFallback: ['NotoColorEmoji'],
+                            ),
                           ),
                           const SizedBox(height: 8),
                           Text('Closing 4pm 19/12/2025',
-                              style: GoogleFonts.notoSans(
+                              style: const TextStyle(
+                                  fontFamily: 'NotoSans',
                                   fontStyle: FontStyle.italic)),
                           const SizedBox(height: 4),
                           Text('Reopening 10am 05/01/2026',
-                              style: GoogleFonts.notoSans(
+                              style: const TextStyle(
+                                  fontFamily: 'NotoSans',
                                   fontStyle: FontStyle.italic)),
                           const SizedBox(height: 4),
                           Text('Last post date: 12pm on 18/12/2025',
-                              style: GoogleFonts.notoSans(
+                              style: const TextStyle(
+                                  fontFamily: 'NotoSans',
                                   fontStyle: FontStyle.italic)),
                           const SizedBox(height: 12),
 
@@ -368,25 +375,28 @@ class HomeScreen extends StatelessWidget {
 
                           // Term time hours
                           Text('(Term Time)',
-                              style: GoogleFonts.notoSans(
+                              style: const TextStyle(
+                                  fontFamily: 'NotoSans',
                                   fontWeight: FontWeight.w700)),
                           const SizedBox(height: 6),
                           Text('Monday - Friday 10am - 4pm',
-                              style: GoogleFonts.notoSans()),
+                              style: const TextStyle(fontFamily: 'NotoSans')),
                           const SizedBox(height: 12),
 
                           // Outside term time hours
                           Text('(Outside of Term Time / Consolidation Weeks)',
-                              style: GoogleFonts.notoSans(
+                              style: const TextStyle(
+                                  fontFamily: 'NotoSans',
                                   fontWeight: FontWeight.w700)),
                           const SizedBox(height: 6),
                           Text('Monday - Friday 10am - 3pm',
-                              style: GoogleFonts.notoSans()),
+                              style: const TextStyle(fontFamily: 'NotoSans')),
                           const SizedBox(height: 12),
 
                           // Online purchase note
                           Text('Purchase online 24/7',
-                              style: GoogleFonts.notoSans(
+                              style: const TextStyle(
+                                  fontFamily: 'NotoSans',
                                   fontWeight: FontWeight.w600)),
                         ],
                       ),

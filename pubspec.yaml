@@ -11,9 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
-  # Pin google_fonts to a version compatible with older Dart/Flutter SDKs.
-  # If you upgrade to Dart 3 / Flutter 3.10+, you can move back to ^5.0.0.
-  google_fonts: ^3.0.1
+  # We no longer use the `google_fonts` package. Instead include local
+  # Noto font assets under `assets/fonts/` and register them below.
 
 dev_dependencies:
   flutter_test:
@@ -22,3 +21,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  # Add Noto fonts here. Download the appropriate .ttf files and place them
+  # in the `assets/fonts/` directory. Example families below:
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+        - asset: assets/fonts/NotoSans-Bold.ttf
+          weight: 700
+    - family: NotoColorEmoji
+      fonts:
+        - asset: assets/fonts/NotoColorEmoji.ttf
