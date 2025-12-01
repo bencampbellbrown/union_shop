@@ -293,61 +293,72 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               color: Colors.grey[50],
               padding: const EdgeInsets.all(24),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 520),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Opening Hours',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final double boxWidth = constraints.maxWidth > 720
+                      ? 520
+                      : constraints.maxWidth * 0.95;
+
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizedBox(
+                      width: boxWidth,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Opening Hours',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          SizedBox(height: 12),
+
+                          // Winter break / important dates block
+                          Text(
+                            '❄️ Winter Break Closure Dates ❄️',
+                            style: TextStyle(fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(height: 8),
+                          Text('Closing 4pm 19/12/2025',
+                              style: TextStyle(fontStyle: FontStyle.italic)),
+                          SizedBox(height: 4),
+                          Text('Reopening 10am 05/01/2026',
+                              style: TextStyle(fontStyle: FontStyle.italic)),
+                          SizedBox(height: 4),
+                          Text('Last post date: 12pm on 18/12/2025',
+                              style: TextStyle(fontStyle: FontStyle.italic)),
+                          SizedBox(height: 12),
+
+                          // dashed separator
+                          Text('----------------------------------------',
+                              style: TextStyle(color: Colors.black26)),
+                          SizedBox(height: 12),
+
+                          // Term time hours
+                          Text('(Term Time)',
+                              style: TextStyle(fontWeight: FontWeight.w700)),
+                          SizedBox(height: 6),
+                          Text('Monday - Friday 10am - 4pm'),
+                          SizedBox(height: 12),
+
+                          // Outside term time hours
+                          Text('(Outside of Term Time / Consolidation Weeks)',
+                              style: TextStyle(fontWeight: FontWeight.w700)),
+                          SizedBox(height: 6),
+                          Text('Monday - Friday 10am - 3pm'),
+                          SizedBox(height: 12),
+
+                          // Online purchase note
+                          Text('Purchase online 24/7',
+                              style: TextStyle(fontWeight: FontWeight.w600)),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 12),
-
-                    // Winter break / important dates block
-                    Text(
-                      '❄️ Winter Break Closure Dates ❄️',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(height: 8),
-                    Text('Closing 4pm 19/12/2025',
-                        style: TextStyle(fontStyle: FontStyle.italic)),
-                    SizedBox(height: 4),
-                    Text('Reopening 10am 05/01/2026',
-                        style: TextStyle(fontStyle: FontStyle.italic)),
-                    SizedBox(height: 4),
-                    Text('Last post date: 12pm on 18/12/2025',
-                        style: TextStyle(fontStyle: FontStyle.italic)),
-                    SizedBox(height: 12),
-
-                    // dashed separator
-                    Text('----------------------------------------',
-                        style: TextStyle(color: Colors.black26)),
-                    SizedBox(height: 12),
-
-                    // Term time hours
-                    Text('(Term Time)',
-                        style: TextStyle(fontWeight: FontWeight.w700)),
-                    SizedBox(height: 6),
-                    Text('Monday - Friday 10am - 4pm'),
-                    SizedBox(height: 12),
-
-                    // Outside term time hours
-                    Text('(Outside of Term Time / Consolidation Weeks)',
-                        style: TextStyle(fontWeight: FontWeight.w700)),
-                    SizedBox(height: 6),
-                    Text('Monday - Friday 10am - 3pm'),
-                    SizedBox(height: 12),
-
-                    // Online purchase note
-                    Text('Purchase online 24/7',
-                        style: TextStyle(fontWeight: FontWeight.w600)),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           ],
