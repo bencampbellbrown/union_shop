@@ -324,17 +324,19 @@ class HomeScreen extends StatelessWidget {
                       ? 520
                       : constraints.maxWidth * 0.95;
 
-                  return Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
+                  // If the available width is narrow, stack the three sections vertically.
+                  final bool isNarrow = constraints.maxWidth < 600;
+
+                  if (isNarrow) {
+                    return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Left column: existing opening hours, constrained to `boxWidth`
-                        SizedBox(
-                          width: boxWidth,
-                          child: Column(
+                        // Left (opening hours) constrained to boxWidth
+                        ConstrainedBox(
+                          constraints: BoxConstraints(maxWidth: boxWidth),
+                          child: const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
                                 'Opening Hours',
                                 style: TextStyle(
@@ -345,14 +347,11 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(height: 12),
-
-                              // Winter break / important dates block
                               Text(
                                 ' Winter Break Closure Dates ',
                                 style: TextStyle(
                                   fontFamily: 'NotoSans',
                                   fontWeight: FontWeight.w700,
-                                  // Ensure emojis fall back to the color emoji font
                                   fontFamilyFallback: ['NotoColorEmoji'],
                                 ),
                               ),
@@ -372,12 +371,8 @@ class HomeScreen extends StatelessWidget {
                                       fontFamily: 'NotoSans',
                                       fontStyle: FontStyle.italic)),
                               SizedBox(height: 12),
-
-                              // separator
                               Divider(color: Colors.black26),
                               SizedBox(height: 12),
-
-                              // Term time hours
                               Text('(Term Time)',
                                   style: TextStyle(
                                       fontFamily: 'NotoSans',
@@ -386,8 +381,6 @@ class HomeScreen extends StatelessWidget {
                               Text('Monday - Friday 10am - 4pm',
                                   style: TextStyle(fontFamily: 'NotoSans')),
                               SizedBox(height: 12),
-
-                              // Outside term time hours
                               Text(
                                   '(Outside of Term Time / Consolidation Weeks)',
                                   style: TextStyle(
@@ -397,8 +390,6 @@ class HomeScreen extends StatelessWidget {
                               Text('Monday - Friday 10am - 3pm',
                                   style: TextStyle(fontFamily: 'NotoSans')),
                               SizedBox(height: 12),
-
-                              // Online purchase note
                               Text('Purchase online 24/7',
                                   style: TextStyle(
                                       fontFamily: 'NotoSans',
@@ -407,9 +398,200 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
 
-                        const SizedBox(width: 32),
+                        const SizedBox(height: 16),
 
-                        // Middle column: Help & Information (buttons)
+                        // Middle (help/info)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Help and Information',
+                              style: TextStyle(
+                                fontFamily: 'NotoSans',
+                                fontWeight: FontWeight.w800,
+                                color: Colors.black87,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            TextButton(
+                              onPressed: placeholderCallbackForButtons,
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: const Size(0, 0),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                alignment: Alignment.centerLeft,
+                              ),
+                              child: const Text('Search',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      color: Colors.black87)),
+                            ),
+                            const SizedBox(height: 6),
+                            TextButton(
+                              onPressed: placeholderCallbackForButtons,
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: const Size(0, 0),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                alignment: Alignment.centerLeft,
+                              ),
+                              child: const Text('Terms & Conditions of Sale',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      color: Colors.black87)),
+                            ),
+                            const SizedBox(height: 6),
+                            TextButton(
+                              onPressed: placeholderCallbackForButtons,
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: const Size(0, 0),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                alignment: Alignment.centerLeft,
+                              ),
+                              child: const Text('Policy',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      color: Colors.black87)),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // Right (newsletter signup)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Latest Offers',
+                                style: TextStyle(
+                                    fontFamily: 'NotoSans',
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.black87)),
+                            const SizedBox(height: 8),
+
+                            // Email input box
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey.shade400),
+                                color: Colors.white,
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Email address',
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+
+                            // Subscribe button (non-functional)
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: placeholderCallbackForButtons,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF4d2963),
+                                  foregroundColor: Colors.white,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
+                                ),
+                                child: const Text(
+                                  'SUBSCRIBE',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 1),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+
+                  // Wide layout: keep original row but make left shrinkable to avoid overflow
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: SizedBox(
+                            width: boxWidth,
+                            child: const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Opening Hours',
+                                  style: TextStyle(
+                                    fontFamily: 'NotoSans',
+                                    color: Colors.black87,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                SizedBox(height: 12),
+                                Text(
+                                  ' Winter Break Closure Dates ',
+                                  style: TextStyle(
+                                    fontFamily: 'NotoSans',
+                                    fontWeight: FontWeight.w700,
+                                    // Ensure emojis fall back to the color emoji font
+                                    fontFamilyFallback: ['NotoColorEmoji'],
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text('Closing 4pm 19/12/2025',
+                                    style: TextStyle(
+                                        fontFamily: 'NotoSans',
+                                        fontStyle: FontStyle.italic)),
+                                SizedBox(height: 4),
+                                Text('Reopening 10am 05/01/2026',
+                                    style: TextStyle(
+                                        fontFamily: 'NotoSans',
+                                        fontStyle: FontStyle.italic)),
+                                SizedBox(height: 4),
+                                Text('Last post date: 12pm on 18/12/2025',
+                                    style: TextStyle(
+                                        fontFamily: 'NotoSans',
+                                        fontStyle: FontStyle.italic)),
+                                SizedBox(height: 12),
+                                Divider(color: Colors.black26),
+                                SizedBox(height: 12),
+                                Text('(Term Time)',
+                                    style: TextStyle(
+                                        fontFamily: 'NotoSans',
+                                        fontWeight: FontWeight.w700)),
+                                SizedBox(height: 6),
+                                Text('Monday - Friday 10am - 4pm',
+                                    style: TextStyle(fontFamily: 'NotoSans')),
+                                SizedBox(height: 12),
+                                Text(
+                                    '(Outside of Term Time / Consolidation Weeks)',
+                                    style: TextStyle(
+                                        fontFamily: 'NotoSans',
+                                        fontWeight: FontWeight.w700)),
+                                SizedBox(height: 6),
+                                Text('Monday - Friday 10am - 3pm',
+                                    style: TextStyle(fontFamily: 'NotoSans')),
+                                SizedBox(height: 12),
+                                Text('Purchase online 24/7',
+                                    style: TextStyle(
+                                        fontFamily: 'NotoSans',
+                                        fontWeight: FontWeight.w600)),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 32),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -471,30 +653,55 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-
                         const SizedBox(width: 32),
-
-                        // Right column: social / newsletter (fixed width on wide screens)
                         SizedBox(
-                          width: constraints.maxWidth > 720 ? 200 : 140,
+                          width: constraints.maxWidth > 720 ? 240 : 160,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text('Follow',
+                            children: [
+                              const Text('Latest Offers',
                                   style: TextStyle(
                                       fontFamily: 'NotoSans',
-                                      fontWeight: FontWeight.w800)),
-                              SizedBox(height: 8),
-                              Text('Facebook • Twitter • Instagram',
-                                  style: TextStyle(fontFamily: 'NotoSans')),
-                              SizedBox(height: 12),
-                              Text('Newsletter',
-                                  style: TextStyle(
-                                      fontFamily: 'NotoSans',
-                                      fontWeight: FontWeight.w700)),
-                              SizedBox(height: 8),
-                              Text('Sign up for updates',
-                                  style: TextStyle(fontFamily: 'NotoSans')),
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.black87)),
+                              const SizedBox(height: 8),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey.shade400),
+                                  color: Colors.white,
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Email address',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: placeholderCallbackForButtons,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF4d2963),
+                                    foregroundColor: Colors.white,
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.zero),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                  ),
+                                  child: const Text(
+                                    'SUBSCRIBE',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        letterSpacing: 1),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
