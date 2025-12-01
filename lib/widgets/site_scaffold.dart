@@ -379,7 +379,7 @@ class SiteScaffold extends StatelessWidget {
                 // Center the footer content with dynamic side gutters.
                 // When the window is wider than `maxContentWidth`, compute
                 // symmetric horizontal padding so the content stays centered.
-                final double maxContentWidth = 1000.0;
+                const double maxContentWidth = 1000.0;
                 final double horizontalPadding =
                     constraints.maxWidth > maxContentWidth
                         ? (constraints.maxWidth - maxContentWidth) / 2

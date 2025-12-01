@@ -55,6 +55,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Compute responsive columns and aspect ratio for product grid.
+    final double width = MediaQuery.of(context).size.width;
+    final int columns = width > 1000 ? 3 : (width > 600 ? 2 : 1);
+    // Use taller tiles for single-column (mobile) so image + text don't overflow.
+    final double childAspect = columns == 3 ? 1.0 : (columns == 2 ? 1.2 : 0.8);
+
     // Use SiteScaffold for consistent header/footer across pages.
     return SiteScaffold(
       child: Column(
@@ -78,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.7),
+                        color: const Color.fromRGBO(0, 0, 0, 0.7),
                       ),
                     ),
                   ),
@@ -151,8 +157,8 @@ class HomeScreen extends StatelessWidget {
                   GridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount:
-                        MediaQuery.of(context).size.width > 600 ? 2 : 1,
+                    crossAxisCount: columns,
+                    childAspectRatio: childAspect,
                     crossAxisSpacing: 24,
                     mainAxisSpacing: 48,
                     children: const [
