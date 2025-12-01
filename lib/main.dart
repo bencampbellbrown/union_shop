@@ -326,80 +326,179 @@ class HomeScreen extends StatelessWidget {
 
                   return Align(
                     alignment: Alignment.centerLeft,
-                    child: SizedBox(
-                      width: boxWidth,
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Opening Hours',
-                            style: TextStyle(
-                              fontFamily: 'NotoSans',
-                              color: Colors.black87,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800,
-                            ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Left column: existing opening hours, constrained to `boxWidth`
+                        SizedBox(
+                          width: boxWidth,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'Opening Hours',
+                                style: TextStyle(
+                                  fontFamily: 'NotoSans',
+                                  color: Colors.black87,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              SizedBox(height: 12),
+
+                              // Winter break / important dates block
+                              Text(
+                                ' Winter Break Closure Dates ',
+                                style: TextStyle(
+                                  fontFamily: 'NotoSans',
+                                  fontWeight: FontWeight.w700,
+                                  // Ensure emojis fall back to the color emoji font
+                                  fontFamilyFallback: ['NotoColorEmoji'],
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text('Closing 4pm 19/12/2025',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontStyle: FontStyle.italic)),
+                              SizedBox(height: 4),
+                              Text('Reopening 10am 05/01/2026',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontStyle: FontStyle.italic)),
+                              SizedBox(height: 4),
+                              Text('Last post date: 12pm on 18/12/2025',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontStyle: FontStyle.italic)),
+                              SizedBox(height: 12),
+
+                              // separator
+                              Divider(color: Colors.black26),
+                              SizedBox(height: 12),
+
+                              // Term time hours
+                              Text('(Term Time)',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontWeight: FontWeight.w700)),
+                              SizedBox(height: 6),
+                              Text('Monday - Friday 10am - 4pm',
+                                  style: TextStyle(fontFamily: 'NotoSans')),
+                              SizedBox(height: 12),
+
+                              // Outside term time hours
+                              Text(
+                                  '(Outside of Term Time / Consolidation Weeks)',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontWeight: FontWeight.w700)),
+                              SizedBox(height: 6),
+                              Text('Monday - Friday 10am - 3pm',
+                                  style: TextStyle(fontFamily: 'NotoSans')),
+                              SizedBox(height: 12),
+
+                              // Online purchase note
+                              Text('Purchase online 24/7',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontWeight: FontWeight.w600)),
+                            ],
                           ),
-                          SizedBox(height: 12),
+                        ),
 
-                          // Winter break / important dates block
-                          Text(
-                            ' Winter Break Closure Dates ',
-                            style: TextStyle(
-                              fontFamily: 'NotoSans',
-                              fontWeight: FontWeight.w700,
-                              // Ensure emojis fall back to the color emoji font
-                              fontFamilyFallback: ['NotoColorEmoji'],
-                            ),
+                        const SizedBox(width: 32),
+
+                        // Middle column: Help & Information (buttons)
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Help and Information',
+                                style: TextStyle(
+                                  fontFamily: 'NotoSans',
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.black87,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              TextButton(
+                                onPressed: placeholderCallbackForButtons,
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  minimumSize: const Size(0, 0),
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  alignment: Alignment.centerLeft,
+                                ),
+                                child: const Text('Search',
+                                    style: TextStyle(
+                                        fontFamily: 'NotoSans',
+                                        color: Colors.black87)),
+                              ),
+                              const SizedBox(height: 6),
+                              TextButton(
+                                onPressed: placeholderCallbackForButtons,
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  minimumSize: const Size(0, 0),
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  alignment: Alignment.centerLeft,
+                                ),
+                                child: const Text('Terms & Conditions of Sale',
+                                    style: TextStyle(
+                                        fontFamily: 'NotoSans',
+                                        color: Colors.black87)),
+                              ),
+                              const SizedBox(height: 6),
+                              TextButton(
+                                onPressed: placeholderCallbackForButtons,
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  minimumSize: const Size(0, 0),
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  alignment: Alignment.centerLeft,
+                                ),
+                                child: const Text('Policy',
+                                    style: TextStyle(
+                                        fontFamily: 'NotoSans',
+                                        color: Colors.black87)),
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 8),
-                          Text('Closing 4pm 19/12/2025',
-                              style: TextStyle(
-                                  fontFamily: 'NotoSans',
-                                  fontStyle: FontStyle.italic)),
-                          SizedBox(height: 4),
-                          Text('Reopening 10am 05/01/2026',
-                              style: TextStyle(
-                                  fontFamily: 'NotoSans',
-                                  fontStyle: FontStyle.italic)),
-                          SizedBox(height: 4),
-                          Text('Last post date: 12pm on 18/12/2025',
-                              style: TextStyle(
-                                  fontFamily: 'NotoSans',
-                                  fontStyle: FontStyle.italic)),
-                          SizedBox(height: 12),
+                        ),
 
-                          // separator
-                          Divider(color: Colors.black26),
-                          SizedBox(height: 12),
+                        const SizedBox(width: 32),
 
-                          // Term time hours
-                          Text('(Term Time)',
-                              style: TextStyle(
-                                  fontFamily: 'NotoSans',
-                                  fontWeight: FontWeight.w700)),
-                          SizedBox(height: 6),
-                          Text('Monday - Friday 10am - 4pm',
-                              style: TextStyle(fontFamily: 'NotoSans')),
-                          SizedBox(height: 12),
-
-                          // Outside term time hours
-                          Text('(Outside of Term Time / Consolidation Weeks)',
-                              style: TextStyle(
-                                  fontFamily: 'NotoSans',
-                                  fontWeight: FontWeight.w700)),
-                          SizedBox(height: 6),
-                          Text('Monday - Friday 10am - 3pm',
-                              style: TextStyle(fontFamily: 'NotoSans')),
-                          SizedBox(height: 12),
-
-                          // Online purchase note
-                          Text('Purchase online 24/7',
-                              style: TextStyle(
-                                  fontFamily: 'NotoSans',
-                                  fontWeight: FontWeight.w600)),
-                        ],
-                      ),
+                        // Right column: social / newsletter (fixed width on wide screens)
+                        SizedBox(
+                          width: constraints.maxWidth > 720 ? 200 : 140,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text('Follow',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontWeight: FontWeight.w800)),
+                              SizedBox(height: 8),
+                              Text('Facebook • Twitter • Instagram',
+                                  style: TextStyle(fontFamily: 'NotoSans')),
+                              SizedBox(height: 12),
+                              Text('Newsletter',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontWeight: FontWeight.w700)),
+                              SizedBox(height: 8),
+                              Text('Sign up for updates',
+                                  style: TextStyle(fontFamily: 'NotoSans')),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 },
