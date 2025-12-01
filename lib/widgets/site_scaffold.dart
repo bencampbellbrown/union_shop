@@ -229,30 +229,87 @@ class SiteScaffold extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Left (opening hours) constrained to boxWidth
                       ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: boxWidth),
                         child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Opening Hours',
+                            Text(
+                              'Opening Hours',
+                              style: TextStyle(
+                                fontFamily: 'NotoSans',
+                                color: Colors.black87,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              ' Winter Break Closure Dates ',
+                              style: TextStyle(
+                                fontFamily: 'NotoSans',
+                                fontWeight: FontWeight.w700,
+                                fontFamilyFallback: ['NotoColorEmoji'],
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text('Closing 4pm 19/12/2025',
                                 style: TextStyle(
                                     fontFamily: 'NotoSans',
-                                    color: Colors.black87,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w800)),
+                                    fontStyle: FontStyle.italic)),
+                            SizedBox(height: 4),
+                            Text('Reopening 10am 05/01/2026',
+                                style: TextStyle(
+                                    fontFamily: 'NotoSans',
+                                    fontStyle: FontStyle.italic)),
+                            SizedBox(height: 4),
+                            Text('Last post date: 12pm on 18/12/2025',
+                                style: TextStyle(
+                                    fontFamily: 'NotoSans',
+                                    fontStyle: FontStyle.italic)),
+                            SizedBox(height: 12),
+                            Divider(color: Colors.black26),
+                            SizedBox(height: 12),
+                            Text('(Term Time)',
+                                style: TextStyle(
+                                    fontFamily: 'NotoSans',
+                                    fontWeight: FontWeight.w700)),
+                            SizedBox(height: 6),
+                            Text('Monday - Friday 10am - 4pm',
+                                style: TextStyle(fontFamily: 'NotoSans')),
+                            SizedBox(height: 12),
+                            Text('(Outside of Term Time / Consolidation Weeks)',
+                                style: TextStyle(
+                                    fontFamily: 'NotoSans',
+                                    fontWeight: FontWeight.w700)),
+                            SizedBox(height: 6),
+                            Text('Monday - Friday 10am - 3pm',
+                                style: TextStyle(fontFamily: 'NotoSans')),
+                            SizedBox(height: 12),
+                            Text('Purchase online 24/7',
+                                style: TextStyle(
+                                    fontFamily: 'NotoSans',
+                                    fontWeight: FontWeight.w600)),
                           ],
                         ),
                       ),
+
                       const SizedBox(height: 16),
+
+                      // Middle (help/info)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Help and Information',
-                              style: TextStyle(
-                                  fontFamily: 'NotoSans',
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.black87,
-                                  fontSize: 16)),
+                          const Text(
+                            'Help and Information',
+                            style: TextStyle(
+                              fontFamily: 'NotoSans',
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black87,
+                              fontSize: 16,
+                            ),
+                          ),
                           const SizedBox(height: 12),
                           TextButton(
                             onPressed: _placeholder,
@@ -267,22 +324,52 @@ class SiteScaffold extends StatelessWidget {
                                     fontFamily: 'NotoSans',
                                     color: Colors.black87)),
                           ),
+                          const SizedBox(height: 6),
+                          TextButton(
+                            onPressed: _placeholder,
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              minimumSize: const Size(0, 0),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              alignment: Alignment.centerLeft,
+                            ),
+                            child: const Text('Terms & Conditions of Sale',
+                                style: TextStyle(
+                                    fontFamily: 'NotoSans',
+                                    color: Colors.black87)),
+                          ),
+                          const SizedBox(height: 6),
+                          TextButton(
+                            onPressed: _placeholder,
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              minimumSize: const Size(0, 0),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              alignment: Alignment.centerLeft,
+                            ),
+                            child: const Text('Policy',
+                                style: TextStyle(
+                                    fontFamily: 'NotoSans',
+                                    color: Colors.black87)),
+                          ),
                         ],
                       ),
+
                       const SizedBox(height: 16),
-                      Column(
+
+                      // Right (newsletter signup)
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Latest Offers',
+                          Text('Latest Offers',
                               style: TextStyle(
                                   fontFamily: 'NotoSans',
                                   fontWeight: FontWeight.w800,
                                   color: Colors.black87)),
-                          const SizedBox(height: 8),
-                          ConstrainedBox(
-                            constraints: BoxConstraints(maxWidth: boxWidth),
-                            child: NewsletterWidget(),
-                          ),
+                          SizedBox(height: 8),
+
+                          // Newsletter widget handles input + subscribe
+                          NewsletterWidget(maxWidth: kFooterLeftMax),
                         ],
                       ),
                     ],
@@ -298,15 +385,66 @@ class SiteScaffold extends StatelessWidget {
                         flex: 4,
                         child: ConstrainedBox(
                           constraints: BoxConstraints(maxWidth: boxWidth),
-                          child: Column(
+                          child: const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text('Opening Hours',
+                            children: [
+                              Text(
+                                'Opening Hours',
+                                style: TextStyle(
+                                  fontFamily: 'NotoSans',
+                                  color: Colors.black87,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              SizedBox(height: 12),
+                              Text(
+                                ' Winter Break Closure Dates ',
+                                style: TextStyle(
+                                  fontFamily: 'NotoSans',
+                                  fontWeight: FontWeight.w700,
+                                  fontFamilyFallback: ['NotoColorEmoji'],
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text('Closing 4pm 19/12/2025',
                                   style: TextStyle(
                                       fontFamily: 'NotoSans',
-                                      color: Colors.black87,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w800)),
+                                      fontStyle: FontStyle.italic)),
+                              SizedBox(height: 4),
+                              Text('Reopening 10am 05/01/2026',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontStyle: FontStyle.italic)),
+                              SizedBox(height: 4),
+                              Text('Last post date: 12pm on 18/12/2025',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontStyle: FontStyle.italic)),
+                              SizedBox(height: 12),
+                              Divider(color: Colors.black26),
+                              SizedBox(height: 12),
+                              Text('(Term Time)',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontWeight: FontWeight.w700)),
+                              SizedBox(height: 6),
+                              Text('Monday - Friday 10am - 4pm',
+                                  style: TextStyle(fontFamily: 'NotoSans')),
+                              SizedBox(height: 12),
+                              Text(
+                                  '(Outside of Term Time / Consolidation Weeks)',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontWeight: FontWeight.w700)),
+                              SizedBox(height: 6),
+                              Text('Monday - Friday 10am - 3pm',
+                                  style: TextStyle(fontFamily: 'NotoSans')),
+                              SizedBox(height: 12),
+                              Text('Purchase online 24/7',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontWeight: FontWeight.w600)),
                             ],
                           ),
                         ),
@@ -317,7 +455,7 @@ class SiteScaffold extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Help and Information',
+                            const Text('Help and Information',
                                 style: TextStyle(
                                   fontFamily: 'NotoSans',
                                   fontWeight: FontWeight.w800,
@@ -342,53 +480,20 @@ class SiteScaffold extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 32),
-                      Flexible(
+                      const Flexible(
                         flex: 2,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Latest Offers',
+                            Text('Latest Offers',
                                 style: TextStyle(
                                     fontFamily: 'NotoSans',
                                     fontWeight: FontWeight.w800,
                                     color: Colors.black87)),
-                            const SizedBox(height: 8),
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey.shade400),
-                                color: Colors.white,
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Email address',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: _placeholder,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF4d2963),
-                                  foregroundColor: Colors.white,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.zero),
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 12),
-                                ),
-                                child: const Text(
-                                  'SUBSCRIBE',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      letterSpacing: 1),
-                                ),
-                              ),
-                            ),
+                            SizedBox(height: 8),
+
+                            // Newsletter widget handles input + subscribe
+                            NewsletterWidget(maxWidth: kFooterLeftMax),
                           ],
                         ),
                       ),
