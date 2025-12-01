@@ -376,9 +376,25 @@ class SiteScaffold extends StatelessWidget {
                   );
                 }
 
-                return Align(
-                  alignment: Alignment.centerLeft,
+                // Center the footer content with dynamic side gutters.
+                // When the window is wider than `maxContentWidth`, compute
+                // symmetric horizontal padding so the content stays centered.
+                final double maxContentWidth = 1000.0;
+                final double horizontalPadding =
+                    constraints.maxWidth > maxContentWidth
+                        ? (constraints.maxWidth - maxContentWidth) / 2
+                        : 24.0;
+                // Responsive gap between footer columns (grows on wide screens)
+                final double horizontalGap = constraints.maxWidth > 1200
+                    ? 64.0
+                    : constraints.maxWidth > 900
+                        ? 48.0
+                        : 32.0;
+
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                   child: Row(
+                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Flexible(
@@ -386,6 +402,7 @@ class SiteScaffold extends StatelessWidget {
                         child: ConstrainedBox(
                           constraints: BoxConstraints(maxWidth: boxWidth),
                           child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -449,10 +466,11 @@ class SiteScaffold extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 32),
+                      SizedBox(width: horizontalGap),
                       Flexible(
                         flex: 4,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text('Help and Information',
@@ -476,13 +494,42 @@ class SiteScaffold extends StatelessWidget {
                                       fontFamily: 'NotoSans',
                                       color: Colors.black87)),
                             ),
+                            const SizedBox(height: 6),
+                            TextButton(
+                              onPressed: _placeholder,
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: const Size(0, 0),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                alignment: Alignment.centerLeft,
+                              ),
+                              child: const Text('Terms & Conditions of Sale',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      color: Colors.black87)),
+                            ),
+                            const SizedBox(height: 6),
+                            TextButton(
+                              onPressed: _placeholder,
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: const Size(0, 0),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                alignment: Alignment.centerLeft,
+                              ),
+                              child: const Text('Policy',
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      color: Colors.black87)),
+                            ),
                           ],
                         ),
                       ),
-                      const SizedBox(width: 32),
+                      SizedBox(width: horizontalGap),
                       const Flexible(
                         flex: 2,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('Latest Offers',
