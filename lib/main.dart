@@ -294,7 +294,7 @@ class HomeScreen extends StatelessWidget {
               color: Colors.grey[50],
               padding: const EdgeInsets.all(24),
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 900),
+                constraints: const BoxConstraints(maxWidth: 520),
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -302,44 +302,50 @@ class HomeScreen extends StatelessWidget {
                       'Opening Hours',
                       style: TextStyle(
                         color: Colors.black87,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                     SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Monday'),
-                              Text('Tuesday'),
-                              Text('Wednesday'),
-                              Text('Thursday'),
-                              Text('Friday'),
-                              Text('Saturday'),
-                              Text('Sunday'),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text('09:00 – 17:00', style: TextStyle(color: Colors.black54)),
-                              Text('09:00 – 17:00', style: TextStyle(color: Colors.black54)),
-                              Text('09:00 – 17:00', style: TextStyle(color: Colors.black54)),
-                              Text('09:00 – 17:00', style: TextStyle(color: Colors.black54)),
-                              Text('09:00 – 17:00', style: TextStyle(color: Colors.black54)),
-                              Text('10:00 – 16:00', style: TextStyle(color: Colors.black54)),
-                              Text('Closed', style: TextStyle(color: Colors.black54)),
-                            ],
-                          ),
-                        ),
-                      ],
+
+                    // Winter break / important dates block
+                    Text(
+                      '❄️ Winter Break Closure Dates ❄️',
+                      style: TextStyle(fontWeight: FontWeight.w700),
                     ),
+                    SizedBox(height: 8),
+                    Text('Closing 4pm 19/12/2025',
+                        style: TextStyle(fontStyle: FontStyle.italic)),
+                    SizedBox(height: 4),
+                    Text('Reopening 10am 05/01/2026',
+                        style: TextStyle(fontStyle: FontStyle.italic)),
+                    SizedBox(height: 4),
+                    Text('Last post date: 12pm on 18/12/2025',
+                        style: TextStyle(fontStyle: FontStyle.italic)),
+                    SizedBox(height: 12),
+
+                    // dashed separator
+                    Text('----------------------------------------',
+                        style: TextStyle(color: Colors.black26)),
+                    SizedBox(height: 12),
+
+                    // Term time hours
+                    Text('(Term Time)',
+                        style: TextStyle(fontWeight: FontWeight.w700)),
+                    SizedBox(height: 6),
+                    Text('Monday - Friday 10am - 4pm'),
+                    SizedBox(height: 12),
+
+                    // Outside term time hours
+                    Text('(Outside of Term Time / Consolidation Weeks)',
+                        style: TextStyle(fontWeight: FontWeight.w700)),
+                    SizedBox(height: 6),
+                    Text('Monday - Friday 10am - 3pm'),
+                    SizedBox(height: 12),
+
+                    // Online purchase note
+                    Text('Purchase online 24/7',
+                        style: TextStyle(fontWeight: FontWeight.w600)),
                   ],
                 ),
               ),
