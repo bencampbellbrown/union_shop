@@ -504,7 +504,7 @@ class HomeScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Help and Information',
                               style: TextStyle(
                                 fontFamily: 'NotoSans',
@@ -561,15 +561,15 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(height: 16),
 
                         // Right (newsletter signup)
-                        Column(
+                        const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Latest Offers',
+                            Text('Latest Offers',
                                 style: TextStyle(
                                     fontFamily: 'NotoSans',
                                     fontWeight: FontWeight.w800,
                                     color: Colors.black87)),
-                            const SizedBox(height: 8),
+                            SizedBox(height: 8),
 
                             // Newsletter widget handles input + subscribe
                             NewsletterWidget(maxWidth: kFooterLeftMax),
@@ -589,10 +589,10 @@ class HomeScreen extends StatelessWidget {
                           flex: 4,
                           child: ConstrainedBox(
                             constraints: BoxConstraints(maxWidth: boxWidth),
-                            child: Column(
+                            child: const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'Opening Hours',
                                   style: TextStyle(
                                     fontFamily: 'NotoSans',
@@ -601,8 +601,8 @@ class HomeScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
-                                const SizedBox(height: 12),
-                                const Text(
+                                SizedBox(height: 12),
+                                Text(
                                   ' Winter Break Closure Dates ',
                                   style: TextStyle(
                                     fontFamily: 'NotoSans',
@@ -610,42 +610,42 @@ class HomeScreen extends StatelessWidget {
                                     fontFamilyFallback: ['NotoColorEmoji'],
                                   ),
                                 ),
-                                const SizedBox(height: 8),
-                                const Text('Closing 4pm 19/12/2025',
+                                SizedBox(height: 8),
+                                Text('Closing 4pm 19/12/2025',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontStyle: FontStyle.italic)),
-                                const SizedBox(height: 4),
-                                const Text('Reopening 10am 05/01/2026',
+                                SizedBox(height: 4),
+                                Text('Reopening 10am 05/01/2026',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontStyle: FontStyle.italic)),
-                                const SizedBox(height: 4),
-                                const Text('Last post date: 12pm on 18/12/2025',
+                                SizedBox(height: 4),
+                                Text('Last post date: 12pm on 18/12/2025',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontStyle: FontStyle.italic)),
-                                const SizedBox(height: 12),
-                                const Divider(color: Colors.black26),
-                                const SizedBox(height: 12),
-                                const Text('(Term Time)',
+                                SizedBox(height: 12),
+                                Divider(color: Colors.black26),
+                                SizedBox(height: 12),
+                                Text('(Term Time)',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontWeight: FontWeight.w700)),
-                                const SizedBox(height: 6),
-                                const Text('Monday - Friday 10am - 4pm',
+                                SizedBox(height: 6),
+                                Text('Monday - Friday 10am - 4pm',
                                     style: TextStyle(fontFamily: 'NotoSans')),
-                                const SizedBox(height: 12),
-                                const Text(
+                                SizedBox(height: 12),
+                                Text(
                                     '(Outside of Term Time / Consolidation Weeks)',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontWeight: FontWeight.w700)),
-                                const SizedBox(height: 6),
-                                const Text('Monday - Friday 10am - 3pm',
+                                SizedBox(height: 6),
+                                Text('Monday - Friday 10am - 3pm',
                                     style: TextStyle(fontFamily: 'NotoSans')),
-                                const SizedBox(height: 12),
-                                const Text('Purchase online 24/7',
+                                SizedBox(height: 12),
+                                Text('Purchase online 24/7',
                                     style: TextStyle(
                                         fontFamily: 'NotoSans',
                                         fontWeight: FontWeight.w600)),
@@ -659,7 +659,7 @@ class HomeScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Help and Information',
                                 style: TextStyle(
                                   fontFamily: 'NotoSans',
