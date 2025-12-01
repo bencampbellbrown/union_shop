@@ -8,9 +8,28 @@ The Student Union has an e-commerce website, which you can access via this link:
 
 In short, your task is to recreate the same website using Flutter. You must not start from scratch, as you need to begin by forking the GitHub repository that contains the incomplete code. [The getting started section of this document](#getting-started) will explain more. Once you have completed the application, you will submit the link to your forked repository on Moodle for assessment and demonstrate your application in a practical session. See the [submission](#submission) and [demonstration](#demonstration) sections for more information.
 
-⚠️ The UPSU.net link on the navbar of the union website is a link to an external site. This is not part of the application that you need to develop. So ignore the link highlighted below:
+⚠️ The UPSU.net link on the original union website navbar points to an external site and is not required for this coursework. In this fork the `UPSU.net` navbar item has been removed (so the app does not include an external link in the main navigation).
 
 ![Union Shop Header](https://raw.githubusercontent.com/manighahrmani/sandwich_shop/refs/heads/main/images/screenshot_union_site_header.png)
+
+## Current Project Status
+
+This fork has been updated from the starter template. Below is a short, accurate summary of what is implemented now and what remains to do.
+
+- **Responsive header**: Implemented. On wide screens the nav links are centered and icons appear on the right. On narrow screens the icon buttons remain visible and a popup menu contains the full navigation (the `UPSU.net` item was removed).
+- **About page**: Added and registered at `/about` (accessible from the navigation menu).
+- **Hero CTA**: `BROWSE PRODUCTS` navigates to the product listing.
+- **Products list & Product page**: Product cards navigate to `/product` with route `arguments` (title, price, imageUrl). `lib/product_page.dart` reads these arguments and displays them.
+- **Footer**: Reworked into three sections (Opening Hours, Help & Information, Latest Offers). Uses a stacked column on narrow widths and a 3-column responsive layout on wide screens.
+- **Newsletter widget**: Added a small `NewsletterWidget` that accepts an email, validates its format, and shows a mock subscribe confirmation (SnackBar). This is currently a mock (no external API integration).
+- **Accessibility & safety**: Basic error builders are in place for network images to avoid crashes if images fail to load.
+
+Remaining / recommended tasks:
+
+- Wire remaining nav/menu actions (`Shop`, `The Print Shack`, `SALE!`) to real routes or behaviors as desired.
+- Replace the mock newsletter action with a real API or persistence flow (or integrate `shared_preferences` for a simple demo).
+- Add tests and more documentation for the components if you need to demonstrate software development practices for the assessment.
+- Optional: style tuning to precisely match a supplied design (fonts, spacing, and colors).
 
 ## Getting Started
 
