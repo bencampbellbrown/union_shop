@@ -11,7 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
-  google_fonts: ^5.0.0
+  # Pin google_fonts to a version compatible with older Dart/Flutter SDKs.
+  # If you upgrade to Dart 3 / Flutter 3.10+, you can move back to ^5.0.0.
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   flutter_test:
