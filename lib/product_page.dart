@@ -99,6 +99,43 @@ class ProductPage extends StatelessWidget {
                   ),
                 ),
 
+                const SizedBox(height: 16),
+
+                // Action buttons (placeholders — intentionally non-functional)
+                Row(
+                  children: [
+                    OutlinedButton(
+                      onPressed: () {}, // no-op placeholder
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        side: const BorderSide(color: Colors.black12),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 14, horizontal: 20),
+                      ),
+                      child: const Text('ADD TO CART'),
+                    ),
+                    const SizedBox(width: 12),
+                    ElevatedButton(
+                      onPressed: () {}, // no-op placeholder
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF4d2963),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 14, horizontal: 20),
+                      ),
+                      child: const Text('BUY WITH SHOP'),
+                    ),
+                    const SizedBox(width: 12),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'More payment options',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                  ],
+                ),
+
                 const SizedBox(height: 24),
 
                 // Product description

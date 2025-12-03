@@ -63,7 +63,7 @@ Widget mainImage(String url, bool isDesktop) {
   - OutlinedButton for Add to cart:
     ```dart
     OutlinedButton(
-      onPressed: addToCart,
+      onPressed: {},
       child: Text('ADD TO CART'),
     )
     ```
@@ -71,7 +71,7 @@ Widget mainImage(String url, bool isDesktop) {
     ```dart
     ElevatedButton(
       style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4d2963)),
-      onPressed: buyWithShop,
+      onPressed: {},
       child: Text('Buy with shop'),
     )
     ```
