@@ -187,6 +187,11 @@ class HomeScreen extends StatelessWidget {
                         price: '£12.00',
                         imageUrl: 'assets/images/caps/blue_cap.png',
                       ),
+                      ProductCard(
+                        title: 'Pencils',
+                        price: '£3.50',
+                        imageUrl: 'assets/images/stationary/pencils.png',
+                      ),
                     ],
                   ),
                 ],

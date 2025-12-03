@@ -4,12 +4,14 @@ class ProductInfo extends StatefulWidget {
   final String title;
   final String price;
   final String description;
+  final bool showOptions;
 
   const ProductInfo(
       {super.key,
       required this.title,
       required this.price,
-      required this.description});
+      required this.description,
+      this.showOptions = true});
 
   @override
   State<ProductInfo> createState() => _ProductInfoState();
@@ -43,33 +45,34 @@ class _ProductInfoState extends State<ProductInfo> {
         const SizedBox(height: 12),
 
         // Simple option selectors (non-functional placeholders)
-        Row(
-          children: [
-            Expanded(
-              child: DropdownButtonFormField<String>(
-                value: colorOptions[0],
-                onChanged: (_) {},
-                items: colorOptions
-                    .map((c) => DropdownMenuItem(value: c, child: Text(c)))
-                    .toList(),
-                decoration: const InputDecoration(labelText: 'Colour'),
+        if (widget.showOptions)
+          Row(
+            children: [
+              Expanded(
+                child: DropdownButtonFormField<String>(
+                  value: colorOptions[0],
+                  onChanged: (_) {},
+                  items: colorOptions
+                      .map((c) => DropdownMenuItem(value: c, child: Text(c)))
+                      .toList(),
+                  decoration: const InputDecoration(labelText: 'Colour'),
+                ),
               ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: DropdownButtonFormField<String>(
-                value: sizeOptions[1],
-                onChanged: (_) {},
-                items: sizeOptions
-                    .map((s) => DropdownMenuItem(value: s, child: Text(s)))
-                    .toList(),
-                decoration: const InputDecoration(labelText: 'Size'),
+              const SizedBox(width: 12),
+              Expanded(
+                child: DropdownButtonFormField<String>(
+                  value: sizeOptions[1],
+                  onChanged: (_) {},
+                  items: sizeOptions
+                      .map((s) => DropdownMenuItem(value: s, child: Text(s)))
+                      .toList(),
+                  decoration: const InputDecoration(labelText: 'Size'),
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
 
-        const SizedBox(height: 12),
+        if (widget.showOptions) const SizedBox(height: 12),
 
         // Quantity selector (1-5)
         DropdownButtonFormField<int>(

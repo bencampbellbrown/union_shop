@@ -60,6 +60,11 @@ class _ProductPageState extends State<ProductPage> {
       images = [productImageArg ?? 'assets/images/hoddies/blue_hoddie.png'];
     }
 
+    // Determine if product should show color/size options
+    final bool showOptions =
+        !((productImageArg != null && productImageArg.contains('stationary')) ||
+            productTitle.toLowerCase().contains('pencil'));
+
     // No external selection state required — gallery is self-managed.
 
     // Use SiteScaffold to provide consistent header/footer
@@ -93,6 +98,7 @@ class _ProductPageState extends State<ProductPage> {
                             price: productPrice,
                             description:
                                 'This is a placeholder description for the product. Replace with real product information.',
+                            showOptions: showOptions,
                           ),
                         ),
                       ],
@@ -109,6 +115,7 @@ class _ProductPageState extends State<ProductPage> {
                           price: productPrice,
                           description:
                               'This is a placeholder description for the product. Replace with real product information.',
+                          showOptions: showOptions,
                         ),
                       ],
                     );
