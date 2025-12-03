@@ -49,6 +49,13 @@ class _ProductPageState extends State<ProductPage> {
         'assets/images/tshirts/white_tshirt.png',
         'assets/images/tshirts/black_tshirt.png',
       ];
+    } else if ((productImageArg != null && productImageArg.contains('cap')) ||
+        productTitle.toLowerCase().contains('cap')) {
+      images = [
+        'assets/images/caps/blue_cap.png',
+        'assets/images/caps/white_cap.png',
+        'assets/images/caps/black_cap.png',
+      ];
     } else {
       images = [productImageArg ?? 'assets/images/hoddies/blue_hoddie.png'];
     }

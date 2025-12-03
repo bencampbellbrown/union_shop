@@ -183,10 +183,9 @@ class HomeScreen extends StatelessWidget {
                         imageUrl: 'assets/images/tshirts/blue_tshirt.png',
                       ),
                       ProductCard(
-                        title: 'Placeholder Product 4',
-                        price: '£25.00',
-                        imageUrl:
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                        title: 'Uni Baseball Cap',
+                        price: '£12.00',
+                        imageUrl: 'assets/images/caps/blue_cap.png',
                       ),
                     ],
                   ),
