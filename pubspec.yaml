@@ -32,3 +32,6 @@ flutter:
     - family: NotoColorEmoji
       fonts:
         - asset: assets/fonts/NotoColorEmoji.ttf
+  # Local image assets for the app. Add image files under `assets/images/`.
+  assets:
+    - assets/images/

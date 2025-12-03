@@ -5,6 +5,14 @@ import 'package:union_shop/auth_page.dart';
 // layout constants and newsletter widget are used elsewhere; imports removed here to avoid unused import warnings
 import 'package:union_shop/widgets/site_scaffold.dart';
 
+// Returns an ImageProvider for either bundled assets or network URLs.
+ImageProvider<Object> _imageProviderFor(String url) {
+  if (url.startsWith('assets/')) {
+    return AssetImage(url);
+  }
+  return NetworkImage(url);
+}
+
 void main() {
   runApp(const UnionShopApp());
 }
@@ -76,9 +84,9 @@ class HomeScreen extends StatelessWidget {
                 // Background image
                 Positioned.fill(
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
+                        image: _imageProviderFor(
                           'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
                         ),
                         fit: BoxFit.cover,
@@ -230,8 +238,8 @@ class ProductCard extends StatelessWidget {
           // the image shrinks when the grid cell height is limited.
           Expanded(
             child: ClipRRect(
-              child: Image.network(
-                imageUrl,
+              child: Image(
+                image: _imageProviderFor(imageUrl),
                 fit: BoxFit.cover,
                 width: double.infinity,
                 errorBuilder: (context, error, stackTrace) {
