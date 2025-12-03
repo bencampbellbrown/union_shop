@@ -33,19 +33,16 @@ class _ProductPageState extends State<ProductPage> {
         ? args['imageUrl'] as String
         : null;
 
-    // For known hoodie products, we'll include both white and blue
-    // variants in the gallery below.
-
-    // If this product is the white hoodie, include the blue
-    // hoodie variant in the gallery so users can switch.
-    List<String> images;
-    if (productImageArg != null && productImageArg.contains('white_hoddie')) {
+    List<String> images;   
+    if ((productImageArg != null && productImageArg.contains('uni_hoddie')) ||
+        productTitle.toLowerCase().contains('uni hood')) {
       images = [
+        'assets/images/blue_hoddie.png',
         'assets/images/white_hoddie.png',
-        'assets/images/blue_hoddie.png'
+        'assets/images/black_hoddie.png',
       ];
     } else {
-      images = [productImageArg ?? 'assets/images/white_hoddie.png'];
+      images = [productImageArg ?? 'assets/images/blue_hoddie.png'];
     }
 
     // No external selection state required — gallery is self-managed.

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ProductInfo extends StatelessWidget {
+class ProductInfo extends StatefulWidget {
   final String title;
   final String price;
   final String description;
@@ -12,6 +12,14 @@ class ProductInfo extends StatelessWidget {
       required this.description});
 
   @override
+  State<ProductInfo> createState() => _ProductInfoState();
+}
+
+class _ProductInfoState extends State<ProductInfo> {
+  // Quantity selector state
+  int _quantity = 1;
+
+  @override
   Widget build(BuildContext context) {
     // Simple placeholder options
     const colorOptions = ['White', 'Blue', 'Black'];
@@ -21,12 +29,12 @@ class ProductInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
+          widget.title,
           style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         Text(
-          price,
+          widget.price,
           style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -61,6 +69,23 @@ class ProductInfo extends StatelessWidget {
           ],
         ),
 
+        const SizedBox(height: 12),
+
+        // Quantity selector (1-5)
+        DropdownButtonFormField<int>(
+          value: _quantity,
+          decoration: const InputDecoration(labelText: 'Quantity'),
+          onChanged: (v) {
+            if (v == null) return;
+            setState(() {
+              _quantity = v;
+            });
+          },
+          items: List.generate(5, (i) => i + 1)
+              .map((n) => DropdownMenuItem(value: n, child: Text('$n')))
+              .toList(),
+        ),
+
         const SizedBox(height: 16),
 
         Row(
@@ -92,7 +117,7 @@ class ProductInfo extends StatelessWidget {
         const Text('Description',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         const SizedBox(height: 8),
-        Text(description,
+        Text(widget.description,
             style: const TextStyle(color: Colors.grey, height: 1.5)),
       ],
     );
