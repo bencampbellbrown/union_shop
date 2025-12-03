@@ -1,92 +1,119 @@
-# Product page redesign plan
+# Plan: Add Reusable Collection Pages
 
-Goal: Make `lib/product_page.dart` match the provided storefront layout — large left image gallery with thumbnails, and product info (title, price, options, actions) on the right. Responsive: stacked on narrow screens, two-column on desktop.
+## Overview
+Create a flexible collection page system that can display filtered product categories (Clothing, Merchandise, Signature & Essential Range, Portsmouth City Collection, Graduation) by reusing a single `CollectionPage` widget with different filters.
 
-## Quick checklist
-1. Update layout to two-column Row on wide screens, Column on small screens (use MediaQuery / LayoutBuilder).
-2. Replace fixed image Container with an interactive `ProductGallery`:
-   - Large main image that preserves full image (BoxFit.contain on desktop).
-   - Clickable thumbnail strip beneath the main image; selecting a thumbnail updates main image.
-   - Smooth image loading + errorBuilder.
-3. Right column `ProductInfo`:
-   - Title (large, bold) and price (purple accent).
-   - "Tax included" small label.
-   - Dropdowns for Color, Size, Quantity (use `DropdownButtonFormField`).
-   - "Add to cart" button (outlined) and primary purple "Buy with shop" button.
-   - "More payment options" link under primary button.
-4. Beneath columns: product description text and smaller details (size chart links).
-5. Accessibility: semantics, tooltips, and form labels.
-6. Reuse `SiteScaffold` and theme colors.
+## Architecture
 
-## Files to change / add
-- lib/product_page.dart — refactor main layout into `ProductGallery` + `ProductInfo`.
-- lib/widgets/product_gallery.dart — new widget that manages selected image state.
-- lib/widgets/product_info.dart — new widget for form/CTA.
-- lib/main.dart — ensure image URLs can be assets or network (already present with _imageProviderFor).
-- assets/images/ — add product images (already in repo). Update pubspec if needed.
+### 1. Create Product Data Model
+**File:** `lib/models/product.dart`
+- Define `Product` class with fields:
+  - `String id`
+  - `String title`
+  - `String price`
+  - `String imageUrl`
+  - `List<String> categories` (e.g., ['clothing', 'signature'])
+  - `bool hasColorVariants`
+  - `bool hasSizeOptions`
+  - `List<String>? imageVariants` (optional, for multi-color products)
 
-## Widget structure (high level)
-- ProductPage (uses SiteScaffold)
-  - ResponsiveBuilder -> Row (desktop) or Column (mobile)
-    - Expanded(left)
-      - ProductGallery(images: [...])
-    - Expanded(right)
-      - ProductInfo(title, price, options, handlers)
-  - Below: Description, size table, related thumbnails
+### 2. Create Product Repository
+**File:** `lib/repositories/product_repository.dart`
+- Convert current hardcoded products from `main.dart` into a centralized list
+- Method: `List<Product> getAllProducts()`
+- Method: `List<Product> getProductsByCategory(String category)`
+- Method: `Product? getProductById(String id)`
 
-## Implementation notes & important snippets
+### 3. Create Reusable Collection Page Widget
+**File:** `lib/pages/collection_page.dart`
+- Accept parameters:
+  - `String collectionTitle` (e.g., "Clothing")
+  - `String categoryFilter` (e.g., "clothing")
+  - `String? description` (optional banner text)
+- Use `SiteScaffold` for consistent layout
+- Display filtered products in responsive grid (reuse grid logic from `main.dart`)
+- Show collection title and optional description banner
+- Reuse `ProductCard` widget for each product
 
-- Responsive switch:
-```dart
-final isDesktop = MediaQuery.of(context).size.width > 1000;
-return isDesktop
-  ? Row(children: [leftExpanded, SizedBox(width: 48), rightExpanded])
-  : Column(children: [left, SizedBox(height:24), right]);
-```
+### 4. Update Navigation Routes
+**File:** `lib/main.dart`
+- Add named routes for each collection:
+  ```dart
+  '/collection/clothing': (context) => CollectionPage(
+        collectionTitle: 'Clothing',
+        categoryFilter: 'clothing',
+      ),
+  '/collection/merchandise': (context) => CollectionPage(
+        collectionTitle: 'Merchandise',
+        categoryFilter: 'merchandise',
+      ),
+  '/collection/signature': (context) => CollectionPage(
+        collectionTitle: 'Signature & Essential Range',
+        categoryFilter: 'signature',
+      ),
+  '/collection/portsmouth': (context) => CollectionPage(
+        collectionTitle: 'Portsmouth City Collection',
+        categoryFilter: 'portsmouth',
+      ),
+  '/collection/graduation': (context) => CollectionPage(
+        collectionTitle: 'Graduation',
+        categoryFilter: 'graduation',
+      ),
+  ```
 
-- Gallery main image (desktop: contain, mobile: cover with AspectRatio):
-```dart
-Widget mainImage(String url, bool isDesktop) {
-  final image = Image(image: _imageProviderFor(url), fit: isDesktop ? BoxFit.contain : BoxFit.cover,);
-  if (isDesktop) return Center(child: image);
-  return AspectRatio(aspectRatio: 4/3, child: ClipRRect(borderRadius: BorderRadius.circular(8), child: image));
-}
-```
+### 5. Update Shop Dropdown Navigation
+**File:** `lib/widgets/site_scaffold.dart`
+- Update `PopupMenuButton` `onSelected` callbacks (lines ~100-105, ~180-192)
+- Navigate to appropriate collection routes:
+  ```dart
+  onSelected: (value) {
+    switch (value) {
+      case 'clothing':
+        Navigator.pushNamed(context, '/collection/clothing');
+        break;
+      case 'merchandise':
+        Navigator.pushNamed(context, '/collection/merchandise');
+        break;
+      // ... etc
+    }
+  }
+  ```
 
-- Thumbnail strip (use `GestureDetector` or `InkWell` to change selected index).
+### 6. Tag Existing Products with Categories
+**File:** `lib/repositories/product_repository.dart`
+- Assign categories to products:
+  - Uni Hoodie: `['clothing', 'signature']`
+  - Uni T-Shirt: `['clothing', 'signature']`
+  - Uni Baseball Cap: `['clothing']`
+  - Pencils: `['merchandise', 'stationary']`
+  - Notebook: `['merchandise', 'stationary']`
+  - Uni Beanie: `['clothing']`
 
-- Product options form:
-  - Use `Form` + `DropdownButtonFormField` for color/size.
-  - Keep local validation minimal.
+### 7. Update Home Page to Use Repository
+**File:** `lib/main.dart`
+- Replace hardcoded `ProductCard` list with `ProductRepository.getAllProducts()`
+- Map `Product` objects to `ProductCard` widgets
+- Pass product metadata through navigation arguments
 
-- Action buttons:
-  - OutlinedButton for Add to cart:
-    ```dart
-    OutlinedButton(
-      onPressed: {},
-      child: Text('ADD TO CART'),
-    )
-    ```
-  - ElevatedButton for primary (purple):
-    ```dart
-    ElevatedButton(
-      style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4d2963)),
-      onPressed: {},
-      child: Text('Buy with shop'),
-    )
-    ```
+## Benefits of This Approach
+✅ **Single source of truth** - All product data centralized in repository
+✅ **DRY principle** - One `CollectionPage` widget serves all collections
+✅ **Easy to extend** - Add new collections by adding routes and categories
+✅ **Maintainable** - Update product details in one place
+✅ **Type-safe** - Product model ensures consistent data structure
 
-## Visual polish
-- Align title & price to the top-right vertically centered to the main image.
-- Use spacing similar to screenshot: large gutters, comfortable whitespace.
-- Thumbnails: fixed height (e.g., 64px) with a selected outline.
-- Use `SingleChildScrollView` for content overflow on small screens.
+## Implementation Order
+1. Create `Product` model class
+2. Create `ProductRepository` with existing products
+3. Build `CollectionPage` widget
+4. Add collection routes to `MaterialApp`
+5. Update navigation in `SiteScaffold`
+6. Refactor `HomeScreen` to use repository
+7. Test each collection page
 
-## Testing & verification
-- Manual: run app in browser/desktop and mobile widths; verify thumbnails update main image and buttons navigate or show SnackBar.
-- Widget tests: add tests for `ProductGallery` to ensure thumbnail taps update display.
-
-## Next steps I can do for you
-- Generate the concrete patch for `product_page.dart` and create `product_gallery.dart` + `product_info.dart`.
-- Implement thumbnails behavior and update tests.
-- Add example assets to `assets/images/` and sample image list.
+## Future Enhancements
+- Add search/filter within collections
+- Sort options (price, name, popularity)
+- Breadcrumb navigation
+- Collection-specific banners/promotions
+- URL-based routing for web support

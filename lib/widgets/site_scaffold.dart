@@ -116,17 +116,11 @@ class SiteScaffold extends StatelessWidget {
                                     value: 'merchandise',
                                     child: Text('Merchandise')),
                                 PopupMenuItem(
-                                    value: 'halloween',
-                                    child: Text('Halloween 🎃')),
-                                PopupMenuItem(
                                     value: 'signature',
                                     child: Text('Signature & Essential Range')),
                                 PopupMenuItem(
                                     value: 'portsmouth',
                                     child: Text('Portsmouth City Collection')),
-                                PopupMenuItem(
-                                    value: 'pride',
-                                    child: Text('Pride Collection 🏳️‍🌈')),
                                 PopupMenuItem(
                                     value: 'graduation',
                                     child: Text('Graduation 🎓')),
