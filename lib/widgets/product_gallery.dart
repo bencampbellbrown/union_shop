@@ -6,16 +6,17 @@ ImageProvider<Object> _imageProviderFor(String url) {
   return NetworkImage(url);
 }
 
-class ProductGallery extends StatelessWidget {
+class ProductGallery extends StatefulWidget {
   final List<String> images;
-  final int selectedIndex;
-  final ValueChanged<int> onSelect;
 
-  const ProductGallery(
-      {super.key,
-      required this.images,
-      required this.selectedIndex,
-      required this.onSelect});
+  const ProductGallery({super.key, required this.images});
+
+  @override
+  State<ProductGallery> createState() => _ProductGalleryState();
+}
+
+class _ProductGalleryState extends State<ProductGallery> {
+  int _selected = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +45,11 @@ class ProductGallery extends StatelessWidget {
       return AspectRatio(aspectRatio: 4 / 3, child: image);
     }
 
-    final int index = (selectedIndex < 0 || selectedIndex >= images.length)
-        ? 0
-        : selectedIndex;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Main image area
-        Expanded(child: mainImage(images[index])),
+        Expanded(child: mainImage(widget.images[_selected])),
 
         const SizedBox(height: 12),
 
@@ -61,13 +58,13 @@ class ProductGallery extends StatelessWidget {
           height: 72,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: images.length,
+            itemCount: widget.images.length,
             separatorBuilder: (context, index) => const SizedBox(width: 12),
-            itemBuilder: (context, idx) {
-              final url = images[idx];
-              final bool selected = idx == index;
+            itemBuilder: (context, index) {
+              final url = widget.images[index];
+              final bool selected = index == _selected;
               return GestureDetector(
-                onTap: () => onSelect(idx),
+                onTap: () => setState(() => _selected = index),
                 child: Container(
                   width: 72,
                   decoration: BoxDecoration(

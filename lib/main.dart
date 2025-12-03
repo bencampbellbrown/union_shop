@@ -180,7 +180,7 @@ class HomeScreen extends StatelessWidget {
                       ProductCard(
                         title: 'Blue Hoodie',
                         price: '£20.00',
-                        imageUrl: 'assets/images/blue_hoddie.png',
+                        imageUrl: 'assets/images/blue_hoddie_2.png',
                       ),
                       ProductCard(
                         title: 'Placeholder Product 3',

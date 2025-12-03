@@ -4,19 +4,12 @@ class ProductInfo extends StatelessWidget {
   final String title;
   final String price;
   final String description;
-  final List<String> colorOptions;
-  final String selectedColor;
-  final ValueChanged<String> onColorChanged;
 
-  const ProductInfo({
-    super.key,
-    required this.title,
-    required this.price,
-    required this.description,
-    required this.colorOptions,
-    required this.selectedColor,
-    required this.onColorChanged,
-  });
+  const ProductInfo(
+      {super.key,
+      required this.title,
+      required this.price,
+      required this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +39,8 @@ class ProductInfo extends StatelessWidget {
           children: [
             Expanded(
               child: DropdownButtonFormField<String>(
-                value: selectedColor,
-                onChanged: (v) {
-                  if (v != null) onColorChanged(v);
-                },
+                value: colorOptions[0],
+                onChanged: (_) {},
                 items: colorOptions
                     .map((c) => DropdownMenuItem(value: c, child: Text(c)))
                     .toList(),
