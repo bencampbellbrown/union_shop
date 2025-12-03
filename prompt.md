@@ -108,7 +108,7 @@ Create a flexible collection page system that can display filtered product categ
 3. ✅ **COMPLETED** - Build `CollectionPage` widget
 4. ✅ **COMPLETED** - Add collection routes to `MaterialApp`
 5. ✅ **COMPLETED** - Update navigation in `SiteScaffold`
-6. Refactor `HomeScreen` to use repository
+6. ✅ **COMPLETED** - Refactor `HomeScreen` to use repository
 7. Test each collection page
 
 ## Future Enhancements
