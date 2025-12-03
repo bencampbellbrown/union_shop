@@ -92,10 +92,45 @@ class SiteScaffold extends StatelessWidget {
                                   style: TextStyle(color: Colors.grey)),
                             ),
                             const SizedBox(width: 12),
-                            TextButton(
-                              onPressed: () => _navigateToProduct(context),
-                              child: const Text('Shop',
-                                  style: TextStyle(color: Colors.grey)),
+                            PopupMenuButton<String>(
+                              offset: const Offset(0, 40),
+                              onSelected: (value) {
+                                // Handle category selection
+                                _placeholder();
+                              },
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Shop',
+                                      style: TextStyle(
+                                          color: Colors.grey, fontSize: 14)),
+                                  SizedBox(width: 4),
+                                  Icon(Icons.arrow_drop_down,
+                                      color: Colors.grey, size: 20),
+                                ],
+                              ),
+                              itemBuilder: (ctx) => const [
+                                PopupMenuItem(
+                                    value: 'clothing', child: Text('Clothing')),
+                                PopupMenuItem(
+                                    value: 'merchandise',
+                                    child: Text('Merchandise')),
+                                PopupMenuItem(
+                                    value: 'halloween',
+                                    child: Text('Halloween 🎃')),
+                                PopupMenuItem(
+                                    value: 'signature',
+                                    child: Text('Signature & Essential Range')),
+                                PopupMenuItem(
+                                    value: 'portsmouth',
+                                    child: Text('Portsmouth City Collection')),
+                                PopupMenuItem(
+                                    value: 'pride',
+                                    child: Text('Pride Collection 🏳️‍🌈')),
+                                PopupMenuItem(
+                                    value: 'graduation',
+                                    child: Text('Graduation 🎓')),
+                              ],
                             ),
                             const SizedBox(width: 12),
                             TextButton(
