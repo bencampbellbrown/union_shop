@@ -192,6 +192,16 @@ class HomeScreen extends StatelessWidget {
                         price: '£3.50',
                         imageUrl: 'assets/images/stationary/pencils.png',
                       ),
+                      ProductCard(
+                        title: 'Notebook',
+                        price: '£5.00',
+                        imageUrl: 'assets/images/stationary/notebook.png',
+                      ),
+                      ProductCard(
+                        title: 'Uni Beanie',
+                        price: '£18.00',
+                        imageUrl: 'assets/images/beanies/blue_beanie.png',
+                      ),
                     ],
                   ),
                 ],

@@ -56,6 +56,14 @@ class _ProductPageState extends State<ProductPage> {
         'assets/images/caps/white_cap.png',
         'assets/images/caps/black_cap.png',
       ];
+    } else if ((productImageArg != null &&
+            productImageArg.contains('beanie')) ||
+        productTitle.toLowerCase().contains('beanie')) {
+      images = [
+        'assets/images/beanies/blue_beanie.png',
+        'assets/images/beanies/white_beanie.png',
+        'assets/images/beanies/Black_beanie.png',
+      ];
     } else {
       images = [productImageArg ?? 'assets/images/hoddies/blue_hoddie.png'];
     }
@@ -63,7 +71,8 @@ class _ProductPageState extends State<ProductPage> {
     // Determine if product should show color/size options
     final bool showOptions =
         !((productImageArg != null && productImageArg.contains('stationary')) ||
-            productTitle.toLowerCase().contains('pencil'));
+            productTitle.toLowerCase().contains('pencil') ||
+            productTitle.toLowerCase().contains('notebook'));
 
     // No external selection state required — gallery is self-managed.
 
