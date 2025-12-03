@@ -178,10 +178,10 @@ class HomeScreen extends StatelessWidget {
                         imageUrl: 'assets/images/white_hoddie.png',
                       ),
                       ProductCard(
-                        title: 'Placeholder Product 2',
-                        price: '£15.00',
+                        title: 'Blue Hoodie',
+                        price: '£20.00',
                         imageUrl:
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                            'assets/images/Blue_hoddie.png',
                       ),
                       ProductCard(
                         title: 'Placeholder Product 3',
