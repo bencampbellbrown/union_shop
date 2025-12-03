@@ -95,8 +95,8 @@ class SiteScaffold extends StatelessWidget {
                             PopupMenuButton<String>(
                               offset: const Offset(0, 40),
                               onSelected: (value) {
-                                // Handle category selection
-                                _placeholder();
+                                Navigator.pushNamed(
+                                    context, '/collection/$value');
                               },
                               child: const Row(
                                 mainAxisSize: MainAxisSize.min,
