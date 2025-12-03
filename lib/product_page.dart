@@ -3,8 +3,16 @@ import 'package:union_shop/widgets/site_scaffold.dart';
 import 'package:union_shop/widgets/product_gallery.dart';
 import 'package:union_shop/widgets/product_info.dart';
 
-class ProductPage extends StatelessWidget {
+class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
+
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
+  String _selectedColor = 'White';
+  int _selectedIndex = 0;
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -24,10 +32,32 @@ class ProductPage extends StatelessWidget {
     final productPrice = args != null && args['price'] != null
         ? args['price'] as String
         : '£15.00';
-    final productImage = args != null && args['imageUrl'] != null
+    final productImageArg = args != null && args['imageUrl'] != null
         ? args['imageUrl'] as String
-        : 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282';
-    // Use SiteScaffold to provide consistent header/footer
+        : null;
+
+    // Define available color variants and their images. You can replace
+    // these with dynamic data from your backend later.
+    final colorOptions = ['White', 'Blue'];
+    final variantImages = {
+      'White': 'assets/images/white_hoddie.png',
+      'Blue': 'assets/images/blue_hoddie_2.png',
+    };
+
+    // If a single image was passed via args prefer that as the default
+    if (productImageArg != null) {
+      variantImages[_selectedColor] = productImageArg;
+    }
+
+    // Ensure selectedColor is valid and compute images list in the same
+    // order as colorOptions so selectedIndex matches.
+    if (!colorOptions.contains(_selectedColor))
+      _selectedColor = colorOptions.first;
+    final images = colorOptions
+        .map((c) => variantImages[c] ?? variantImages[colorOptions.first]!)
+        .toList();
+    _selectedIndex = colorOptions.indexOf(_selectedColor);
+
     return SiteScaffold(
       child: Column(
         children: [
@@ -37,7 +67,6 @@ class ProductPage extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             child: LayoutBuilder(builder: (context, constraints) {
               final isDesktop = MediaQuery.of(context).size.width > 1000;
-              final images = [productImage];
               return isDesktop
                   ? Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +76,14 @@ class ProductPage extends StatelessWidget {
                           flex: 1,
                           child: SizedBox(
                             height: 520,
-                            child: ProductGallery(images: images),
+                            child: ProductGallery(
+                              images: images,
+                              selectedIndex: _selectedIndex,
+                              onSelect: (idx) => setState(() {
+                                _selectedIndex = idx;
+                                _selectedColor = colorOptions[idx];
+                              }),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 48),
@@ -59,6 +95,12 @@ class ProductPage extends StatelessWidget {
                             price: productPrice,
                             description:
                                 'This is a placeholder description for the product. Replace with real product information.',
+                            colorOptions: colorOptions,
+                            selectedColor: _selectedColor,
+                            onColorChanged: (color) => setState(() {
+                              _selectedColor = color;
+                              _selectedIndex = colorOptions.indexOf(color);
+                            }),
                           ),
                         ),
                       ],
@@ -67,7 +109,14 @@ class ProductPage extends StatelessWidget {
                       children: [
                         SizedBox(
                           height: 340,
-                          child: ProductGallery(images: images),
+                          child: ProductGallery(
+                            images: images,
+                            selectedIndex: _selectedIndex,
+                            onSelect: (idx) => setState(() {
+                              _selectedIndex = idx;
+                              _selectedColor = colorOptions[idx];
+                            }),
+                          ),
                         ),
                         const SizedBox(height: 24),
                         ProductInfo(
@@ -75,6 +124,12 @@ class ProductPage extends StatelessWidget {
                           price: productPrice,
                           description:
                               'This is a placeholder description for the product. Replace with real product information.',
+                          colorOptions: colorOptions,
+                          selectedColor: _selectedColor,
+                          onColorChanged: (color) => setState(() {
+                            _selectedColor = color;
+                            _selectedIndex = colorOptions.indexOf(color);
+                          }),
                         ),
                       ],
                     );
