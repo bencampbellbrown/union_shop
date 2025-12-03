@@ -37,20 +37,20 @@ class _ProductPageState extends State<ProductPage> {
     if ((productImageArg != null && productImageArg.contains('uni_hoddie')) ||
         productTitle.toLowerCase().contains('uni hood')) {
       images = [
-        'assets/images/blue_hoddie.png',
-        'assets/images/white_hoddie.png',
-        'assets/images/black_hoddie.png',
+        'assets/images/hoddies/blue_hoddie.png',
+        'assets/images/hoddies/white_hoddie.png',
+        'assets/images/hoddies/black_hoddie.png',
       ];
     } else if ((productImageArg != null &&
             productImageArg.contains('tshirt')) ||
         productTitle.toLowerCase().contains('t-shirt')) {
       images = [
-        'assets/images/blue_tshirt.png',
-        'assets/images/white_tshirt.png',
-        'assets/images/black_tshirt.png',
+        'assets/images/tshirts/blue_tshirt.png',
+        'assets/images/tshirts/white_tshirt.png',
+        'assets/images/tshirts/black_tshirt.png',
       ];
     } else {
-      images = [productImageArg ?? 'assets/images/blue_hoddie.png'];
+      images = [productImageArg ?? 'assets/images/hoddies/blue_hoddie.png'];
     }
 
     // No external selection state required — gallery is self-managed.
