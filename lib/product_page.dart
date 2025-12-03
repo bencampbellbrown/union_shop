@@ -3,9 +3,14 @@ import 'package:union_shop/widgets/site_scaffold.dart';
 import 'package:union_shop/widgets/product_gallery.dart';
 import 'package:union_shop/widgets/product_info.dart';
 
-class ProductPage extends StatelessWidget {
+class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
 
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
@@ -24,9 +29,27 @@ class ProductPage extends StatelessWidget {
     final productPrice = args != null && args['price'] != null
         ? args['price'] as String
         : '£15.00';
-    final productImage = args != null && args['imageUrl'] != null
+    final productImageArg = args != null && args['imageUrl'] != null
         ? args['imageUrl'] as String
-        : 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282';
+        : null;
+
+    // For known hoodie products, we'll include both white and blue
+    // variants in the gallery below.
+
+    // If this product is the white hoodie, include the blue
+    // hoodie variant in the gallery so users can switch.
+    List<String> images;
+    if (productImageArg != null && productImageArg.contains('white_hoddie')) {
+      images = [
+        'assets/images/white_hoddie.png',
+        'assets/images/blue_hoddie.png'
+      ];
+    } else {
+      images = [productImageArg ?? 'assets/images/white_hoddie.png'];
+    }
+
+    // No external selection state required — gallery is self-managed.
+
     // Use SiteScaffold to provide consistent header/footer
     return SiteScaffold(
       child: Column(
@@ -37,7 +60,6 @@ class ProductPage extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             child: LayoutBuilder(builder: (context, constraints) {
               final isDesktop = MediaQuery.of(context).size.width > 1000;
-              final images = [productImage];
               return isDesktop
                   ? Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
