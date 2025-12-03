@@ -33,13 +33,21 @@ class _ProductPageState extends State<ProductPage> {
         ? args['imageUrl'] as String
         : null;
 
-    List<String> images;   
+    List<String> images;
     if ((productImageArg != null && productImageArg.contains('uni_hoddie')) ||
         productTitle.toLowerCase().contains('uni hood')) {
       images = [
         'assets/images/blue_hoddie.png',
         'assets/images/white_hoddie.png',
         'assets/images/black_hoddie.png',
+      ];
+    } else if ((productImageArg != null &&
+            productImageArg.contains('tshirt')) ||
+        productTitle.toLowerCase().contains('t-shirt')) {
+      images = [
+        'assets/images/blue_tshirt.png',
+        'assets/images/white_tshirt.png',
+        'assets/images/black_tshirt.png',
       ];
     } else {
       images = [productImageArg ?? 'assets/images/blue_hoddie.png'];
