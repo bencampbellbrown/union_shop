@@ -173,10 +173,9 @@ class HomeScreen extends StatelessWidget {
                     mainAxisSpacing: 48,
                     children: const [
                       ProductCard(
-                        title: 'Placeholder Product 1',
-                        price: '£10.00',
-                        imageUrl:
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                        title: 'White Hoodie',
+                        price: '£20.00',
+                        imageUrl: 'assets/images/white_hoddie.png',
                       ),
                       ProductCard(
                         title: 'Placeholder Product 2',
