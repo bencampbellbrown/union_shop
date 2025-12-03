@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
 import 'package:union_shop/auth_page.dart';
-// layout constants and newsletter widget are used elsewhere; imports removed here to avoid unused import warnings
+import 'package:union_shop/pages/collection_page.dart';
 import 'package:union_shop/widgets/site_scaffold.dart';
 import 'package:union_shop/repositories/product_repository.dart';
 
@@ -40,6 +40,26 @@ class UnionShopApp extends StatelessWidget {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutPage(),
         '/auth': (context) => const AuthPage(),
+        '/collection/clothing': (context) => const CollectionPage(
+          collectionTitle: 'Clothing',
+         categoryFilter: 'clothing',
+        ),
+        '/collection/merchandise': (context) => const CollectionPage(
+          collectionTitle: 'Merchandise',
+          categoryFilter: 'merchandise',
+        ),
+        '/collection/signature': (context) => const CollectionPage(
+          collectionTitle: 'Signature & Essential Range',
+          categoryFilter: 'signature',
+        ),
+        '/collection/portsmouth': (context) => const CollectionPage(
+          collectionTitle: 'Portsmouth City Collection',
+          categoryFilter: 'portsmouth',
+        ),
+        '/collection/graduation': (context) => const CollectionPage(
+          collectionTitle: 'Graduation',
+          categoryFilter: 'graduation',
+        ),
       },
     );
   }
