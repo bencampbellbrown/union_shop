@@ -180,8 +180,7 @@ class HomeScreen extends StatelessWidget {
                       ProductCard(
                         title: 'Blue Hoodie',
                         price: '£20.00',
-                        imageUrl:
-                            'assets/images/Blue_hoddie.png',
+                        imageUrl: 'assets/images/blue_hoddie_2.png',
                       ),
                       ProductCard(
                         title: 'Placeholder Product 3',
@@ -221,6 +220,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDesktop = MediaQuery.of(context).size.width > 1000;
+
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, '/product', arguments: {
@@ -233,25 +234,47 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Image should flex to available space so text below doesn't push
-          // the tile beyond its grid cell. Using Flexible/Expanded ensures
-          // the image shrinks when the grid cell height is limited.
+          // the tile beyond its grid cell. On desktop we use BoxFit.contain
+          // and center the image so the whole image remains visible. On
+          // smaller screens we keep a square AspectRatio and BoxFit.cover.
           Expanded(
-            child: ClipRRect(
-              child: Image(
-                image: _imageProviderFor(imageUrl),
-                fit: BoxFit.cover,
-                width: double.infinity,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[300],
-                    child: const Center(
-                      child:
-                          Icon(Icons.image_not_supported, color: Colors.grey),
+            child: isDesktop
+                ? Center(
+                    child: ClipRRect(
+                      child: Image(
+                        image: _imageProviderFor(imageUrl),
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.grey[300],
+                            child: const Center(
+                              child: Icon(Icons.image_not_supported,
+                                  color: Colors.grey),
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  );
-                },
-              ),
-            ),
+                  )
+                : AspectRatio(
+                    aspectRatio: 1.0,
+                    child: ClipRRect(
+                      child: Image(
+                        image: _imageProviderFor(imageUrl),
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.grey[300],
+                            child: const Center(
+                              child: Icon(Icons.image_not_supported,
+                                  color: Colors.grey),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
           ),
           const SizedBox(height: 8),
           Text(
