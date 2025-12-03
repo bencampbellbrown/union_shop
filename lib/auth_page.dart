@@ -81,11 +81,13 @@ class _AuthPageState extends State<AuthPage> {
                             keyboardType: TextInputType.emailAddress,
                             validator: (v) {
                               final value = v ?? '';
-                              if (value.trim().isEmpty)
+                              if (value.trim().isEmpty) {
                                 return 'Please enter your email';
+                              }
                               final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-                              if (!emailRegex.hasMatch(value.trim()))
+                              if (!emailRegex.hasMatch(value.trim())) {
                                 return 'Enter a valid email';
+                              }
                               return null;
                             },
                           ),

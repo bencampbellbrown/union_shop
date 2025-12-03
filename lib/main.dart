@@ -86,7 +86,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: const Color.fromRGBO(0, 0, 0, 0.7),
+                        color: Color.fromRGBO(0, 0, 0, 0.7),
                       ),
                     ),
                   ),
