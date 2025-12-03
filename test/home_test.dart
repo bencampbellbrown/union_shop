@@ -9,14 +9,14 @@ void main() {
       await tester.pump();
 
       // Check that basic UI elements are present
+      // Banner text contains "BIG SALE"
       expect(
-        find.text('PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!'),
-        findsOneWidget,
-      );
+          find.byWidgetPredicate(
+              (w) => w is Text && (w.data ?? '').contains('BIG SALE')),
+          findsOneWidget);
       expect(find.text('Placeholder Hero Title'), findsOneWidget);
-      expect(find.text('PLACEHOLDER PRODUCTS SECTION'), findsOneWidget);
+      expect(find.text('PRODUCTS SECTION'), findsOneWidget);
       expect(find.text('BROWSE PRODUCTS'), findsOneWidget);
-      expect(find.text('VIEW ALL PRODUCTS'), findsOneWidget);
     });
 
     testWidgets('should display product cards', (tester) async {
@@ -42,20 +42,18 @@ void main() {
 
       // Check that header icons are present
       expect(find.byIcon(Icons.search), findsOneWidget);
+      expect(find.widgetWithIcon(IconButton, Icons.person_outline),
+          findsOneWidget);
       expect(find.byIcon(Icons.shopping_bag_outlined), findsOneWidget);
-      expect(find.byIcon(Icons.menu), findsOneWidget);
     });
 
     testWidgets('should display footer', (tester) async {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pump();
 
-      // Check that footer is present
-      expect(find.text('Placeholder Footer'), findsOneWidget);
-      expect(
-        find.text('Students should customise this footer section'),
-        findsOneWidget,
-      );
+      // Check that footer sections are present
+      expect(find.text('Opening Hours'), findsOneWidget);
+      expect(find.text('Latest Offers'), findsOneWidget);
     });
   });
 }

@@ -29,6 +29,11 @@ class _AuthPageState extends State<AuthPage> {
     });
   }
 
+  /// Sign in via the shop button. Does not require email — returns user to home.
+  void _signInWithShop() {
+    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +77,27 @@ class _AuthPageState extends State<AuthPage> {
                       key: _formKey,
                       child: Column(
                         children: [
+                          // Primary shop sign-in button placed above the email field
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: _submitting ? null : _signInWithShop,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF4d2963),
+                                foregroundColor: Colors.white,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 14),
+                              ),
+                              child: _submitting
+                                  ? const SizedBox(
+                                      width: 16,
+                                      height: 16,
+                                      child: CircularProgressIndicator(
+                                          strokeWidth: 2, color: Colors.white))
+                                  : const Text('Sign in with shop'),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
                           TextFormField(
                             controller: _emailController,
                             decoration: const InputDecoration(
@@ -94,28 +120,8 @@ class _AuthPageState extends State<AuthPage> {
                           const SizedBox(height: 12),
                           SizedBox(
                             width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: _submitting ? null : _submit,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF4d2963),
-                                foregroundColor: Colors.white,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 14),
-                              ),
-                              child: _submitting
-                                  ? const SizedBox(
-                                      width: 16,
-                                      height: 16,
-                                      child: CircularProgressIndicator(
-                                          strokeWidth: 2, color: Colors.white))
-                                  : const Text('Sign in with shop'),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          SizedBox(
-                            width: double.infinity,
                             child: OutlinedButton(
-                              onPressed: () => Navigator.pop(context, false),
+                              onPressed: _submitting ? null : _submit,
                               child: const Text('Continue'),
                             ),
                           ),
