@@ -4,6 +4,7 @@ import 'package:union_shop/about_page.dart';
 import 'package:union_shop/auth_page.dart';
 // layout constants and newsletter widget are used elsewhere; imports removed here to avoid unused import warnings
 import 'package:union_shop/widgets/site_scaffold.dart';
+import 'package:union_shop/repositories/product_repository.dart';
 
 // Returns an ImageProvider for either bundled assets or network URLs.
 ImageProvider<Object> _imageProviderFor(String url) {
@@ -171,38 +172,13 @@ class HomeScreen extends StatelessWidget {
                     childAspectRatio: childAspect,
                     crossAxisSpacing: 24,
                     mainAxisSpacing: 48,
-                    children: const [
-                      ProductCard(
-                        title: 'Uni Hoodie',
-                        price: '£20.00',
-                        imageUrl: 'assets/images/hoddies/blue_hoddie.png',
-                      ),
-                      ProductCard(
-                        title: 'Uni T-Shirt',
-                        price: '£15.00',
-                        imageUrl: 'assets/images/tshirts/blue_tshirt.png',
-                      ),
-                      ProductCard(
-                        title: 'Uni Baseball Cap',
-                        price: '£12.00',
-                        imageUrl: 'assets/images/caps/blue_cap.png',
-                      ),
-                      ProductCard(
-                        title: 'Pencils',
-                        price: '£3.50',
-                        imageUrl: 'assets/images/stationary/pencils.png',
-                      ),
-                      ProductCard(
-                        title: 'Notebook',
-                        price: '£5.00',
-                        imageUrl: 'assets/images/stationary/notebook.png',
-                      ),
-                      ProductCard(
-                        title: 'Uni Beanie',
-                        price: '£18.00',
-                        imageUrl: 'assets/images/beanies/blue_beanie.png',
-                      ),
-                    ],
+                    children: ProductRepository.getAllProducts()
+                        .map((product) => ProductCard(
+                              title: product.title,
+                              price: product.price,
+                              imageUrl: product.imageUrl,
+                            ))
+                        .toList(),
                   ),
                 ],
               ),
