@@ -173,7 +173,7 @@ class HomeScreen extends StatelessWidget {
                     mainAxisSpacing: 48,
                     children: const [
                       ProductCard(
-                        title: 'White Hoodie',
+                        title: 'Uni Hoodie',
                         price: '£20.00',
                         imageUrl: 'assets/images/white_hoddie.png',
                       ),
