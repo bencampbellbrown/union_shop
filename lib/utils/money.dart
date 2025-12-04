@@ -9,7 +9,7 @@ class MoneyUtils {
 
   static String formatPenceToPrice(int pence) {
     final value = pence / 100.0;
-    return '£' + value.toStringAsFixed(2);
+    return '£${value.toStringAsFixed(2)}';
   }
 
   static int calcDiscountedPence(int pence, {int discountPercent = 20}) {
