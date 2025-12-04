@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
 import 'package:union_shop/auth_page.dart';
@@ -12,6 +13,7 @@ import 'package:union_shop/widgets/price_tag.dart';
 import 'package:union_shop/widgets/hero_banner.dart';
 import 'package:union_shop/repositories/banner_repository.dart';
 import 'package:union_shop/widgets/collection_preview.dart';
+import 'package:union_shop/providers/cart_provider.dart';
 
 // Returns an ImageProvider for either bundled assets or network URLs.
 ImageProvider<Object> _imageProviderFor(String url) {
@@ -30,52 +32,57 @@ class UnionShopApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Union Shop',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
-        // Use the bundled Noto fonts (configured in pubspec.yaml) via
-        // TextStyle with `fontFamily` and `fontFamilyFallback`.
-      ),
-      home: const HomeScreen(),
-      // By default, the app starts at the '/' route, which is the HomeScreen
-      initialRoute: '/',
-      // When navigating to '/product', build and return the ProductPage
-      // In your browser, try this link: http://localhost:49856/#/product
-      routes: {
-        '/product': (context) => const ProductPage(),
-        '/about': (context) => const AboutPage(),
-        '/auth': (context) => const AuthPage(),
-        '/cart': (context) => const CartPage(),
-        '/sale': (context) => const SalePage(),
-        '/search': (context) {
-          final args = ModalRoute.of(context)!.settings.arguments
-              as Map<String, dynamic>?;
-          final query = args?['query'] as String? ?? '';
-          return SearchResultsPage(query: query);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Union Shop',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
+          // Use the bundled Noto fonts (configured in pubspec.yaml) via
+          // TextStyle with `fontFamily` and `fontFamilyFallback`.
+        ),
+        home: const HomeScreen(),
+        // By default, the app starts at the '/' route, which is the HomeScreen
+        initialRoute: '/',
+        // When navigating to '/product', build and return the ProductPage
+        // In your browser, try this link: http://localhost:49856/#/product
+        routes: {
+          '/product': (context) => const ProductPage(),
+          '/about': (context) => const AboutPage(),
+          '/auth': (context) => const AuthPage(),
+          '/cart': (context) => const CartPage(),
+          '/sale': (context) => const SalePage(),
+          '/search': (context) {
+            final args = ModalRoute.of(context)!.settings.arguments
+                as Map<String, dynamic>?;
+            final query = args?['query'] as String? ?? '';
+            return SearchResultsPage(query: query);
+          },
+          '/collection/clothing': (context) => const CollectionPage(
+                collectionTitle: 'Clothing',
+                categoryFilter: 'clothing',
+              ),
+          '/collection/merchandise': (context) => const CollectionPage(
+                collectionTitle: 'Merchandise',
+                categoryFilter: 'merchandise',
+              ),
+          '/collection/signature': (context) => const CollectionPage(
+                collectionTitle: 'Signature & Essential Range',
+                categoryFilter: 'signature',
+              ),
+          '/collection/portsmouth': (context) => const CollectionPage(
+                collectionTitle: 'Portsmouth City Collection',
+                categoryFilter: 'portsmouth',
+              ),
+          '/collection/graduation': (context) => const CollectionPage(
+                collectionTitle: 'Graduation',
+                categoryFilter: 'graduation',
+              ),
         },
-        '/collection/clothing': (context) => const CollectionPage(
-              collectionTitle: 'Clothing',
-              categoryFilter: 'clothing',
-            ),
-        '/collection/merchandise': (context) => const CollectionPage(
-              collectionTitle: 'Merchandise',
-              categoryFilter: 'merchandise',
-            ),
-        '/collection/signature': (context) => const CollectionPage(
-              collectionTitle: 'Signature & Essential Range',
-              categoryFilter: 'signature',
-            ),
-        '/collection/portsmouth': (context) => const CollectionPage(
-              collectionTitle: 'Portsmouth City Collection',
-              categoryFilter: 'portsmouth',
-            ),
-        '/collection/graduation': (context) => const CollectionPage(
-              collectionTitle: 'Graduation',
-              categoryFilter: 'graduation',
-            ),
-      },
+      ),
     );
   }
 }
