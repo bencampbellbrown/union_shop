@@ -20,8 +20,7 @@ class CartProvider extends ChangeNotifier {
     if (existingIndex >= 0) {
       // Update quantity if product with same options exists
       _items[existingIndex] = _items[existingIndex].copyWith(
-          quantity:
-              _items[existingIndex].quantity + cartItem.quantity);
+          quantity: _items[existingIndex].quantity + cartItem.quantity);
     } else {
       // Add new item
       _items.add(cartItem);
