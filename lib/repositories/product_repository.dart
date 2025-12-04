@@ -174,4 +174,18 @@ class ProductRepository {
     }
     return sorted;
   }
+
+  /// Search products by query string
+  static List<Product> searchProducts(String query) {
+    if (query.isEmpty) return [];
+
+    final lowerQuery = query.toLowerCase().trim();
+
+    return _products.where((product) {
+      return product.title.toLowerCase().contains(lowerQuery) ||
+          product.categories
+              .any((cat) => cat.toLowerCase().contains(lowerQuery)) ||
+          product.id.toLowerCase().contains(lowerQuery);
+    }).toList();
+  }
 }

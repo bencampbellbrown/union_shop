@@ -163,8 +163,8 @@ Mobile AppBar:
 
 ## Implementation Checklist
 
-- [ ] Step 1: Add `searchProducts(String query)` to ProductRepository
-- [ ] Step 2: Create SearchResultsPage with grid + empty state
+- [x] Step 1: Add `searchProducts(String query)` to ProductRepository
+- [x] Step 2: Create SearchResultsPage with grid + empty state
 - [ ] Step 3: Add `/search` route to main.dart
 - [ ] Step 4: Add search bar to SiteScaffold AppBar
 - [ ] Step 5: Handle empty queries gracefully
