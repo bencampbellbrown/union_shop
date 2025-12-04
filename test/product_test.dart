@@ -38,9 +38,13 @@ void main() {
         (tester) async {
       await tester.pumpWidget(createTestWidget());
 
+      // Scroll to make the button visible
+      await tester.ensureVisible(find.text('ADD TO CART'));
+      await tester.pumpAndSettle();
+
       // Tap the ADD TO CART button
       await tester.tap(find.text('ADD TO CART'));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Dialog should appear with success message
       expect(find.text('Added to Cart!'), findsOneWidget);
