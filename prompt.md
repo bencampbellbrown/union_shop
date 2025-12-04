@@ -22,7 +22,7 @@ We will implement this with reusable utilities and a shared PriceTag widget to a
 
 ## Steps
 
-### 1) Add money utilities (parse/format/calc)
+### 1) ✅ COMPLETED — Add money utilities (parse/format/calc)
 File: lib/utils/money.dart
 - parsePriceToPence(String priceText) -> int
   - Accepts values like "£20", "£20.00", "20", "20.00"
