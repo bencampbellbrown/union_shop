@@ -7,6 +7,7 @@ import 'package:union_shop/widgets/site_scaffold.dart';
 import 'package:union_shop/repositories/product_repository.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/pages/sale_page.dart';
+import 'package:union_shop/widgets/price_tag.dart';
 
 // Returns an ImageProvider for either bundled assets or network URLs.
 ImageProvider<Object> _imageProviderFor(String url) {
@@ -251,11 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisSpacing: 24,
                     mainAxisSpacing: 48,
                     children: _getSortedProducts()
-                        .map((product) => ProductCard(
-                              title: product.title,
-                              price: product.price,
-                              imageUrl: product.imageUrl,
-                            ))
+                        .map((product) => ProductCard.fromProduct(product))
                         .toList(),
                   ),
                 ],
@@ -272,13 +269,24 @@ class ProductCard extends StatelessWidget {
   final String title;
   final String price;
   final String imageUrl;
+  final bool isOnSale;
 
   const ProductCard({
     super.key,
     required this.title,
     required this.price,
     required this.imageUrl,
+    this.isOnSale = false,
   });
+
+  factory ProductCard.fromProduct(Product product) {
+    return ProductCard(
+      title: product.title,
+      price: product.price,
+      imageUrl: product.imageUrl,
+      isOnSale: product.isOnSale,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -290,6 +298,7 @@ class ProductCard extends StatelessWidget {
           'title': title,
           'price': price,
           'imageUrl': imageUrl,
+          'isOnSale': isOnSale,
         });
       },
       child: Column(
@@ -346,9 +355,10 @@ class ProductCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 6),
-          Text(
-            price,
-            style: const TextStyle(fontSize: 13, color: Colors.grey),
+          PriceTag(
+            priceText: price,
+            isOnSale: isOnSale,
+            discountPercent: 20,
           ),
         ],
       ),

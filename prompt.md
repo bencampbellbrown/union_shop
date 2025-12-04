@@ -59,7 +59,7 @@ Behavior:
 
 Why: One unified place to render prices everywhere.
 
-### 4) Update ProductCard to use PriceTag (non-breaking)
+### 4) ✅ COMPLETED — Update ProductCard to use PriceTag (non-breaking)
 File: lib/widgets/product_card.dart
 - Add a named constructor: ProductCard.fromProduct(Product product)
   - Uses product.title, product.imageUrl, and PriceTag(
@@ -70,7 +70,7 @@ File: lib/widgets/product_card.dart
 - Keep existing constructor for any legacy use
 - Prefer .fromProduct() in new code (Home/Collections/Sale pages)
 
-### 5) Switch Home and Collection pages to ProductCard.fromProduct
+### 5) ✅ COMPLETED — Switch Home and Collection pages to ProductCard.fromProduct
 Files:
 - lib/main.dart (Home grid)
 - lib/pages/collection_page.dart

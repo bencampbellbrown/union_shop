@@ -19,7 +19,8 @@ class PriceTag extends StatelessWidget {
   Widget build(BuildContext context) {
     final int pence = basePricePence ?? MoneyUtils.parsePriceToPence(priceText);
     final int salePence = isOnSale
-        ? MoneyUtils.calcDiscountedPence(pence, discountPercent: discountPercent)
+        ? MoneyUtils.calcDiscountedPence(pence,
+            discountPercent: discountPercent)
         : pence;
 
     final String formatted = MoneyUtils.formatPenceToPrice(pence);
@@ -34,11 +35,8 @@ class PriceTag extends StatelessWidget {
       );
     }
 
-    final Color? muted = Theme.of(context)
-        .textTheme
-        .bodySmall
-        ?.color
-        ?.withOpacity(0.6);
+    final Color? muted =
+        Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.6);
 
     return Row(
       mainAxisSize: MainAxisSize.min,

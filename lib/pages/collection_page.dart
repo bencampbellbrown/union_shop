@@ -94,11 +94,7 @@ class CollectionPage extends StatelessWidget {
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
                       children: products
-                          .map((product) => ProductCard(
-                                title: product.title,
-                                price: product.price,
-                                imageUrl: product.imageUrl,
-                              ))
+                          .map((product) => ProductCard.fromProduct(product))
                           .toList(),
                     ),
             ),

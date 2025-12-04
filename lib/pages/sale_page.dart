@@ -136,11 +136,8 @@ class _SalePageState extends State<SalePage> {
                           crossAxisSpacing: 24,
                           mainAxisSpacing: 48,
                           children: _getSortedProducts()
-                              .map((product) => ProductCard(
-                                    title: product.title,
-                                    price: product.price,
-                                    imageUrl: product.imageUrl,
-                                  ))
+                              .map(
+                                  (product) => ProductCard.fromProduct(product))
                               .toList(),
                         ),
                       ],
