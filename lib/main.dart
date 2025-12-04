@@ -4,13 +4,13 @@ import 'package:union_shop/about_page.dart';
 import 'package:union_shop/auth_page.dart';
 import 'package:union_shop/pages/collection_page.dart';
 import 'package:union_shop/widgets/site_scaffold.dart';
-import 'package:union_shop/repositories/product_repository.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/pages/sale_page.dart';
 import 'package:union_shop/pages/search_results_page.dart';
 import 'package:union_shop/widgets/price_tag.dart';
 import 'package:union_shop/widgets/hero_banner.dart';
 import 'package:union_shop/repositories/banner_repository.dart';
+import 'package:union_shop/widgets/collection_preview.dart';
 
 // Returns an ImageProvider for either bundled assets or network URLs.
 ImageProvider<Object> _imageProviderFor(String url) {
@@ -86,8 +86,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ProductSortOption _sortOption = ProductSortOption.priceDesc;
-
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
@@ -104,28 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // This is the event handler for buttons that don't work yet
   }
 
-  List<Product> _getSortedProducts() {
-    final products = ProductRepository.getAllProducts();
-    switch (_sortOption) {
-      case ProductSortOption.nameAsc:
-        return ProductRepository.sortByName(products, ascending: true);
-      case ProductSortOption.nameDesc:
-        return ProductRepository.sortByName(products, ascending: false);
-      case ProductSortOption.priceAsc:
-        return ProductRepository.sortByPrice(products, ascending: true);
-      case ProductSortOption.priceDesc:
-        return ProductRepository.sortByPrice(products, ascending: false);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    // Compute responsive columns and aspect ratio for product grid.
-    final double width = MediaQuery.of(context).size.width;
-    final int columns = width > 1000 ? 3 : (width > 600 ? 2 : 1);
-    // Use taller tiles for single-column (mobile) so image + text don't overflow.
-    final double childAspect = columns == 3 ? 1.0 : (columns == 2 ? 1.2 : 0.8);
-
     // Use SiteScaffold for consistent header/footer across pages.
     return SiteScaffold(
       child: Column(
@@ -143,59 +121,48 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(40.0),
               child: Column(
                 children: [
-                  const Text(
-                    'PRODUCTS SECTION',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                      letterSpacing: 1,
-                    ),
+                  // Signature Collection
+                  CollectionPreview(
+                    collectionTitle: 'Signature Collection',
+                    categoryFilter: 'signature',
+                    itemsToShow: 3,
+                    showViewAllButton: true,
                   ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      DropdownButton<ProductSortOption>(
-                        value: _sortOption,
-                        onChanged: (option) {
-                          if (option != null) {
-                            setState(() {
-                              _sortOption = option;
-                            });
-                          }
-                        },
-                        items: const [
-                          DropdownMenuItem(
-                            value: ProductSortOption.nameAsc,
-                            child: Text('Name: A-Z'),
-                          ),
-                          DropdownMenuItem(
-                            value: ProductSortOption.nameDesc,
-                            child: Text('Name: Z-A'),
-                          ),
-                          DropdownMenuItem(
-                            value: ProductSortOption.priceAsc,
-                            child: Text('Price: Low-High'),
-                          ),
-                          DropdownMenuItem(
-                            value: ProductSortOption.priceDesc,
-                            child: Text('Price: High-Low'),
-                          ),
-                        ],
-                      ),
-                    ],
+                  const SizedBox(height: 48),
+
+                  // Clothing Collection
+                  CollectionPreview(
+                    collectionTitle: 'Clothing',
+                    categoryFilter: 'clothing',
+                    itemsToShow: 3,
+                    showViewAllButton: true,
                   ),
-                  const SizedBox(height: 24),
-                  GridView.count(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: columns,
-                    childAspectRatio: childAspect,
-                    crossAxisSpacing: 24,
-                    mainAxisSpacing: 48,
-                    children: _getSortedProducts()
-                        .map((product) => ProductCard.fromProduct(product))
-                        .toList(),
+                  const SizedBox(height: 48),
+
+                  // Merchandise Collection
+                  CollectionPreview(
+                    collectionTitle: 'Merchandise',
+                    categoryFilter: 'merchandise',
+                    itemsToShow: 3,
+                    showViewAllButton: true,
+                  ),
+                  const SizedBox(height: 48),
+
+                  // Portsmouth Collection
+                  CollectionPreview(
+                    collectionTitle: 'Portsmouth',
+                    categoryFilter: 'portsmouth',
+                    itemsToShow: 3,
+                    showViewAllButton: true,
+                  ),
+                  const SizedBox(height: 48),
+
+                  // Graduation Collection
+                  CollectionPreview(
+                    collectionTitle: 'Graduation',
+                    categoryFilter: 'graduation',
+                    itemsToShow: 3,
+                    showViewAllButton: true,
                   ),
                 ],
               ),
