@@ -76,6 +76,15 @@ class ProductRepository {
         'assets/images/beanies/Black_beanie.png',
       ],
     ),
+    const Product(
+      id: 'lanyard',
+      title: 'Lanyard',
+      price: '£1.50',
+      imageUrl: 'assets/images/misc/lanyard.png',
+      categories: ['signature'],
+      hasColorVariants: false,
+      hasSizeOptions: false,
+    ),
   ];
 
   /// Get all products

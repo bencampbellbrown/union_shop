@@ -71,8 +71,10 @@ class _ProductPageState extends State<ProductPage> {
     // Determine if product should show color/size options
     final bool showOptions =
         !((productImageArg != null && productImageArg.contains('stationary')) ||
+            (productImageArg != null && productImageArg.contains('misc')) ||
             productTitle.toLowerCase().contains('pencil') ||
-            productTitle.toLowerCase().contains('notebook'));
+            productTitle.toLowerCase().contains('notebook') ||
+            productTitle.toLowerCase().contains('lanyard'));
 
     // No external selection state required — gallery is self-managed.
 
