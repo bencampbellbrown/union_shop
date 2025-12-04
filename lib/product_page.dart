@@ -32,6 +32,9 @@ class _ProductPageState extends State<ProductPage> {
     final productImageArg = args != null && args['imageUrl'] != null
         ? args['imageUrl'] as String
         : null;
+    final bool isOnSale = args != null && args['isOnSale'] != null
+      ? args['isOnSale'] as bool
+      : false;
 
     List<String> images;
     if ((productImageArg != null && productImageArg.contains('uni_hoddie')) ||
@@ -110,6 +113,7 @@ class _ProductPageState extends State<ProductPage> {
                             description:
                                 'This is a placeholder description for the product. Replace with real product information.',
                             showOptions: showOptions,
+                            isOnSale: isOnSale,
                           ),
                         ),
                       ],
@@ -127,6 +131,7 @@ class _ProductPageState extends State<ProductPage> {
                           description:
                               'This is a placeholder description for the product. Replace with real product information.',
                           showOptions: showOptions,
+                          isOnSale: isOnSale,
                         ),
                       ],
                     );

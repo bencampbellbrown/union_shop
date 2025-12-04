@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/widgets/price_tag.dart';
 
 class ProductInfo extends StatefulWidget {
   final String title;
   final String price;
   final String description;
   final bool showOptions;
+  final bool isOnSale;
 
-  const ProductInfo(
+    const ProductInfo(
       {super.key,
       required this.title,
       required this.price,
       required this.description,
-      this.showOptions = true});
+      this.showOptions = true,
+      this.isOnSale = false});
 
   @override
   State<ProductInfo> createState() => _ProductInfoState();
@@ -35,12 +38,10 @@ class _ProductInfoState extends State<ProductInfo> {
           style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        Text(
-          widget.price,
-          style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4d2963)),
+        PriceTag(
+          priceText: widget.price,
+          isOnSale: widget.isOnSale,
+          discountPercent: 20,
         ),
         const SizedBox(height: 12),
 

@@ -79,7 +79,7 @@ Files:
 
 Why: Ensures consistent price rendering across all grids.
 
-### 6) Update ProductInfo to use PriceTag
+### 6) ✅ COMPLETED — Update ProductInfo to use PriceTag
 File: lib/widgets/product_info.dart
 - Replace direct price Text with PriceTag:
   PriceTag(
@@ -91,11 +91,17 @@ Implementation options:
 - If ProductInfo currently receives only title/price as strings, extend it to optionally accept a Product object OR a boolean isOnSale.
 - Minimal change: pass a new bool isOnSale to ProductInfo and wire from route args.
 
-### 7) Wire isOnSale to ProductPage
+Result:
+- Added `bool isOnSale` to `ProductInfo` with default `false` and render `PriceTag`.
+
+### 7) ✅ COMPLETED — Wire isOnSale to ProductPage
 File: lib/product_page.dart
 - When navigating to ProductPage, include `isOnSale` (and/or the Product) in arguments.
 - Ensure ProductInfo receives `isOnSale: true/false` for the chosen product.
 - If the app already uses ProductRepository.getProductById via args, pass the Product directly to ProductInfo.
+
+Result:
+- Read `isOnSale` from `ModalRoute.of(context)?.settings.arguments` and pass to `ProductInfo` in both desktop and mobile layouts.
 
 ### 8) Styling polish
 - Old price color: Theme.of(context).textTheme.bodySmall?.color with opacity 0.6
