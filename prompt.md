@@ -343,7 +343,7 @@ Use `shared_preferences` or `hive`:
 
 - [x] Step 1: Create CartItem model
 - [x] Step 2: Create CartProvider (state management)
-- [ ] Step 3: Create AddToCartDialog widget
+- [x] Step 3: Create AddToCartDialog widget
 - [ ] Step 4: Update ProductInfo to add items to cart
 - [ ] Step 5: Create CartPage
 - [ ] Step 6: Add /cart route
