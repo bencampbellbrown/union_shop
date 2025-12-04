@@ -44,10 +44,14 @@ void main() {
 
       // Tap the ADD TO CART button
       await tester.tap(find.text('ADD TO CART'));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       // Dialog should appear with success message
       expect(find.text('Added to Cart!'), findsOneWidget);
+
+      // Wait for the 3-second auto-close timer to complete
+      await tester.pump(const Duration(seconds: 3));
+      await tester.pumpAndSettle();
     });
   });
 }
