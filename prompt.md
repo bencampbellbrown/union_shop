@@ -347,7 +347,7 @@ Use `shared_preferences` or `hive`:
 - [x] Step 4: Update ProductInfo to add items to cart
 - [x] Step 5: Create CartPage
 - [x] Step 6: Add /cart route
-- [ ] Step 7: Update SiteScaffold with basket icon and badge
+- [x] Step 7: Update SiteScaffold with basket icon and badge
 - [ ] Step 8: Wrap app with Provider
 - [ ] Step 9: (Optional) Add local storage persistence
 - [ ] Step 10: Test cart functionality end-to-end

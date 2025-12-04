@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:union_shop/src/layout_constants.dart';
 import 'package:union_shop/widgets/newsletter_widget.dart';
+import 'package:union_shop/providers/cart_provider.dart';
 
 /// Reusable scaffold that provides the site header and footer around [child].
 class SiteScaffold extends StatelessWidget {
@@ -121,13 +123,44 @@ class SiteScaffold extends StatelessWidget {
                               onPressed: () =>
                                   Navigator.pushNamed(ctx, '/auth'),
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.shopping_bag_outlined,
-                                  size: 18, color: Colors.grey),
-                              padding: const EdgeInsets.all(8),
-                              constraints: const BoxConstraints(
-                                  minWidth: 32, minHeight: 32),
-                              onPressed: _placeholder,
+                            Consumer<CartProvider>(
+                              builder: (context, cart, child) {
+                                return Stack(
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                          Icons.shopping_basket_outlined,
+                                          size: 18,
+                                          color: Colors.grey),
+                                      padding: const EdgeInsets.all(8),
+                                      constraints: const BoxConstraints(
+                                          minWidth: 32, minHeight: 32),
+                                      onPressed: () =>
+                                          Navigator.pushNamed(ctx, '/cart'),
+                                    ),
+                                    if (cart.itemCount > 0)
+                                      Positioned(
+                                        right: 4,
+                                        top: 4,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(2),
+                                          decoration: const BoxDecoration(
+                                            color: Colors.red,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Text(
+                                            '${cart.itemCount}',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
                             ),
                           ],
                         );
