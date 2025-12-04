@@ -97,7 +97,7 @@ class BannerRepository {
       id: 'banner-2',
       title: 'Placeholder Banner 2',
       subtitle: 'Content coming soon',
-      imageUrl: 'assets/images/banners/banner2.png',
+      imageUrl: 'assets/images/banners/sale_banner.png',
       routeName: '/sale',
     ),
     HeroBannerItem(
