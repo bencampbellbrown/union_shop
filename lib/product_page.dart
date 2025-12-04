@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/site_scaffold.dart';
 import 'package:union_shop/widgets/product_gallery.dart';
 import 'package:union_shop/widgets/product_info.dart';
+import 'package:union_shop/repositories/product_repository.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -35,6 +36,15 @@ class _ProductPageState extends State<ProductPage> {
     final bool isOnSale = args != null && args['isOnSale'] != null
         ? args['isOnSale'] as bool
         : false;
+    final String? productId = args != null && args['productId'] != null
+        ? args['productId'] as String
+        : null;
+
+    // Fetch product description from repository if product ID is available
+    final product =
+        productId != null ? ProductRepository.getProductById(productId) : null;
+    final productDescription = product?.description ??
+        'This is a placeholder description for the product. Replace with real product information.';
 
     List<String> images;
     if ((productImageArg != null && productImageArg.contains('uni_hoddie')) ||
@@ -110,8 +120,7 @@ class _ProductPageState extends State<ProductPage> {
                           child: ProductInfo(
                             title: productTitle,
                             price: productPrice,
-                            description:
-                                'This is a placeholder description for the product. Replace with real product information.',
+                            description: productDescription,
                             showOptions: showOptions,
                             isOnSale: isOnSale,
                           ),
@@ -128,8 +137,7 @@ class _ProductPageState extends State<ProductPage> {
                         ProductInfo(
                           title: productTitle,
                           price: productPrice,
-                          description:
-                              'This is a placeholder description for the product. Replace with real product information.',
+                          description: productDescription,
                           showOptions: showOptions,
                           isOnSale: isOnSale,
                         ),

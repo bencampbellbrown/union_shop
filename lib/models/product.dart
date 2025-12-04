@@ -10,6 +10,7 @@ class Product {
   final bool hasSizeOptions;
   final List<String>? imageVariants;
   final bool isOnSale;
+  final String description;
 
   const Product({
     required this.id,
@@ -21,6 +22,8 @@ class Product {
     this.hasSizeOptions = true,
     this.imageVariants,
     this.isOnSale = false,
+    this.description =
+        'High-quality product from the University of Portsmouth Union Shop.',
   });
 
   /// Helper to get all image URLs (primary + variants)

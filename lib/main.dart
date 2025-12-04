@@ -212,6 +212,7 @@ class ProductCard extends StatelessWidget {
   final String price;
   final String imageUrl;
   final bool isOnSale;
+  final String? productId;
 
   const ProductCard({
     super.key,
@@ -219,6 +220,7 @@ class ProductCard extends StatelessWidget {
     required this.price,
     required this.imageUrl,
     this.isOnSale = false,
+    this.productId,
   });
 
   factory ProductCard.fromProduct(Product product) {
@@ -227,6 +229,7 @@ class ProductCard extends StatelessWidget {
       price: product.price,
       imageUrl: product.imageUrl,
       isOnSale: product.isOnSale,
+      productId: product.id,
     );
   }
 
@@ -241,6 +244,7 @@ class ProductCard extends StatelessWidget {
           'price': price,
           'imageUrl': imageUrl,
           'isOnSale': isOnSale,
+          'productId': productId,
         });
       },
       child: Column(

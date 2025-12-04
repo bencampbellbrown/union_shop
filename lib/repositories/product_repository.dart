@@ -15,6 +15,8 @@ class ProductRepository {
         'assets/images/hoddies/white_hoddie.png',
         'assets/images/hoddies/black_hoddie.png',
       ],
+      description:
+          'Comfortable and stylish university hoodie featuring the official University of Portsmouth crest. Perfect for campus life or casual wear. Available in multiple colors.',
     ),
     const Product(
       id: 'uni-tshirt',
@@ -29,6 +31,8 @@ class ProductRepository {
         'assets/images/tshirts/white_tshirt.png',
         'assets/images/tshirts/black_tshirt.png',
       ],
+      description:
+          'Classic university t-shirt with the Portsmouth crest. Made from soft, breathable fabric for all-day comfort. Available in blue, white, and black.',
     ),
     const Product(
       id: 'uni-baseball-cap',
@@ -43,6 +47,8 @@ class ProductRepository {
         'assets/images/caps/white_cap.png',
         'assets/images/caps/black_cap.png',
       ],
+      description:
+          'Adjustable baseball cap featuring the University of Portsmouth logo. Perfect for sunny days on campus or showing your university pride.',
     ),
     const Product(
       id: 'pencils',
@@ -52,6 +58,8 @@ class ProductRepository {
       categories: ['merchandise', 'stationary'],
       hasColorVariants: false,
       hasSizeOptions: false,
+      description:
+          'Set of high-quality pencils branded with the University of Portsmouth logo. Essential for lectures, exams, and note-taking.',
     ),
     const Product(
       id: 'notebook',
@@ -61,6 +69,8 @@ class ProductRepository {
       categories: ['merchandise', 'stationary'],
       hasColorVariants: false,
       hasSizeOptions: false,
+      description:
+          'University-branded notebook with lined pages. Perfect for lectures, seminars, and personal study. Durable cover with Portsmouth logo.',
     ),
     const Product(
       id: 'uni-beanie',
@@ -76,6 +86,8 @@ class ProductRepository {
         'assets/images/beanies/Black_beanie.png',
       ],
       isOnSale: true,
+      description:
+          'Warm and cozy university beanie hat with embroidered Portsmouth logo. Keep warm during winter months while showing your university spirit. Currently on sale!',
     ),
     const Product(
       id: 'lanyard',
@@ -85,6 +97,8 @@ class ProductRepository {
       categories: ['signature'],
       hasColorVariants: false,
       hasSizeOptions: false,
+      description:
+          'Essential University of Portsmouth lanyard for carrying your student ID card and keys. Durable design with secure clip fastening.',
     ),
     const Product(
       id: 'bookmark',
@@ -94,6 +108,8 @@ class ProductRepository {
       categories: ['portsmouth'],
       hasColorVariants: false,
       hasSizeOptions: false,
+      description:
+          'Portsmouth City-themed bookmark featuring iconic landmarks. Perfect for students and book lovers. Makes a great souvenir.',
     ),
     const Product(
       id: 'fridge-magnet',
@@ -103,6 +119,8 @@ class ProductRepository {
       categories: ['portsmouth'],
       hasColorVariants: false,
       hasSizeOptions: false,
+      description:
+          'Decorative fridge magnet showcasing Portsmouth City. A wonderful keepsake or gift to remember your time at the university.',
     ),
     const Product(
       id: 'keychain',
@@ -113,6 +131,8 @@ class ProductRepository {
       hasColorVariants: false,
       hasSizeOptions: false,
       isOnSale: true,
+      description:
+          'Portsmouth-themed keychain with sturdy metal ring. Practical and stylish accessory to keep your keys organized. Currently on sale!',
     ),
     const Product(
       id: 'grad-hoodie',
@@ -127,6 +147,8 @@ class ProductRepository {
         'assets/images/graduation/grad_hoodie_white.png',
         'assets/images/graduation/grad_hoodie_black.png',
       ],
+      description:
+          'Commemorative graduation hoodie celebrating your achievement at the University of Portsmouth. Features your graduation year and university crest. A perfect memento of your academic journey.',
     ),
     const Product(
       id: 'grad-pin',
@@ -136,6 +158,8 @@ class ProductRepository {
       categories: ['graduation'],
       hasColorVariants: false,
       hasSizeOptions: false,
+      description:
+          'Elegant graduation pin badge to wear on your graduation day. A small token of your academic success and a treasured keepsake.',
     ),
     const Product(
       id: 'teddy-bear',
@@ -145,6 +169,8 @@ class ProductRepository {
       categories: ['graduation'],
       hasColorVariants: false,
       hasSizeOptions: false,
+      description:
+          'Adorable University of Portsmouth teddy bear wearing graduation robes. Perfect gift for graduates or a charming keepsake to remember your university days.',
     ),
   ];
 
