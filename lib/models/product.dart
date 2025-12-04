@@ -27,3 +27,11 @@
     return [imageUrl];
   }
 }
+
+/// Sorting options for products
+enum ProductSortOption {
+  nameAsc,
+  nameDesc,
+  priceAsc,
+  priceDesc,
+}

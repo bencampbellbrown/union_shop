@@ -10,7 +10,7 @@ Enable users to sort products by name (A-Z, Z-A) and price (low-high, high-low) 
   - `List<Product> sortByName(List<Product> products, {bool ascending = true})`
   - `List<Product> sortByPrice(List<Product> products, {bool ascending = true})`
 
-### 2. Define Sort Options Model
+### 2. ✅ **COMPLETED** - Define Sort Options Model
 - Create an enum or class for sort options:
   - Name Ascending
   - Name Descending
