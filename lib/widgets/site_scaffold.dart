@@ -393,7 +393,7 @@ class SiteScaffold extends StatelessWidget {
                           ),
                           const SizedBox(height: 12),
                           TextButton(
-                            onPressed: _placeholder,
+                            onPressed: () => _showSearchDialog(context),
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,
                               minimumSize: const Size(0, 0),
@@ -563,7 +563,7 @@ class SiteScaffold extends StatelessWidget {
                                 )),
                             const SizedBox(height: 12),
                             TextButton(
-                              onPressed: _placeholder,
+                              onPressed: () => _showSearchDialog(context),
                               style: TextButton.styleFrom(
                                 padding: EdgeInsets.zero,
                                 minimumSize: const Size(0, 0),
