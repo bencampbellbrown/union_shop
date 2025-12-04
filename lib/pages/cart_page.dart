@@ -118,10 +118,6 @@ class CartPage extends StatelessWidget {
                               cart.items.length,
                               (index) {
                                 final item = cart.items[index];
-                                final price = double.tryParse(
-                                        item.price.replaceAll('£', '')) ??
-                                    0.0;
-                                final itemTotal = price * item.quantity;
 
                                 return Column(
                                   children: [

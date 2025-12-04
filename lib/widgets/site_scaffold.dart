@@ -165,69 +165,75 @@ class SiteScaffold extends StatelessWidget {
                           ],
                         );
 
-                        Widget navLinks = Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextButton(
-                              onPressed: () => _navigateToHome(context),
-                              child: const Text('Home',
-                                  style: TextStyle(color: Colors.grey)),
-                            ),
-                            const SizedBox(width: 12),
-                            PopupMenuButton<String>(
-                              offset: const Offset(0, 40),
-                              onSelected: (value) {
-                                Navigator.pushNamed(
-                                    context, '/collection/$value');
-                              },
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text('Shop',
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 14)),
-                                  SizedBox(width: 4),
-                                  Icon(Icons.arrow_drop_down,
-                                      color: Colors.grey, size: 20),
+                        Widget navLinks = SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextButton(
+                                onPressed: () => _navigateToHome(context),
+                                child: const Text('Home',
+                                    style: TextStyle(color: Colors.grey)),
+                              ),
+                              const SizedBox(width: 12),
+                              PopupMenuButton<String>(
+                                offset: const Offset(0, 40),
+                                onSelected: (value) {
+                                  Navigator.pushNamed(
+                                      context, '/collection/$value');
+                                },
+                                child: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text('Shop',
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 14)),
+                                    SizedBox(width: 4),
+                                    Icon(Icons.arrow_drop_down,
+                                        color: Colors.grey, size: 20),
+                                  ],
+                                ),
+                                itemBuilder: (ctx) => const [
+                                  PopupMenuItem(
+                                      value: 'clothing',
+                                      child: Text('Clothing')),
+                                  PopupMenuItem(
+                                      value: 'merchandise',
+                                      child: Text('Merchandise')),
+                                  PopupMenuItem(
+                                      value: 'signature',
+                                      child:
+                                          Text('Signature & Essential Range')),
+                                  PopupMenuItem(
+                                      value: 'portsmouth',
+                                      child:
+                                          Text('Portsmouth City Collection')),
+                                  PopupMenuItem(
+                                      value: 'graduation',
+                                      child: Text('Graduation 🎓')),
                                 ],
                               ),
-                              itemBuilder: (ctx) => const [
-                                PopupMenuItem(
-                                    value: 'clothing', child: Text('Clothing')),
-                                PopupMenuItem(
-                                    value: 'merchandise',
-                                    child: Text('Merchandise')),
-                                PopupMenuItem(
-                                    value: 'signature',
-                                    child: Text('Signature & Essential Range')),
-                                PopupMenuItem(
-                                    value: 'portsmouth',
-                                    child: Text('Portsmouth City Collection')),
-                                PopupMenuItem(
-                                    value: 'graduation',
-                                    child: Text('Graduation 🎓')),
-                              ],
-                            ),
-                            const SizedBox(width: 12),
-                            TextButton(
-                              onPressed: _placeholder,
-                              child: const Text('The Print Shack',
-                                  style: TextStyle(color: Colors.grey)),
-                            ),
-                            const SizedBox(width: 12),
-                            TextButton(
-                              onPressed: () =>
-                                  Navigator.pushNamed(context, '/sale'),
-                              child: const Text('SALE!',
-                                  style: TextStyle(color: Colors.grey)),
-                            ),
-                            const SizedBox(width: 12),
-                            TextButton(
-                              onPressed: () => _navigateToAbout(context),
-                              child: const Text('About',
-                                  style: TextStyle(color: Colors.grey)),
-                            ),
-                          ],
+                              const SizedBox(width: 12),
+                              TextButton(
+                                onPressed: _placeholder,
+                                child: const Text('The Print Shack',
+                                    style: TextStyle(color: Colors.grey)),
+                              ),
+                              const SizedBox(width: 12),
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pushNamed(context, '/sale'),
+                                child: const Text('SALE!',
+                                    style: TextStyle(color: Colors.grey)),
+                              ),
+                              const SizedBox(width: 12),
+                              TextButton(
+                                onPressed: () => _navigateToAbout(context),
+                                child: const Text('About',
+                                    style: TextStyle(color: Colors.grey)),
+                              ),
+                            ],
+                          ),
                         );
 
                         if (isNarrow) {

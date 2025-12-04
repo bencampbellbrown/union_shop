@@ -36,13 +36,15 @@ class CollectionPreview extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              collectionTitle,
-              style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                letterSpacing: 0.3,
+            Flexible(
+              child: Text(
+                collectionTitle,
+                style: const TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  letterSpacing: 0.3,
+                ),
               ),
             ),
             if (showViewAllButton)
