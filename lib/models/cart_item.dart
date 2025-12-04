@@ -2,6 +2,7 @@ class CartItem {
   final String productId;
   final String title;
   final String price;
+  final String? salePrice;
   final int quantity;
   final String? selectedColor;
   final String? selectedSize;
@@ -12,6 +13,7 @@ class CartItem {
     required this.productId,
     required this.title,
     required this.price,
+    this.salePrice,
     required this.quantity,
     this.selectedColor,
     this.selectedSize,
@@ -29,6 +31,7 @@ class CartItem {
       productId: productId,
       title: title,
       price: price,
+      salePrice: salePrice,
       quantity: quantity ?? this.quantity,
       selectedColor: selectedColor ?? this.selectedColor,
       selectedSize: selectedSize ?? this.selectedSize,

@@ -120,6 +120,7 @@ class _ProductPageState extends State<ProductPage> {
                           child: ProductInfo(
                             title: productTitle,
                             price: productPrice,
+                            salePrice: product?.formattedSalePrice,
                             description: productDescription,
                             showOptions: showOptions,
                             isOnSale: isOnSale,
@@ -139,6 +140,7 @@ class _ProductPageState extends State<ProductPage> {
                         ProductInfo(
                           title: productTitle,
                           price: productPrice,
+                          salePrice: product?.formattedSalePrice,
                           description: productDescription,
                           showOptions: showOptions,
                           isOnSale: isOnSale,

@@ -8,6 +8,7 @@ import 'package:union_shop/widgets/add_to_cart_dialog.dart';
 class ProductInfo extends StatefulWidget {
   final String title;
   final String price;
+  final String? salePrice;
   final String description;
   final bool showOptions;
   final bool isOnSale;
@@ -18,6 +19,7 @@ class ProductInfo extends StatefulWidget {
       {super.key,
       required this.title,
       required this.price,
+      this.salePrice,
       required this.description,
       this.showOptions = true,
       this.isOnSale = false,

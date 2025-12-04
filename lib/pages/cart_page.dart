@@ -208,14 +208,49 @@ class CartPage extends StatelessWidget {
                                                     ),
                                                   ),
                                                 const SizedBox(height: 8),
-                                                Text(
-                                                  item.price,
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Color(0xFF4d2963),
+                                                if (item.isOnSale &&
+                                                    item.salePrice != null)
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        item.price,
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color:
+                                                              Colors.grey[600],
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .lineThrough,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(height: 4),
+                                                      Text(
+                                                        item.salePrice!,
+                                                        style: const TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color:
+                                                              Color(0xFF4d2963),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                else
+                                                  Text(
+                                                    item.price,
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Color(0xFF4d2963),
+                                                    ),
                                                   ),
-                                                ),
                                               ],
                                             ),
                                           ),

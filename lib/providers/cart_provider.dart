@@ -54,10 +54,14 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Calculate subtotal
+  /// Calculate subtotal based on item prices and quantities
+  /// Uses sale price if item is on sale, otherwise uses regular price
   double getSubtotal() {
     return _items.fold(0.0, (sum, item) {
-      final price = double.tryParse(item.price.replaceAll('£', '')) ?? 0.0;
+      final priceStr = item.isOnSale && item.salePrice != null
+          ? item.salePrice!
+          : item.price;
+      final price = double.tryParse(priceStr.replaceAll('£', '')) ?? 0.0;
       return sum + (price * item.quantity);
     });
   }
