@@ -233,6 +233,9 @@ class SiteScaffold extends StatelessWidget {
                                       case 'shop':
                                         _navigateToProduct(context);
                                         break;
+                                      case 'sale':
+                                        Navigator.pushNamed(context, '/sale');
+                                        break;
                                       case 'about':
                                         _navigateToAbout(context);
                                         break;
