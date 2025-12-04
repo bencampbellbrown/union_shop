@@ -21,6 +21,55 @@ class SiteScaffold extends StatelessWidget {
 
   void _placeholder() {}
 
+  void _showSearchDialog(BuildContext context) {
+    final TextEditingController searchController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Search Products'),
+        content: TextField(
+          controller: searchController,
+          autofocus: true,
+          decoration: const InputDecoration(
+            hintText: 'Enter search term...',
+            prefixIcon: Icon(Icons.search),
+          ),
+          onSubmitted: (value) {
+            if (value.trim().isNotEmpty) {
+              Navigator.pop(context);
+              Navigator.pushNamed(
+                context,
+                '/search',
+                arguments: {'query': value.trim()},
+              );
+            }
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final query = searchController.text.trim();
+              if (query.isNotEmpty) {
+                Navigator.pop(context);
+                Navigator.pushNamed(
+                  context,
+                  '/search',
+                  arguments: {'query': query},
+                );
+              }
+            },
+            child: const Text('Search'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +109,7 @@ class SiteScaffold extends StatelessWidget {
                               padding: const EdgeInsets.all(8),
                               constraints: const BoxConstraints(
                                   minWidth: 32, minHeight: 32),
-                              onPressed: _placeholder,
+                              onPressed: () => _showSearchDialog(ctx),
                             ),
                             IconButton(
                               icon: const Icon(Icons.person_outline,
