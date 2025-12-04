@@ -85,6 +85,33 @@ class ProductRepository {
       hasColorVariants: false,
       hasSizeOptions: false,
     ),
+    const Product(
+      id: 'bookmark',
+      title: 'Bookmark',
+      price: '£1.00',
+      imageUrl: 'assets/images/misc/bookmark.png',
+      categories: ['portsmouth'],
+      hasColorVariants: false,
+      hasSizeOptions: false,
+    ),
+    const Product(
+      id: 'fridge-magnet',
+      title: 'Fridge Magnet',
+      price: '£2.00',
+      imageUrl: 'assets/images/misc/fridge_magnet.png',
+      categories: ['portsmouth'],
+      hasColorVariants: false,
+      hasSizeOptions: false,
+    ),
+    const Product(
+      id: 'keychain',
+      title: 'Keychain',
+      price: '£2.50',
+      imageUrl: 'assets/images/misc/keychain.png',
+      categories: ['portsmouth'],
+      hasColorVariants: false,
+      hasSizeOptions: false,
+    ),
   ];
 
   /// Get all products
