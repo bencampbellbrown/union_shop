@@ -3,6 +3,7 @@ import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
 import 'package:union_shop/auth_page.dart';
 import 'package:union_shop/pages/collection_page.dart';
+import 'package:union_shop/pages/cart_page.dart';
 import 'package:union_shop/widgets/site_scaffold.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/pages/sale_page.dart';
@@ -46,6 +47,7 @@ class UnionShopApp extends StatelessWidget {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutPage(),
         '/auth': (context) => const AuthPage(),
+        '/cart': (context) => const CartPage(),
         '/sale': (context) => const SalePage(),
         '/search': (context) {
           final args = ModalRoute.of(context)!.settings.arguments
