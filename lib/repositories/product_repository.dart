@@ -114,6 +114,38 @@ class ProductRepository {
       hasSizeOptions: false,
       isOnSale: true,
     ),
+    const Product(
+      id: 'grad-hoodie',
+      title: 'Graduation Hoodie',
+      price: '£25.00',
+      imageUrl: 'assets/images/graduation/grad_hoodie_blue.png',
+      categories: ['clothing', 'graduation'],
+      hasColorVariants: true,
+      hasSizeOptions: true,
+      imageVariants: [
+        'assets/images/graduation/grad_hoodie_blue.png',
+        'assets/images/graduation/grad_hoodie_white.png',
+        'assets/images/graduation/grad_hoodie_black.png',
+      ],
+    ),
+    const Product(
+      id: 'grad-pin',
+      title: 'Graduation Pin',
+      price: '£2.00',
+      imageUrl: 'assets/images/graduation/grad_pin.png',
+      categories: ['graduation'],
+      hasColorVariants: false,
+      hasSizeOptions: false,
+    ),
+    const Product(
+      id: 'teddy-bear',
+      title: 'Teddy Bear',
+      price: '£15.00',
+      imageUrl: 'assets/images/graduation/teddy_bear.png',
+      categories: ['graduation'],
+      hasColorVariants: false,
+      hasSizeOptions: false,
+    ),
   ];
 
   /// Get all products
