@@ -1,193 +1,245 @@
-# Plan: Implement Product Search with Search Results Page
+# Plan: Add Scrollable Hero Banner to Home Page
 
 ## Goal
-Add a search feature that allows users to search for products by title or other attributes. Display matching products on a dedicated "Search Results" page with:
-- A grid of matching ProductCards
-- A "No results found" message when the search yields no matches
-- Sorting options (consistent with other pages)
-- A clear indication of what was searched
+Add an auto-scrolling hero banner carousel to the home page with:
+- 3 different banner sections (content to be provided later)
+- Auto-scroll functionality with manual navigation controls
+- Click/tap on banner navigates to relevant page
+- Responsive design (adapts to mobile/desktop)
+- Smooth transitions between banners
 
 ---
 
 ## Architecture Overview
 
-- Add a search bar to the site navigation (SiteScaffold)
-- Create a SearchResultsPage that filters products based on query
-- Use ProductRepository to search across product fields
-- Reuse ProductCard.fromProduct for consistent display
-- Support sorting on search results
+- Create a reusable `HeroBanner` widget
+- Support multiple banner items with image, title, and navigation route
+- Auto-scroll with pause on hover (desktop) or tap (mobile)
+- Manual navigation: dots indicator and arrow buttons
+- Position banner above product grid on home page
 
 ---
 
 ## Steps
 
-### 1) Add search method to ProductRepository
-File: `lib/repositories/product_repository.dart`
+### 1) Create HeroBanner model
+File: `lib/models/hero_banner.dart`
 
-Add:
 ```dart
-static List<Product> searchProducts(String query) {
-  if (query.isEmpty) return [];
+class HeroBannerItem {
+  final String id;
+  final String title;
+  final String? subtitle;
+  final String imageUrl;
+  final String routeName;
+  final Map<String, dynamic>? routeArgs;
   
-  final lowerQuery = query.toLowerCase().trim();
-  
-  return _products.where((product) {
-    return product.title.toLowerCase().contains(lowerQuery) ||
-           product.categories.any((cat) => cat.toLowerCase().contains(lowerQuery)) ||
-           product.id.toLowerCase().contains(lowerQuery);
-  }).toList();
+  const HeroBannerItem({
+    required this.id,
+    required this.title,
+    this.subtitle,
+    required this.imageUrl,
+    required this.routeName,
+    this.routeArgs,
+  });
 }
 ```
 
-Why: Centralized search logic that can be extended to search description, tags, etc.
+Why: Structured data for each banner slide with navigation info.
 
 ---
 
-### 2) Create SearchResultsPage widget
-File: `lib/pages/search_results_page.dart`
-
-Props:
-- `String query` (the search term)
+### 2) Create HeroBanner widget
+File: `lib/widgets/hero_banner.dart`
 
 Features:
-- Uses `ProductRepository.searchProducts(query)` to get matching products
-- Shows header: "Search results for '{query}'" and result count
-- If empty: displays a large centered message:
-  - Icon (search with X or magnifying glass)
-  - "No results found for '{query}'"
-  - Suggestion text: "Try different keywords"
-- If not empty: responsive grid of `ProductCard.fromProduct(product)`
-- Sorting dropdown (same as Home/Collection/Sale pages)
-- Default sort: Name A-Z (or keep Price High-Low for consistency)
+- Accepts `List<HeroBannerItem> banners`
+- Auto-scroll every 5 seconds (configurable)
+- PageView or CarouselSlider for slide transitions
+- Dot indicators showing current slide (bottom center)
+- Arrow buttons for manual navigation (optional, desktop only)
+- Pause auto-scroll on hover (desktop) or when user manually swipes
+- On tap/click: Navigate to `banner.routeName` with optional args
+- Smooth fade/slide transitions
 
 Layout:
 ```
-┌─────────────────────────────────────┐
-│ Search results for "hoodie" (3)     │
-│ [Sort: Name A-Z ▼]                  │
-├─────────────────────────────────────┤
-│ [ProductCard] [ProductCard] [Card]  │
-│ [ProductCard] [ProductCard]         │
-└─────────────────────────────────────┘
+┌────────────────────────────────────────┐
+│  [←]                              [→]  │
+│                                        │
+│        BANNER IMAGE + TEXT             │
+│                                        │
+│            ● ○ ○                       │
+└────────────────────────────────────────┘
 ```
 
-Empty state:
-```
-┌─────────────────────────────────────┐
-│ Search results for "xyz" (0)        │
-├─────────────────────────────────────┤
-│                                     │
-│         🔍                          │
-│   No results found for "xyz"        │
-│   Try different keywords            │
-│                                     │
-└─────────────────────────────────────┘
-```
+Responsive behavior:
+- Desktop: Height ~400-500px, full width with max constraint
+- Mobile: Height ~250-300px, full width
+- Images should cover/contain appropriately
 
 ---
 
-### 3) Add search route
-File: `lib/main.dart`
+### 3) Add banner data repository
+File: `lib/repositories/banner_repository.dart`
 
-Add route:
 ```dart
-'/search': (context) {
-  final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
-  final query = args?['query'] as String? ?? '';
-  return SearchResultsPage(query: query);
-},
+class BannerRepository {
+  static final List<HeroBannerItem> _banners = [
+    HeroBannerItem(
+      id: 'banner-1',
+      title: 'Placeholder Banner 1',
+      subtitle: 'Content coming soon',
+      imageUrl: 'assets/images/banners/banner1.png',
+      routeName: '/collection/clothing', // Example route
+    ),
+    HeroBannerItem(
+      id: 'banner-2',
+      title: 'Placeholder Banner 2',
+      subtitle: 'Content coming soon',
+      imageUrl: 'assets/images/banners/banner2.png',
+      routeName: '/sale',
+    ),
+    HeroBannerItem(
+      id: 'banner-3',
+      title: 'Placeholder Banner 3',
+      subtitle: 'Content coming soon',
+      imageUrl: 'assets/images/banners/banner3.png',
+      routeName: '/collection/signature',
+    ),
+  ];
+
+  static List<HeroBannerItem> getBanners() => _banners;
+}
 ```
 
-Why: Allows navigation with query parameter.
+Why: Centralized banner management, easy to update content later.
 
 ---
 
-### 4) Add search bar to SiteScaffold
-File: `lib/widgets/site_scaffold.dart`
-
-Add a search TextField/SearchBar in the AppBar:
-- Desktop: Place search bar between logo and nav links (or in trailing actions)
-- Mobile: Add search icon button that expands to search field or navigates to search page
-- On submit/search button click:
-  - Navigate to `/search` with `arguments: {'query': searchText}`
-  - Clear the search field after navigation (optional)
-
-Implementation options:
-- **Option A**: Inline search field in AppBar (always visible on desktop)
-- **Option B**: Search icon button → modal overlay or dedicated search page
-- **Recommended**: Option A for desktop, icon button for mobile
-
-Desktop AppBar layout:
-```
-┌──────────────────────────────────────────────────────┐
-│ [Logo]  [SearchField______]  [Shop▼] [About] [SALE!] │
-└──────────────────────────────────────────────────────┘
+### 4) Add banner assets directory
+- Create folder: `assets/images/banners/`
+- Add placeholder images: `banner1.png`, `banner2.png`, `banner3.png`
+- Update `pubspec.yaml`:
+```yaml
+flutter:
+  assets:
+    - assets/images/banners/
 ```
 
-Mobile AppBar:
-```
-┌──────────────────────────────────┐
-│ [☰] [Logo]              [🔍]     │
-└──────────────────────────────────┘
-```
+Why: Organize banner images separately from product images.
 
 ---
 
-### 5) Handle empty/whitespace queries
-- If user submits empty or whitespace-only query, either:
-  - Show validation message ("Please enter a search term")
-  - Navigate to search page with empty results and instructional message
-- Recommended: Disable search button until query has non-whitespace content
+### 5) Integrate HeroBanner into HomeScreen
+File: `lib/main.dart` (HomeScreen widget)
+
+Add banner above the product grid:
+```dart
+return SiteScaffold(
+  child: SingleChildScrollView(
+    child: Column(
+      children: [
+        // Hero Banner
+        HeroBanner(
+          banners: BannerRepository.getBanners(),
+        ),
+        const SizedBox(height: 32),
+        
+        // Sort dropdown
+        Padding(/*...*/),
+        
+        // Product grid
+        GridView.count(/*...*/),
+      ],
+    ),
+  ),
+);
+```
+
+Note: May need to adjust layout structure to allow both scrolling and fixed grid.
 
 ---
 
 ### 6) Styling and UX polish
-- Search results header: Bold, larger font
-- Result count: "(X results)" or "(No results)"
-- Empty state icon: `Icons.search_off` or `Icons.info_outline`, size 64-80
-- Empty state text: Larger font, muted color
-- Sorting dropdown: Same styling as other pages
-- Maintain consistent padding/spacing with Home/Collection pages
+- Banner images: Use `BoxFit.cover` with gradient overlay for text readability
+- Text styling: Bold title (24-32px), lighter subtitle (16-18px), white/contrast color
+- Dot indicators: Active dot primary color, inactive dots grey with opacity
+- Arrow buttons: Icon buttons with semi-transparent background (desktop only)
+- Transitions: 300ms duration with `Curves.easeInOut`
+- Accessibility: Semantic labels for screen readers, keyboard navigation support
 
 ---
 
-### 7) Optional enhancements (future)
-- Search suggestions/autocomplete as user types
-- Search history (recent searches)
-- Filter search results by category
-- Highlight matching text in product titles
-- Search by price range
-- Fuzzy matching for typos
+### 7) Auto-scroll configuration
+- Default interval: 5 seconds
+- Pause on:
+  - Hover (desktop)
+  - Manual swipe/navigation
+  - Focus (accessibility)
+- Resume after 2 seconds of inactivity
+- Loop infinitely (slide 3 → slide 1)
+
+---
+
+### 8) Mobile optimizations
+- Touch-friendly: Large tap target for entire banner
+- Swipe gestures: Native PageView swipe support
+- Reduced height: 250-300px vs desktop 400-500px
+- Hide arrow buttons on mobile (rely on swipe + dots)
 
 ---
 
 ## Implementation Checklist
 
-- [ ] Step 1: Add `searchProducts(String query)` to ProductRepository
-- [ ] Step 2: Create SearchResultsPage with grid + empty state
-- [ ] Step 3: Add `/search` route to main.dart
-- [ ] Step 4: Add search bar to SiteScaffold AppBar
-- [ ] Step 5: Handle empty queries gracefully
-- [ ] Step 6: Style and test on desktop + mobile
-- [ ] Step 7: (Optional) Add enhancements
+- [ ] Step 1: Create `HeroBannerItem` model
+- [ ] Step 2: Build `HeroBanner` widget with auto-scroll
+- [ ] Step 3: Create `BannerRepository` with placeholder data
+- [ ] Step 4: Add banner assets and update pubspec.yaml
+- [ ] Step 5: Integrate `HeroBanner` into HomeScreen
+- [ ] Step 6: Style and polish (text, dots, arrows, transitions)
+- [ ] Step 7: Implement auto-scroll with pause logic
+- [ ] Step 8: Test and optimize for mobile
 
 ---
 
 ## Testing Plan
 
-- Search for existing product: "hoodie" → should show Uni Hoodie
-- Search for category: "clothing" → should show all clothing items
-- Search for partial match: "cap" → should show Baseball Cap
-- Search for non-existent term: "xyz" → should show empty state
-- Search with whitespace: "  " → should handle gracefully
-- Sort search results → should work consistently
-- Test on desktop and mobile viewports
+- Auto-scroll: Verify banners auto-advance every 5 seconds
+- Manual navigation: Click dots/arrows to change slides
+- Pause behavior: Hover (desktop) or swipe should pause auto-scroll
+- Click navigation: Tap banner navigates to correct route
+- Responsive: Check banner height/layout on mobile and desktop
+- Accessibility: Screen reader announces slide changes, keyboard nav works
+- Edge cases: Single banner, zero banners (shouldn't crash)
+
+---
+
+## Future Enhancements
+
+- Admin panel to update banners without code changes
+- A/B testing different banner content
+- Video backgrounds for banners
+- Parallax scroll effects
+- Analytics tracking (banner clicks, impressions)
+- Multiple banner sets (seasonal, promotional)
+
+---
+
+## Dependencies (Optional)
+
+Consider using a carousel package for easier implementation:
+- `carousel_slider: ^4.2.1` - Popular, feature-rich
+- `flutter_carousel_widget: ^2.0.0` - Modern alternative
+
+Or implement with native `PageView` + `Timer` for zero dependencies.
 
 ---
 
 ## Notes
 
-- Keep search case-insensitive and trim whitespace
-- Consider searching across title, categories, and id initially
-- Can extend to search description, tags, SKU later
-- Search bar should be accessible (keyboard navigation, clear button)
+- Keep banner images optimized (WebP format, ~1920x500px max for desktop)
+- Use placeholder content initially; real images/text will be provided
+- Ensure banner links are tested before launch
+- Consider loading banners from remote config for dynamic updates
+- Auto-scroll should be smooth and not jarring
