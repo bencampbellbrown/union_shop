@@ -62,14 +62,8 @@ class CartProvider extends ChangeNotifier {
     });
   }
 
-  /// Calculate total with tax (20%)
+  /// Calculate total
   double getTotal() {
-    final subtotal = getSubtotal();
-    return subtotal * 1.2; // Add 20% tax
-  }
-
-  /// Calculate tax amount
-  double getTax() {
-    return getSubtotal() * 0.2;
+    return getSubtotal();
   }
 }

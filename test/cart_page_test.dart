@@ -56,6 +56,7 @@ void main() {
 
     // Should show the cart item
     expect(find.text('Test Product'), findsOneWidget);
-    expect(find.text('£10.00'), findsOneWidget);
+    expect(find.text('Color: Red | Size: M'), findsOneWidget);
+    expect(find.text('1 item'), findsOneWidget);
   });
 }
