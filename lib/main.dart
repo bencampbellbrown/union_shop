@@ -5,6 +5,7 @@ import 'package:union_shop/auth_page.dart';
 import 'package:union_shop/pages/collection_page.dart';
 import 'package:union_shop/widgets/site_scaffold.dart';
 import 'package:union_shop/repositories/product_repository.dart';
+import 'package:union_shop/models/product.dart';
 
 // Returns an ImageProvider for either bundled assets or network URLs.
 ImageProvider<Object> _imageProviderFor(String url) {
@@ -41,32 +42,39 @@ class UnionShopApp extends StatelessWidget {
         '/about': (context) => const AboutPage(),
         '/auth': (context) => const AuthPage(),
         '/collection/clothing': (context) => const CollectionPage(
-          collectionTitle: 'Clothing',
-         categoryFilter: 'clothing',
-        ),
+              collectionTitle: 'Clothing',
+              categoryFilter: 'clothing',
+            ),
         '/collection/merchandise': (context) => const CollectionPage(
-          collectionTitle: 'Merchandise',
-          categoryFilter: 'merchandise',
-        ),
+              collectionTitle: 'Merchandise',
+              categoryFilter: 'merchandise',
+            ),
         '/collection/signature': (context) => const CollectionPage(
-          collectionTitle: 'Signature & Essential Range',
-          categoryFilter: 'signature',
-        ),
+              collectionTitle: 'Signature & Essential Range',
+              categoryFilter: 'signature',
+            ),
         '/collection/portsmouth': (context) => const CollectionPage(
-          collectionTitle: 'Portsmouth City Collection',
-          categoryFilter: 'portsmouth',
-        ),
+              collectionTitle: 'Portsmouth City Collection',
+              categoryFilter: 'portsmouth',
+            ),
         '/collection/graduation': (context) => const CollectionPage(
-          collectionTitle: 'Graduation',
-          categoryFilter: 'graduation',
-        ),
+              collectionTitle: 'Graduation',
+              categoryFilter: 'graduation',
+            ),
       },
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  ProductSortOption _sortOption = ProductSortOption.nameAsc;
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -82,6 +90,20 @@ class HomeScreen extends StatelessWidget {
 
   void placeholderCallbackForButtons() {
     // This is the event handler for buttons that don't work yet
+  }
+
+  List<Product> _getSortedProducts() {
+    final products = ProductRepository.getAllProducts();
+    switch (_sortOption) {
+      case ProductSortOption.nameAsc:
+        return ProductRepository.sortByName(products, ascending: true);
+      case ProductSortOption.nameDesc:
+        return ProductRepository.sortByName(products, ascending: false);
+      case ProductSortOption.priceAsc:
+        return ProductRepository.sortByPrice(products, ascending: true);
+      case ProductSortOption.priceDesc:
+        return ProductRepository.sortByPrice(products, ascending: false);
+    }
   }
 
   @override
@@ -184,7 +206,41 @@ class HomeScreen extends StatelessWidget {
                       letterSpacing: 1,
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      DropdownButton<ProductSortOption>(
+                        value: _sortOption,
+                        onChanged: (option) {
+                          if (option != null) {
+                            setState(() {
+                              _sortOption = option;
+                            });
+                          }
+                        },
+                        items: const [
+                          DropdownMenuItem(
+                            value: ProductSortOption.nameAsc,
+                            child: Text('Name: A-Z'),
+                          ),
+                          DropdownMenuItem(
+                            value: ProductSortOption.nameDesc,
+                            child: Text('Name: Z-A'),
+                          ),
+                          DropdownMenuItem(
+                            value: ProductSortOption.priceAsc,
+                            child: Text('Price: Low-High'),
+                          ),
+                          DropdownMenuItem(
+                            value: ProductSortOption.priceDesc,
+                            child: Text('Price: High-Low'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
                   GridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -192,7 +248,7 @@ class HomeScreen extends StatelessWidget {
                     childAspectRatio: childAspect,
                     crossAxisSpacing: 24,
                     mainAxisSpacing: 48,
-                    children: ProductRepository.getAllProducts()
+                    children: _getSortedProducts()
                         .map((product) => ProductCard(
                               title: product.title,
                               price: product.price,
@@ -296,4 +352,11 @@ class ProductCard extends StatelessWidget {
       ),
     );
   }
+}
+
+enum ProductSortOption {
+  nameAsc,
+  nameDesc,
+  priceAsc,
+  priceDesc,
 }

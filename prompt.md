@@ -17,7 +17,7 @@ Enable users to sort products by name (A-Z, Z-A) and price (low-high, high-low) 
   - Price Ascending
   - Price Descending
 
-### 3. Update HomeScreen and CollectionPage Widgets
+### 3. ✅ **COMPLETED** - Update HomeScreen and CollectionPage Widgets
 - Add a dropdown or segmented control for sort selection at the top of the product grid.
 - Store the selected sort option in state.
 - When the sort option changes, re-sort the product list using ProductRepository methods.
