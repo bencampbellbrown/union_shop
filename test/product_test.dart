@@ -11,59 +11,39 @@ void main() {
         providers: [
           ChangeNotifierProvider(create: (_) => CartProvider()),
         ],
-        child: const MaterialApp(home: ProductPage()),
+        child: const MaterialApp(
+          home: Scaffold(
+            body: ProductPage(),
+          ),
+        ),
       );
     }
 
-    testWidgets('should display product page with basic elements', (
-      tester,
-    ) async {
+    testWidgets('should display product title and price', (tester) async {
       await tester.pumpWidget(createTestWidget());
-      await tester.pump();
 
-      // Check that basic UI elements are present
-      expect(
-        find.text('PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!'),
-        findsOneWidget,
-      );
+      // Check that product title and price are displayed
       expect(find.text('Placeholder Product Name'), findsOneWidget);
       expect(find.text('£15.00'), findsOneWidget);
-      expect(find.text('Description'), findsOneWidget);
     });
 
-    testWidgets('should display student instruction text', (tester) async {
+    testWidgets('should display add to cart button', (tester) async {
       await tester.pumpWidget(createTestWidget());
-      await tester.pump();
 
-      // Check that student instruction is present
-      expect(
-        find.text(
-          'Students should add size options, colour options, quantity selector, add to cart button, and buy now button here.',
-        ),
-        findsOneWidget,
-      );
+      // Check that ADD TO CART button is present
+      expect(find.text('ADD TO CART'), findsOneWidget);
     });
 
-    testWidgets('should display header icons', (tester) async {
+    testWidgets('should add item to cart when button is tapped',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
+
+      // Tap the ADD TO CART button
+      await tester.tap(find.text('ADD TO CART'));
       await tester.pump();
 
-      // Check that header icons are present
-      expect(find.byIcon(Icons.search), findsOneWidget);
-      expect(find.byIcon(Icons.shopping_bag_outlined), findsOneWidget);
-      expect(find.byIcon(Icons.menu), findsOneWidget);
-    });
-
-    testWidgets('should display footer', (tester) async {
-      await tester.pumpWidget(createTestWidget());
-      await tester.pump();
-
-      // Check that footer is present
-      expect(find.text('Placeholder Footer'), findsOneWidget);
-      expect(
-        find.text('Students should customise this footer section'),
-        findsOneWidget,
-      );
+      // Dialog should appear with success message
+      expect(find.text('Added to Cart!'), findsOneWidget);
     });
   });
 }
