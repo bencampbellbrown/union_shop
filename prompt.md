@@ -193,7 +193,7 @@ Note: May need to adjust layout structure to allow both scrolling and fixed grid
 ## Implementation Checklist
 
 - [x] Step 1: Create `HeroBannerItem` model
-- [ ] Step 2: Build `HeroBanner` widget with auto-scroll
+- [x] Step 2: Build `HeroBanner` widget with auto-scroll
 - [ ] Step 3: Create `BannerRepository` with placeholder data
 - [ ] Step 4: Add banner assets and update pubspec.yaml
 - [ ] Step 5: Integrate `HeroBanner` into HomeScreen
