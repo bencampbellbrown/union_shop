@@ -33,7 +33,7 @@ File: lib/utils/money.dart
 
 Why: Keeps logic consistent and unit-testable.
 
-### 2) Extend Product with computed getters
+### 2) ✅ COMPLETED — Extend Product with computed getters
 File: lib/models/product.dart
 - Add computed getters that delegate to money utils (no breaking changes):
   - int get pricePence
@@ -43,7 +43,7 @@ File: lib/models/product.dart
 
 Why: A thin convenience layer for UI widgets to consume.
 
-### 3) Create a reusable PriceTag widget
+### 3) ✅ COMPLETED — Create a reusable PriceTag widget
 File: lib/widgets/price_tag.dart
 Props:
 - required String priceText

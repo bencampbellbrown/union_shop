@@ -1,4 +1,6 @@
-﻿class Product {
+﻿import '../utils/money.dart';
+
+class Product {
   final String id;
   final String title;
   final String price;
@@ -28,6 +30,18 @@
     }
     return [imageUrl];
   }
+
+  // Computed pricing helpers
+  int get pricePence => MoneyUtils.parsePriceToPence(price);
+
+  int get salePricePence => isOnSale
+      ? MoneyUtils.calcDiscountedPence(pricePence, discountPercent: 20)
+      : pricePence;
+
+  String get formattedPrice => MoneyUtils.formatPenceToPrice(pricePence);
+
+  String get formattedSalePrice =>
+      MoneyUtils.formatPenceToPrice(salePricePence);
 }
 
 /// Sorting options for products
