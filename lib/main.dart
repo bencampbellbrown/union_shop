@@ -114,21 +114,21 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 32),
 
-          // Products Section
+          // Products Section with Collection Previews
           Container(
             color: Colors.white,
             child: Padding(
-              padding: const EdgeInsets.all(40.0),
+              padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 48),
               child: Column(
                 children: [
                   // Signature Collection
                   CollectionPreview(
-                    collectionTitle: 'Signature Collection',
+                    collectionTitle: 'Signature & Essential Range',
                     categoryFilter: 'signature',
                     itemsToShow: 3,
                     showViewAllButton: true,
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 56),
 
                   // Clothing Collection
                   CollectionPreview(
@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemsToShow: 3,
                     showViewAllButton: true,
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 56),
 
                   // Merchandise Collection
                   CollectionPreview(
@@ -146,16 +146,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemsToShow: 3,
                     showViewAllButton: true,
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 56),
 
                   // Portsmouth Collection
                   CollectionPreview(
-                    collectionTitle: 'Portsmouth',
+                    collectionTitle: 'Portsmouth City Collection',
                     categoryFilter: 'portsmouth',
                     itemsToShow: 3,
                     showViewAllButton: true,
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 56),
 
                   // Graduation Collection
                   CollectionPreview(

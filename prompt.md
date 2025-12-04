@@ -138,8 +138,8 @@ Remove the old "All Products" section and sort dropdown from the home page (thes
 ## Implementation Checklist
 
 - [x] Step 1: Create `CollectionPreview` widget
-- [ ] Step 2: Update HomeScreen with collection previews
-- [ ] Step 3: Style and polish sections
+- [x] Step 2: Update HomeScreen with collection previews
+- [x] Step 3: Style and polish sections
 - [ ] Step 4: Verify navigation and linking
 - [ ] Step 5: Test responsive design on mobile/tablet/desktop
 

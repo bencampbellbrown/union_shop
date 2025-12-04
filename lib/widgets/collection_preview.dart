@@ -29,82 +29,85 @@ class CollectionPreview extends StatelessWidget {
     final int columns = width > 1000 ? 3 : (width > 600 ? 2 : 1);
     final double childAspect = columns == 3 ? 1.0 : (columns == 2 ? 1.2 : 0.8);
 
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
-      child: Column(
-        children: [
-          // Header with title and "View All" button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                collectionTitle,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  letterSpacing: 0.5,
-                ),
+    return Column(
+      children: [
+        // Header with title and "View All" button
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              collectionTitle,
+              style: const TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                letterSpacing: 0.3,
               ),
-              if (showViewAllButton)
-                TextButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/collection/$categoryFilter',
-                    );
-                  },
-                  label: const Text(
-                    'View All',
-                    style: TextStyle(
-                      color: Color(0xFF4d2963),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  icon: const Icon(
-                    Icons.arrow_forward,
-                    size: 18,
-                    color: Color(0xFF4d2963),
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 24),
-
-          // Product grid
-          if (displayedProducts.isEmpty)
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.all(40.0),
-                child: Text(
-                  'No products in this collection',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            )
-          else
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: columns,
-                childAspectRatio: childAspect,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-              ),
-              itemCount: displayedProducts.length,
-              itemBuilder: (context, index) {
-                final product = displayedProducts[index];
-                return ProductCard.fromProduct(product);
-              },
             ),
-        ],
-      ),
+            if (showViewAllButton)
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/collection/$categoryFilter',
+                  );
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'View All',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: const Color(0xFF4d2963),
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    const Icon(
+                      Icons.arrow_forward,
+                      size: 16,
+                      color: Color(0xFF4d2963),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 20),
+
+        // Product grid
+        if (displayedProducts.isEmpty)
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.all(40.0),
+              child: Text(
+                'No products in this collection',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          )
+        else
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: columns,
+              childAspectRatio: childAspect,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+            ),
+            itemCount: displayedProducts.length,
+            itemBuilder: (context, index) {
+              final product = displayedProducts[index];
+              return ProductCard.fromProduct(product);
+            },
+          ),
+      ],
     );
   }
 }
