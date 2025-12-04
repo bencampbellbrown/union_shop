@@ -2,15 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/site_scaffold.dart';
 import 'package:union_shop/repositories/product_repository.dart';
 import 'package:union_shop/main.dart';
+import 'package:union_shop/models/product.dart';
 
-class SalePage extends StatelessWidget {
+class SalePage extends StatefulWidget {
   const SalePage({super.key});
 
   @override
+  State<SalePage> createState() => _SalePageState();
+}
+
+class _SalePageState extends State<SalePage> {
+  ProductSortOption _sortOption = ProductSortOption.priceDesc;
+
+  List<Product> _getFiltered() =>
+      ProductRepository.getAllProducts().where((p) => p.isOnSale).toList();
+
+  List<Product> _getSortedProducts() {
+    final products = _getFiltered();
+    switch (_sortOption) {
+      case ProductSortOption.nameAsc:
+        return ProductRepository.sortByName(products, ascending: true);
+      case ProductSortOption.nameDesc:
+        return ProductRepository.sortByName(products, ascending: false);
+      case ProductSortOption.priceAsc:
+        return ProductRepository.sortByPrice(products, ascending: true);
+      case ProductSortOption.priceDesc:
+        return ProductRepository.sortByPrice(products, ascending: false);
+      default:
+        return products;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Get products marked as on sale
-    final products =
-        ProductRepository.getAllProducts().where((p) => p.isOnSale).toList();
+    final filtered = _getFiltered();
 
     // Compute responsive columns and aspect ratio for product grid
     final double width = MediaQuery.of(context).size.width;
@@ -39,7 +64,7 @@ class SalePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '${products.length} product${products.length != 1 ? 's' : ''}',
+                  '${filtered.length} product${filtered.length != 1 ? 's' : ''}',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
@@ -49,12 +74,12 @@ class SalePage extends StatelessWidget {
             ),
           ),
 
-          // Products Grid
+          // Products Grid + Sort
           Container(
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(40.0),
-              child: products.isEmpty
+              child: filtered.isEmpty
                   ? const Center(
                       child: Padding(
                         padding: EdgeInsets.all(40.0),
@@ -67,20 +92,58 @@ class SalePage extends StatelessWidget {
                         ),
                       ),
                     )
-                  : GridView.count(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: columns,
-                      childAspectRatio: childAspect,
-                      crossAxisSpacing: 24,
-                      mainAxisSpacing: 48,
-                      children: products
-                          .map((product) => ProductCard(
-                                title: product.title,
-                                price: product.price,
-                                imageUrl: product.imageUrl,
-                              ))
-                          .toList(),
+                  : Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            DropdownButton<ProductSortOption>(
+                              value: _sortOption,
+                              onChanged: (option) {
+                                if (option != null) {
+                                  setState(() {
+                                    _sortOption = option;
+                                  });
+                                }
+                              },
+                              items: const [
+                                DropdownMenuItem(
+                                  value: ProductSortOption.nameAsc,
+                                  child: Text('Name: A-Z'),
+                                ),
+                                DropdownMenuItem(
+                                  value: ProductSortOption.nameDesc,
+                                  child: Text('Name: Z-A'),
+                                ),
+                                DropdownMenuItem(
+                                  value: ProductSortOption.priceAsc,
+                                  child: Text('Price: Low-High'),
+                                ),
+                                DropdownMenuItem(
+                                  value: ProductSortOption.priceDesc,
+                                  child: Text('Price: High-Low'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 24),
+                        GridView.count(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          crossAxisCount: columns,
+                          childAspectRatio: childAspect,
+                          crossAxisSpacing: 24,
+                          mainAxisSpacing: 48,
+                          children: _getSortedProducts()
+                              .map((product) => ProductCard(
+                                    title: product.title,
+                                    price: product.price,
+                                    imageUrl: product.imageUrl,
+                                  ))
+                              .toList(),
+                        ),
+                      ],
                     ),
             ),
           ),

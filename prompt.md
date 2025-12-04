@@ -16,7 +16,7 @@ Create a dedicated Sale page that displays products marked as "on sale." The pag
 - Use a similar structure to `CollectionPage`.
 - Filter products using `ProductRepository.getAllProducts().where((p) => p.isOnSale)`.
 
-### 4. Add Sorting to SalePage
+### 4. ✅ **COMPLETED** - Add Sorting to SalePage
 - Add a dropdown for sorting (by name and price).
 - Use the same sort logic as HomeScreen and CollectionPage.
 

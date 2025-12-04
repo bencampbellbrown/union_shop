@@ -354,9 +354,4 @@ class ProductCard extends StatelessWidget {
   }
 }
 
-enum ProductSortOption {
-  nameAsc,
-  nameDesc,
-  priceAsc,
-  priceDesc,
-}
+// Sorting options are defined in models/product.dart
