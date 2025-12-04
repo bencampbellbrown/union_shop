@@ -134,7 +134,8 @@ class SiteScaffold extends StatelessWidget {
                             ),
                             const SizedBox(width: 12),
                             TextButton(
-                              onPressed: _placeholder,
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/sale'),
                               child: const Text('SALE!',
                                   style: TextStyle(color: Colors.grey)),
                             ),

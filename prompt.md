@@ -20,11 +20,11 @@ Create a dedicated Sale page that displays products marked as "on sale." The pag
 - Add a dropdown for sorting (by name and price).
 - Use the same sort logic as HomeScreen and CollectionPage.
 
-### 5. Add Route for Sale Page
+### 5. ✅ **COMPLETED** - Add Route for Sale Page
 - In `main.dart`, add a route:  
   `'/sale': (context) => const SalePage(),`
 
-### 6. Add Navigation Link
+### 6. ✅ **COMPLETED** - Add Navigation Link
 - Update the navigation bar (e.g., in `site_scaffold.dart`) to include a "Sale" link that navigates to `/sale`.
 
 ### 7. Test Sale Page

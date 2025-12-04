@@ -6,6 +6,7 @@ import 'package:union_shop/pages/collection_page.dart';
 import 'package:union_shop/widgets/site_scaffold.dart';
 import 'package:union_shop/repositories/product_repository.dart';
 import 'package:union_shop/models/product.dart';
+import 'package:union_shop/pages/sale_page.dart';
 
 // Returns an ImageProvider for either bundled assets or network URLs.
 ImageProvider<Object> _imageProviderFor(String url) {
@@ -41,6 +42,7 @@ class UnionShopApp extends StatelessWidget {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutPage(),
         '/auth': (context) => const AuthPage(),
+        '/sale': (context) => const SalePage(),
         '/collection/clothing': (context) => const CollectionPage(
               collectionTitle: 'Clothing',
               categoryFilter: 'clothing',
