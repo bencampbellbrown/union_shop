@@ -341,8 +341,8 @@ Use `shared_preferences` or `hive`:
 
 ## Implementation Checklist
 
-- [ ] Step 1: Create CartItem model
-- [ ] Step 2: Create CartProvider (state management)
+- [x] Step 1: Create CartItem model
+- [x] Step 2: Create CartProvider (state management)
 - [ ] Step 3: Create AddToCartDialog widget
 - [ ] Step 4: Update ProductInfo to add items to cart
 - [ ] Step 5: Create CartPage
