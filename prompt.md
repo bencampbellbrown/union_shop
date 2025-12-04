@@ -344,7 +344,7 @@ Use `shared_preferences` or `hive`:
 - [x] Step 1: Create CartItem model
 - [x] Step 2: Create CartProvider (state management)
 - [x] Step 3: Create AddToCartDialog widget
-- [ ] Step 4: Update ProductInfo to add items to cart
+- [x] Step 4: Update ProductInfo to add items to cart
 - [ ] Step 5: Create CartPage
 - [ ] Step 6: Add /cart route
 - [ ] Step 7: Update SiteScaffold with basket icon and badge

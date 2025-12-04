@@ -123,6 +123,8 @@ class _ProductPageState extends State<ProductPage> {
                             description: productDescription,
                             showOptions: showOptions,
                             isOnSale: isOnSale,
+                            productId: productId,
+                            imageUrl: productImageArg,
                           ),
                         ),
                       ],
@@ -140,6 +142,8 @@ class _ProductPageState extends State<ProductPage> {
                           description: productDescription,
                           showOptions: showOptions,
                           isOnSale: isOnSale,
+                          productId: productId,
+                          imageUrl: productImageArg,
                         ),
                       ],
                     );

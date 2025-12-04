@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:union_shop/widgets/price_tag.dart';
+import 'package:union_shop/models/cart_item.dart';
+import 'package:union_shop/providers/cart_provider.dart';
+import 'package:union_shop/widgets/add_to_cart_dialog.dart';
 
 class ProductInfo extends StatefulWidget {
   final String title;
@@ -7,6 +11,8 @@ class ProductInfo extends StatefulWidget {
   final String description;
   final bool showOptions;
   final bool isOnSale;
+  final String? productId;
+  final String? imageUrl;
 
   const ProductInfo(
       {super.key,
@@ -14,7 +20,9 @@ class ProductInfo extends StatefulWidget {
       required this.price,
       required this.description,
       this.showOptions = true,
-      this.isOnSale = false});
+      this.isOnSale = false,
+      this.productId,
+      this.imageUrl});
 
   @override
   State<ProductInfo> createState() => _ProductInfoState();
@@ -23,6 +31,8 @@ class ProductInfo extends StatefulWidget {
 class _ProductInfoState extends State<ProductInfo> {
   // Quantity selector state
   int _quantity = 1;
+  String? _selectedColor;
+  String? _selectedSize;
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +55,18 @@ class _ProductInfoState extends State<ProductInfo> {
         ),
         const SizedBox(height: 12),
 
-        // Simple option selectors (non-functional placeholders)
+        // Simple option selectors
         if (widget.showOptions)
           Row(
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: colorOptions[0],
-                  onChanged: (_) {},
+                  value: _selectedColor ?? colorOptions[0],
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedColor = value;
+                    });
+                  },
                   items: colorOptions
                       .map((c) => DropdownMenuItem(value: c, child: Text(c)))
                       .toList(),
@@ -62,8 +76,12 @@ class _ProductInfoState extends State<ProductInfo> {
               const SizedBox(width: 12),
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: sizeOptions[1],
-                  onChanged: (_) {},
+                  value: _selectedSize ?? sizeOptions[1],
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedSize = value;
+                    });
+                  },
                   items: sizeOptions
                       .map((s) => DropdownMenuItem(value: s, child: Text(s)))
                       .toList(),
@@ -97,12 +115,31 @@ class _ProductInfoState extends State<ProductInfo> {
             final isMobile = constraints.maxWidth < 500;
 
             if (isMobile) {
-              // Stack buttons vertically on mobile
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   OutlinedButton(
-                    onPressed: () {}, // no-op placeholder
+                    onPressed: () {
+                      final cartItem = CartItem(
+                        productId: widget.productId ?? 'unknown',
+                        title: widget.title,
+                        price: widget.price,
+                        quantity: _quantity,
+                        selectedColor: _selectedColor,
+                        selectedSize: _selectedSize,
+                        imageUrl: widget.imageUrl ?? '',
+                        isOnSale: widget.isOnSale,
+                      );
+
+                      Provider.of<CartProvider>(context, listen: false)
+                          .addItem(cartItem);
+
+                      showDialog(
+                        context: context,
+                        builder: (context) =>
+                            AddToCartDialog(cartItem: cartItem),
+                      );
+                    },
                     child: const Padding(
                       padding: EdgeInsets.symmetric(vertical: 12.0),
                       child: Text('ADD TO CART'),
@@ -110,7 +147,7 @@ class _ProductInfoState extends State<ProductInfo> {
                   ),
                   const SizedBox(height: 12),
                   ElevatedButton(
-                    onPressed: () {}, // no-op placeholder
+                    onPressed: () {}, // placeholder for future Shop Pay integration
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963)),
                     child: const Padding(
@@ -125,7 +162,27 @@ class _ProductInfoState extends State<ProductInfo> {
               return Row(
                 children: [
                   OutlinedButton(
-                    onPressed: () {}, // no-op placeholder
+                    onPressed: () {
+                      final cartItem = CartItem(
+                        productId: widget.productId ?? 'unknown',
+                        title: widget.title,
+                        price: widget.price,
+                        quantity: _quantity,
+                        selectedColor: _selectedColor,
+                        selectedSize: _selectedSize,
+                        imageUrl: widget.imageUrl ?? '',
+                        isOnSale: widget.isOnSale,
+                      );
+
+                      Provider.of<CartProvider>(context, listen: false)
+                          .addItem(cartItem);
+
+                      showDialog(
+                        context: context,
+                        builder: (context) =>
+                            AddToCartDialog(cartItem: cartItem),
+                      );
+                    },
                     child: const Padding(
                       padding: EdgeInsets.symmetric(
                           vertical: 12.0, horizontal: 18.0),
@@ -134,7 +191,7 @@ class _ProductInfoState extends State<ProductInfo> {
                   ),
                   const SizedBox(width: 12),
                   ElevatedButton(
-                    onPressed: () {}, // no-op placeholder
+                    onPressed: () {}, // placeholder for future Shop Pay integration
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963)),
                     child: const Padding(
