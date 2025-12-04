@@ -92,26 +92,61 @@ class _ProductInfoState extends State<ProductInfo> {
 
         const SizedBox(height: 16),
 
-        Row(
-          children: [
-            OutlinedButton(
-              onPressed: () {}, // no-op placeholder
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
-                child: Text('ADD TO CART'),
-              ),
-            ),
-            const SizedBox(width: 12),
-            ElevatedButton(
-              onPressed: () {}, // no-op placeholder
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4d2963)),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
-                child: Text('BUY WITH SHOP'),
-              ),
-            ),
-          ],
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final isMobile = constraints.maxWidth < 500;
+
+            if (isMobile) {
+              // Stack buttons vertically on mobile
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {}, // no-op placeholder
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text('ADD TO CART'),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () {}, // no-op placeholder
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF4d2963)),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text('BUY WITH SHOP'),
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              // Show side-by-side on desktop
+              return Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: () {}, // no-op placeholder
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 18.0),
+                      child: Text('ADD TO CART'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  ElevatedButton(
+                    onPressed: () {}, // no-op placeholder
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF4d2963)),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 18.0),
+                      child: Text('BUY WITH SHOP'),
+                    ),
+                  ),
+                ],
+              );
+            }
+          },
         ),
 
         const SizedBox(height: 8),
