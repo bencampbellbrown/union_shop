@@ -1,132 +1,193 @@
-# Plan: Show Sale Pricing (strike-through old price + 20% off) on Collections and Product Pages
+# Plan: Implement Product Search with Search Results Page
 
 ## Goal
-When a product is on sale:
-- Show the original price struck through
-- Show a discounted price that is 20% lower than the listed price
-- Apply consistently in:
-  - Product tiles (Home and Collection pages)
-  - Individual Product page (ProductInfo header area)
-
-We will implement this with reusable utilities and a shared PriceTag widget to avoid duplication.
+Add a search feature that allows users to search for products by title or other attributes. Display matching products on a dedicated "Search Results" page with:
+- A grid of matching ProductCards
+- A "No results found" message when the search yields no matches
+- Sorting options (consistent with other pages)
+- A clear indication of what was searched
 
 ---
 
 ## Architecture Overview
 
-- Keep Product.price as String for backward compatibility.
-- Add reusable helpers to parse/format currency and calculate sale prices.
-- Centralize the visual treatment of prices in a single widget (PriceTag) and reuse it in ProductCard and ProductInfo.
+- Add a search bar to the site navigation (SiteScaffold)
+- Create a SearchResultsPage that filters products based on query
+- Use ProductRepository to search across product fields
+- Reuse ProductCard.fromProduct for consistent display
+- Support sorting on search results
 
 ---
 
 ## Steps
 
-### 1) ✅ COMPLETED — Add money utilities (parse/format/calc)
-File: lib/utils/money.dart
-- parsePriceToPence(String priceText) -> int
-  - Accepts values like "£20", "£20.00", "20", "20.00"
-- formatPenceToPrice(int pence) -> String
-  - Outputs "£X.YY"
-- calcDiscountedPence(int pence, {int discountPercent = 20}) -> int
-  - Returns floor-discounted value for display (e.g., 20% off)
+### 1) Add search method to ProductRepository
+File: `lib/repositories/product_repository.dart`
 
-Why: Keeps logic consistent and unit-testable.
+Add:
+```dart
+static List<Product> searchProducts(String query) {
+  if (query.isEmpty) return [];
+  
+  final lowerQuery = query.toLowerCase().trim();
+  
+  return _products.where((product) {
+    return product.title.toLowerCase().contains(lowerQuery) ||
+           product.categories.any((cat) => cat.toLowerCase().contains(lowerQuery)) ||
+           product.id.toLowerCase().contains(lowerQuery);
+  }).toList();
+}
+```
 
-### 2) ✅ COMPLETED — Extend Product with computed getters
-File: lib/models/product.dart
-- Add computed getters that delegate to money utils (no breaking changes):
-  - int get pricePence
-  - int get salePricePence => isOnSale ? calcDiscountedPence(pricePence) : pricePence
-  - String get formattedPrice
-  - String get formattedSalePrice (only used if isOnSale)
-
-Why: A thin convenience layer for UI widgets to consume.
-
-### 3) ✅ COMPLETED — Create a reusable PriceTag widget
-File: lib/widgets/price_tag.dart
-Props:
-- required String priceText
-- bool isOnSale = false
-- int? basePricePence (optional, overrides priceText parsing)
-- int discountPercent = 20
-Behavior:
-- If isOnSale: renders Row with:
-  - original price (TextDecoration.lineThrough, muted color)
-  - discounted price (bold, accent color)
-- Else: renders a single price
-- Internally uses money utils for parsing/formatting if basePricePence not supplied
-
-Why: One unified place to render prices everywhere.
-
-### 4) ✅ COMPLETED — Update ProductCard to use PriceTag (non-breaking)
-File: lib/widgets/product_card.dart
-- Add a named constructor: ProductCard.fromProduct(Product product)
-  - Uses product.title, product.imageUrl, and PriceTag(
-      priceText: product.price,
-      isOnSale: product.isOnSale,
-      discountPercent: 20,
-    )
-- Keep existing constructor for any legacy use
-- Prefer .fromProduct() in new code (Home/Collections/Sale pages)
-
-### 5) ✅ COMPLETED — Switch Home and Collection pages to ProductCard.fromProduct
-Files:
-- lib/main.dart (Home grid)
-- lib/pages/collection_page.dart
-- lib/pages/sale_page.dart (already exists)
-- Map products with ProductCard.fromProduct(product)
-
-Why: Ensures consistent price rendering across all grids.
-
-### 6) ✅ COMPLETED — Update ProductInfo to use PriceTag
-File: lib/widgets/product_info.dart
-- Replace direct price Text with PriceTag:
-  PriceTag(
-    priceText: widget.price,
-    isOnSale: productOrArgs?.isOnSale ?? false, // depends on how ProductInfo receives data
-    discountPercent: 20,
-  )
-Implementation options:
-- If ProductInfo currently receives only title/price as strings, extend it to optionally accept a Product object OR a boolean isOnSale.
-- Minimal change: pass a new bool isOnSale to ProductInfo and wire from route args.
-
-Result:
-- Added `bool isOnSale` to `ProductInfo` with default `false` and render `PriceTag`.
-
-### 7) ✅ COMPLETED — Wire isOnSale to ProductPage
-File: lib/product_page.dart
-- When navigating to ProductPage, include `isOnSale` (and/or the Product) in arguments.
-- Ensure ProductInfo receives `isOnSale: true/false` for the chosen product.
-- If the app already uses ProductRepository.getProductById via args, pass the Product directly to ProductInfo.
-
-Result:
-- Read `isOnSale` from `ModalRoute.of(context)?.settings.arguments` and pass to `ProductInfo` in both desktop and mobile layouts.
-
-### 8) Styling polish
-- Old price color: Theme.of(context).textTheme.bodySmall?.color with opacity 0.6
-- New price color: Theme.of(context).colorScheme.primary and FontWeight.w600
-- Spacing between prices: SizedBox(width: 8)
-
-### 9) Tests (optional but recommended)
-- Unit tests for money.dart parsing/formatting/discount
-- Golden/widget tests for PriceTag (with and without sale)
-- Smoke test: Home/Collection/Sale pages render discounted prices for on-sale items
+Why: Centralized search logic that can be extended to search description, tags, etc.
 
 ---
 
-## Rollout Checklist
-- Implement Steps 1–3 (utils + PriceTag)
-- Update ProductCard (Step 4)
-- Switch Home/Collection/Sale grids to fromProduct (Step 5)
-- Update ProductInfo and ProductPage (Steps 6–7)
-- Manual verify on:
-  - Home grid shows discounted price for on-sale products
-  - Collection pages show discounted price
-  - Product page shows both struck-through and discounted prices
-- Add tests (Step 9)
+### 2) Create SearchResultsPage widget
+File: `lib/pages/search_results_page.dart`
+
+Props:
+- `String query` (the search term)
+
+Features:
+- Uses `ProductRepository.searchProducts(query)` to get matching products
+- Shows header: "Search results for '{query}'" and result count
+- If empty: displays a large centered message:
+  - Icon (search with X or magnifying glass)
+  - "No results found for '{query}'"
+  - Suggestion text: "Try different keywords"
+- If not empty: responsive grid of `ProductCard.fromProduct(product)`
+- Sorting dropdown (same as Home/Collection/Sale pages)
+- Default sort: Name A-Z (or keep Price High-Low for consistency)
+
+Layout:
+```
+┌─────────────────────────────────────┐
+│ Search results for "hoodie" (3)     │
+│ [Sort: Name A-Z ▼]                  │
+├─────────────────────────────────────┤
+│ [ProductCard] [ProductCard] [Card]  │
+│ [ProductCard] [ProductCard]         │
+└─────────────────────────────────────┘
+```
+
+Empty state:
+```
+┌─────────────────────────────────────┐
+│ Search results for "xyz" (0)        │
+├─────────────────────────────────────┤
+│                                     │
+│         🔍                          │
+│   No results found for "xyz"        │
+│   Try different keywords            │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+---
+
+### 3) Add search route
+File: `lib/main.dart`
+
+Add route:
+```dart
+'/search': (context) {
+  final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+  final query = args?['query'] as String? ?? '';
+  return SearchResultsPage(query: query);
+},
+```
+
+Why: Allows navigation with query parameter.
+
+---
+
+### 4) Add search bar to SiteScaffold
+File: `lib/widgets/site_scaffold.dart`
+
+Add a search TextField/SearchBar in the AppBar:
+- Desktop: Place search bar between logo and nav links (or in trailing actions)
+- Mobile: Add search icon button that expands to search field or navigates to search page
+- On submit/search button click:
+  - Navigate to `/search` with `arguments: {'query': searchText}`
+  - Clear the search field after navigation (optional)
+
+Implementation options:
+- **Option A**: Inline search field in AppBar (always visible on desktop)
+- **Option B**: Search icon button → modal overlay or dedicated search page
+- **Recommended**: Option A for desktop, icon button for mobile
+
+Desktop AppBar layout:
+```
+┌──────────────────────────────────────────────────────┐
+│ [Logo]  [SearchField______]  [Shop▼] [About] [SALE!] │
+└──────────────────────────────────────────────────────┘
+```
+
+Mobile AppBar:
+```
+┌──────────────────────────────────┐
+│ [☰] [Logo]              [🔍]     │
+└──────────────────────────────────┘
+```
+
+---
+
+### 5) Handle empty/whitespace queries
+- If user submits empty or whitespace-only query, either:
+  - Show validation message ("Please enter a search term")
+  - Navigate to search page with empty results and instructional message
+- Recommended: Disable search button until query has non-whitespace content
+
+---
+
+### 6) Styling and UX polish
+- Search results header: Bold, larger font
+- Result count: "(X results)" or "(No results)"
+- Empty state icon: `Icons.search_off` or `Icons.info_outline`, size 64-80
+- Empty state text: Larger font, muted color
+- Sorting dropdown: Same styling as other pages
+- Maintain consistent padding/spacing with Home/Collection pages
+
+---
+
+### 7) Optional enhancements (future)
+- Search suggestions/autocomplete as user types
+- Search history (recent searches)
+- Filter search results by category
+- Highlight matching text in product titles
+- Search by price range
+- Fuzzy matching for typos
+
+---
+
+## Implementation Checklist
+
+- [ ] Step 1: Add `searchProducts(String query)` to ProductRepository
+- [ ] Step 2: Create SearchResultsPage with grid + empty state
+- [ ] Step 3: Add `/search` route to main.dart
+- [ ] Step 4: Add search bar to SiteScaffold AppBar
+- [ ] Step 5: Handle empty queries gracefully
+- [ ] Step 6: Style and test on desktop + mobile
+- [ ] Step 7: (Optional) Add enhancements
+
+---
+
+## Testing Plan
+
+- Search for existing product: "hoodie" → should show Uni Hoodie
+- Search for category: "clothing" → should show all clothing items
+- Search for partial match: "cap" → should show Baseball Cap
+- Search for non-existent term: "xyz" → should show empty state
+- Search with whitespace: "  " → should handle gracefully
+- Sort search results → should work consistently
+- Test on desktop and mobile viewports
 
 ---
 
 ## Notes
-- Discount is currently fixed at 20%. If you want per-product discounts later, extend Product with `int? discountPercent` and default to 20 when `isOnSale == true` and `discountPercent == null`.
+
+- Keep search case-insensitive and trim whitespace
+- Consider searching across title, categories, and id initially
+- Can extend to search description, tags, SKU later
+- Search bar should be accessible (keyboard navigation, clear button)
