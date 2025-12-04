@@ -8,7 +8,7 @@ class ProductInfo extends StatefulWidget {
   final bool showOptions;
   final bool isOnSale;
 
-    const ProductInfo(
+  const ProductInfo(
       {super.key,
       required this.title,
       required this.price,
