@@ -147,7 +147,8 @@ class _ProductInfoState extends State<ProductInfo> {
                   ),
                   const SizedBox(height: 12),
                   ElevatedButton(
-                    onPressed: () {}, // placeholder for future Shop Pay integration
+                    onPressed:
+                        () {}, // placeholder for future Shop Pay integration
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963)),
                     child: const Padding(
@@ -191,7 +192,8 @@ class _ProductInfoState extends State<ProductInfo> {
                   ),
                   const SizedBox(width: 12),
                   ElevatedButton(
-                    onPressed: () {}, // placeholder for future Shop Pay integration
+                    onPressed:
+                        () {}, // placeholder for future Shop Pay integration
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963)),
                     child: const Padding(
