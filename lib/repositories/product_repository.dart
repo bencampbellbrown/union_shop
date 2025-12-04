@@ -175,17 +175,76 @@ class ProductRepository {
     return sorted;
   }
 
-  /// Search products by query string
+  /// Calculate Levenshtein distance between two strings (for fuzzy matching)
+  static int _levenshteinDistance(String s1, String s2) {
+    if (s1 == s2) return 0;
+    if (s1.isEmpty) return s2.length;
+    if (s2.isEmpty) return s1.length;
+
+    List<int> previousRow = List<int>.generate(s2.length + 1, (i) => i);
+
+    for (int i = 0; i < s1.length; i++) {
+      List<int> currentRow = [i + 1];
+
+      for (int j = 0; j < s2.length; j++) {
+        int insertions = previousRow[j + 1] + 1;
+        int deletions = currentRow[j] + 1;
+        int substitutions = previousRow[j] + (s1[i] != s2[j] ? 1 : 0);
+
+        currentRow.add([insertions, deletions, substitutions]
+            .reduce((a, b) => a < b ? a : b));
+      }
+
+      previousRow = currentRow;
+    }
+
+    return previousRow.last;
+  }
+
+  /// Check if two strings are similar enough (fuzzy match)
+  static bool _isFuzzyMatch(String text, String query, {int maxDistance = 2}) {
+    text = text.toLowerCase();
+    query = query.toLowerCase();
+
+    // Exact match or contains
+    if (text.contains(query)) return true;
+
+    // Check each word in the text against the query
+    final words = text.split(RegExp(r'\s+'));
+    for (final word in words) {
+      if (word.contains(query)) return true;
+
+      // Only apply fuzzy matching if query is long enough
+      if (query.length >= 4 && word.length >= 3) {
+        final distance = _levenshteinDistance(word, query);
+        // Allow typos based on word length
+        final threshold = query.length <= 5 ? 1 : maxDistance;
+        if (distance <= threshold) return true;
+      }
+    }
+
+    return false;
+  }
+
+  /// Search products by query string with fuzzy matching for typos
   static List<Product> searchProducts(String query) {
     if (query.isEmpty) return [];
 
     final lowerQuery = query.toLowerCase().trim();
 
     return _products.where((product) {
-      return product.title.toLowerCase().contains(lowerQuery) ||
-          product.categories
-              .any((cat) => cat.toLowerCase().contains(lowerQuery)) ||
-          product.id.toLowerCase().contains(lowerQuery);
+      // Check title with fuzzy matching
+      if (_isFuzzyMatch(product.title, lowerQuery)) return true;
+
+      // Check categories with fuzzy matching
+      if (product.categories.any((cat) => _isFuzzyMatch(cat, lowerQuery))) {
+        return true;
+      }
+
+      // Check ID with fuzzy matching
+      if (_isFuzzyMatch(product.id, lowerQuery)) return true;
+
+      return false;
     }).toList();
   }
 }
