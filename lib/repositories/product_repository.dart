@@ -75,6 +75,7 @@ class ProductRepository {
         'assets/images/beanies/white_beanie.png',
         'assets/images/beanies/Black_beanie.png',
       ],
+      isOnSale: true,
     ),
     const Product(
       id: 'lanyard',
@@ -111,6 +112,7 @@ class ProductRepository {
       categories: ['portsmouth'],
       hasColorVariants: false,
       hasSizeOptions: false,
+      isOnSale: true,
     ),
   ];
 

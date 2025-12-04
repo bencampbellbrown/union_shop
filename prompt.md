@@ -8,7 +8,7 @@ Create a dedicated Sale page that displays products marked as "on sale." The pag
 ### 1. ✅ **COMPLETED** - Update Product Model
 - Add a `bool isOnSale` field to the `Product` class (default: `false`).
 
-### 2. Tag Sale Products
+### 2. ✅ **COMPLETED** - Tag Sale Products
 - In `ProductRepository`, set `isOnSale: true` for products you want to appear on the Sale page.
 
 ### 3. Create SalePage Widget
