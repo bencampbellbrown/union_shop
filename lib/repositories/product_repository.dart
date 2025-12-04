@@ -143,4 +143,33 @@ class ProductRepository {
     }
     return categories.toList()..sort();
   }
+
+  /// Sort products by name
+  static List<Product> sortByName(List<Product> products,
+      {bool ascending = true}) {
+    List<Product> sorted = List<Product>.from(products);
+    sorted
+        .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+    if (!ascending) {
+      sorted = sorted.reversed.toList();
+    }
+    return sorted;
+  }
+
+  /// Sort products by price
+  static List<Product> sortByPrice(List<Product> products,
+      {bool ascending = true}) {
+    List<Product> sorted = List<Product>.from(products);
+    sorted.sort((a, b) {
+      final priceA =
+          double.tryParse(a.price.replaceAll(RegExp(r'[^0-9.]'), '')) ?? 0.0;
+      final priceB =
+          double.tryParse(b.price.replaceAll(RegExp(r'[^0-9.]'), '')) ?? 0.0;
+      return priceA.compareTo(priceB);
+    });
+    if (!ascending) {
+      sorted = sorted.reversed.toList();
+    }
+    return sorted;
+  }
 }

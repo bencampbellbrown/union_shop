@@ -1,119 +1,65 @@
-# Plan: Add Reusable Collection Pages
+# Plan: Add Product Sorting to Home and Collection Pages
 
 ## Overview
-Create a flexible collection page system that can display filtered product categories (Clothing, Merchandise, Signature & Essential Range, Portsmouth City Collection, Graduation) by reusing a single `CollectionPage` widget with different filters.
+Enable users to sort products by name (A-Z, Z-A) and price (low-high, high-low) on both the home page and all collection pages. Sorting should be easy to extend and maintain.
 
-## Architecture
+## Steps for Implementation
 
-### 1. Create Product Data Model
-**File:** `lib/models/product.dart`
-- Define `Product` class with fields:
-  - `String id`
-  - `String title`
-  - `String price`
-  - `String imageUrl`
-  - `List<String> categories` (e.g., ['clothing', 'signature'])
-  - `bool hasColorVariants`
-  - `bool hasSizeOptions`
-  - `List<String>? imageVariants` (optional, for multi-color products)
+### 1. ✅ **COMPLETED** - Update ProductRepository
+- Add static methods to return sorted product lists:
+  - `List<Product> sortByName(List<Product> products, {bool ascending = true})`
+  - `List<Product> sortByPrice(List<Product> products, {bool ascending = true})`
 
-### 2. Create Product Repository
-**File:** `lib/repositories/product_repository.dart`
-- Convert current hardcoded products from `main.dart` into a centralized list
-- Method: `List<Product> getAllProducts()`
-- Method: `List<Product> getProductsByCategory(String category)`
-- Method: `Product? getProductById(String id)`
+### 2. Define Sort Options Model
+- Create an enum or class for sort options:
+  - Name Ascending
+  - Name Descending
+  - Price Ascending
+  - Price Descending
 
-### 3. Create Reusable Collection Page Widget
-**File:** `lib/pages/collection_page.dart`
-- Accept parameters:
-  - `String collectionTitle` (e.g., "Clothing")
-  - `String categoryFilter` (e.g., "clothing")
-  - `String? description` (optional banner text)
-- Use `SiteScaffold` for consistent layout
-- Display filtered products in responsive grid (reuse grid logic from `main.dart`)
-- Show collection title and optional description banner
-- Reuse `ProductCard` widget for each product
+### 3. Update HomeScreen and CollectionPage Widgets
+- Add a dropdown or segmented control for sort selection at the top of the product grid.
+- Store the selected sort option in state.
+- When the sort option changes, re-sort the product list using ProductRepository methods.
 
-### 4. Update Navigation Routes
-**File:** `lib/main.dart`
-- Add named routes for each collection:
-  ```dart
-  '/collection/clothing': (context) => CollectionPage(
-        collectionTitle: 'Clothing',
-        categoryFilter: 'clothing',
-      ),
-  '/collection/merchandise': (context) => CollectionPage(
-        collectionTitle: 'Merchandise',
-        categoryFilter: 'merchandise',
-      ),
-  '/collection/signature': (context) => CollectionPage(
-        collectionTitle: 'Signature & Essential Range',
-        categoryFilter: 'signature',
-      ),
-  '/collection/portsmouth': (context) => CollectionPage(
-        collectionTitle: 'Portsmouth City Collection',
-        categoryFilter: 'portsmouth',
-      ),
-  '/collection/graduation': (context) => CollectionPage(
-        collectionTitle: 'Graduation',
-        categoryFilter: 'graduation',
-      ),
-  ```
+### 4. Refactor Product Grid Rendering
+- Ensure both pages use the sorted product list for rendering.
+- Avoid code duplication by extracting grid rendering logic into a reusable widget if needed.
 
-### 5. Update Shop Dropdown Navigation
-**File:** `lib/widgets/site_scaffold.dart`
-- Update `PopupMenuButton` `onSelected` callbacks (lines ~100-105, ~180-192)
-- Navigate to appropriate collection routes:
-  ```dart
-  onSelected: (value) {
-    switch (value) {
-      case 'clothing':
-        Navigator.pushNamed(context, '/collection/clothing');
-        break;
-      case 'merchandise':
-        Navigator.pushNamed(context, '/collection/merchandise');
-        break;
-      // ... etc
-    }
-  }
-  ```
+### 5. UI/UX Enhancements
+- Make sure the sort control is clearly visible and accessible.
+- Optionally, persist the last selected sort option per session.
 
-### 6. Tag Existing Products with Categories
-**File:** `lib/repositories/product_repository.dart`
-- Assign categories to products:
-  - Uni Hoodie: `['clothing', 'signature']`
-  - Uni T-Shirt: `['clothing', 'signature']`
-  - Uni Baseball Cap: `['clothing']`
-  - Pencils: `['merchandise', 'stationary']`
-  - Notebook: `['merchandise', 'stationary']`
-  - Uni Beanie: `['clothing']`
+### 6. Testing
+- Verify sorting works for all product lists and categories.
+- Check edge cases (e.g., products with same name or price).
 
-### 7. Update Home Page to Use Repository
-**File:** `lib/main.dart`
-- Replace hardcoded `ProductCard` list with `ProductRepository.getAllProducts()`
-- Map `Product` objects to `ProductCard` widgets
-- Pass product metadata through navigation arguments
+## Example Sort Option Enum
 
-## Benefits of This Approach
-✅ **Single source of truth** - All product data centralized in repository
-✅ **DRY principle** - One `CollectionPage` widget serves all collections
-✅ **Easy to extend** - Add new collections by adding routes and categories
-✅ **Maintainable** - Update product details in one place
-✅ **Type-safe** - Product model ensures consistent data structure
+```dart
+enum ProductSortOption {
+  nameAsc,
+  nameDesc,
+  priceAsc,
+  priceDesc,
+}
+```
 
-## Implementation Order
-1. ✅ **COMPLETED** - Create `Product` model class
-2. ✅ **COMPLETED** - Create `ProductRepository` with existing products
-3. ✅ **COMPLETED** - Build `CollectionPage` widget
-4. ✅ **COMPLETED** - Add collection routes to `MaterialApp`
-5. ✅ **COMPLETED** - Update navigation in `SiteScaffold`
-6. ✅ **COMPLETED** - Refactor `HomeScreen` to use repository
-7. Test each collection page
+## Example Usage
 
-## Future Enhancements
-- Add search/filter within collections
-- Sort options (price, name, popularity)
-- Breadcrumb navigation
-- Collection-specific banners/promotions
-- URL-based routing for web support
+- User selects "Price: Low to High" from dropdown.
+- Product list is sorted using `ProductRepository.sortByPrice(products, ascending: true)`.
+- UI updates to show sorted products.
+
+## Benefits
+
+- Consistent sorting experience across all product views.
+- Easy to add new sort options in the future.
+- Centralized sorting logic for maintainability.
+
+## Next Steps
+
+1. Implement sorting methods in ProductRepository.
+2. Add sort controls to HomeScreen and CollectionPage.
+3. Refactor grid rendering as needed.
+4. Test thoroughly.
