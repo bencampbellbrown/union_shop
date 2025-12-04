@@ -45,13 +45,13 @@ class CartPage extends StatelessWidget {
 
               // Cart Content
               if (cart.items.isEmpty)
-                Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                Container(
+                  height: 400,
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
                           Icon(
                             Icons.shopping_cart_outlined,
                             size: 80,
@@ -103,16 +103,16 @@ class CartPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
-              else
-                Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          children: [
+              if (cart.items.isNotEmpty)
+                Container(
+                  constraints: BoxConstraints(
+                    minHeight: 300,
+                  ),
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      children: [
                             // Cart Items List
                             ...List.generate(
                               cart.items.length,
@@ -465,8 +465,6 @@ class CartPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                ),
             ],
           );
         },

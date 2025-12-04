@@ -6,8 +6,7 @@ import 'package:union_shop/providers/cart_provider.dart';
 import 'package:union_shop/models/cart_item.dart';
 
 void main() {
-  testWidgets('CartPage should display empty cart message',
-      (tester) async {
+  testWidgets('CartPage should display empty cart message', (tester) async {
     await tester.pumpWidget(
       MultiProvider(
         providers: [
@@ -26,10 +25,9 @@ void main() {
     expect(find.text('Your cart is empty'), findsOneWidget);
   });
 
-  testWidgets('CartPage should display cart items when added',
-      (tester) async {
+  testWidgets('CartPage should display cart items when added', (tester) async {
     final cartProvider = CartProvider();
-    
+
     await tester.pumpWidget(
       MultiProvider(
         providers: [
