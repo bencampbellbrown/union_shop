@@ -74,7 +74,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ProductSortOption _sortOption = ProductSortOption.nameAsc;
+  ProductSortOption _sortOption = ProductSortOption.priceDesc;
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
