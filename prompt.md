@@ -5,7 +5,7 @@ Create a dedicated Sale page that displays products marked as "on sale." The pag
 
 ## Steps for Implementation
 
-### 1. Update Product Model
+### 1. ✅ **COMPLETED** - Update Product Model
 - Add a `bool isOnSale` field to the `Product` class (default: `false`).
 
 ### 2. Tag Sale Products

@@ -7,6 +7,7 @@
   final bool hasColorVariants;
   final bool hasSizeOptions;
   final List<String>? imageVariants;
+  final bool isOnSale;
 
   const Product({
     required this.id,
@@ -17,6 +18,7 @@
     this.hasColorVariants = false,
     this.hasSizeOptions = true,
     this.imageVariants,
+    this.isOnSale = false,
   });
 
   /// Helper to get all image URLs (primary + variants)
