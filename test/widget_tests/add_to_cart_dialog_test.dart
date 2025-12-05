@@ -78,6 +78,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Cart Page'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 3));
     });
 
     testWidgets('"Continue Shopping" button closes the dialog',
@@ -94,6 +95,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(AddToCartDialog), findsNothing);
+      await tester.pump(const Duration(seconds: 3));
     });
 
     testWidgets('dialog auto-closes after 3 seconds',

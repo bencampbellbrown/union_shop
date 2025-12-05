@@ -113,6 +113,7 @@ class _HeroBannerState extends State<HeroBanner> {
               itemBuilder: (context, index) {
                 final banner = widget.banners[index];
                 return GestureDetector(
+                  key: ValueKey('banner_item_$index'),
                   onTap: () => _navigateToBanner(context, banner),
                   child: Stack(
                     fit: StackFit.expand,
@@ -250,6 +251,7 @@ class _HeroBannerState extends State<HeroBanner> {
                   children: List.generate(
                     widget.banners.length,
                     (index) => GestureDetector(
+                      key: ValueKey('banner_dot_$index'),
                       onTap: () => _goToPage(index),
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 4),

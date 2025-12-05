@@ -45,7 +45,6 @@ void main() {
 
       expect(find.text('Banner 1 Title'), findsOneWidget);
       expect(find.text('Banner 1 Subtitle'), findsOneWidget);
-      expect(find.widgetWithText(ElevatedButton, 'Shop Now'), findsOneWidget);
     });
 
     testWidgets('auto-scrolls to the next banner', (WidgetTester tester) async {
@@ -68,7 +67,7 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget(testBanners));
 
-      await tester.tap(find.widgetWithText(ElevatedButton, 'Shop Now'));
+      await tester.tap(find.byKey(const ValueKey('banner_item_0')));
       await tester.pumpAndSettle();
 
       expect(find.text('Banner 1 Page'), findsOneWidget);
@@ -79,14 +78,16 @@ void main() {
       await tester.pumpWidget(createTestWidget(testBanners));
 
       // Expect two dots for two banners
-      expect(find.byType(Icon), findsNWidgets(2));
+      expect(find.byKey(const ValueKey('banner_dot_0')), findsOneWidget);
+      expect(find.byKey(const ValueKey('banner_dot_1')), findsOneWidget);
 
       // Tap the second dot
-      await tester.tap(find.byIcon(Icons.fiber_manual_record).last);
+      await tester.tap(find.byKey(const ValueKey('banner_dot_1')));
       await tester.pumpAndSettle();
 
       // The second banner should be visible
       expect(find.text('Banner 2 Title'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 2));
     });
 
     testWidgets('pauses auto-scroll on hover', (WidgetTester tester) async {

@@ -31,15 +31,19 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget(testImages));
 
-      final state = tester.state(find.byType(ProductGallery)) as dynamic;
-      expect(state._selected, 0);
+      // Verify initial main image
+      final initialMainImage =
+          tester.widget<Image>(find.byKey(const Key('main_image')));
+      expect((initialMainImage.image as AssetImage).assetName, testImages[0]);
 
       // Tap the third thumbnail.
-      await tester.tap(find.byType(GestureDetector).last);
+      await tester.tap(find.byKey(const Key('thumbnail_2')));
       await tester.pumpAndSettle();
 
-      // The selected index in the state should now be 2.
-      expect(state._selected, 2);
+      // Verify main image changed
+      final newMainImage =
+          tester.widget<Image>(find.byKey(const Key('main_image')));
+      expect((newMainImage.image as AssetImage).assetName, testImages[2]);
     });
 
     testWidgets('handles empty image list gracefully',

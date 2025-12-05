@@ -20,12 +20,19 @@ class _ProductGalleryState extends State<ProductGallery> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.images.isEmpty) {
+      return const Center(
+        child: Icon(Icons.image_not_supported, size: 64, color: Colors.grey),
+      );
+    }
+
     final bool isDesktop = MediaQuery.of(context).size.width > 1000;
 
     Widget mainImage(String url) {
       final image = ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Image(
+          key: const Key('main_image'),
           image: _imageProviderFor(url),
           fit: isDesktop ? BoxFit.contain : BoxFit.cover,
           width: double.infinity,
@@ -64,6 +71,7 @@ class _ProductGalleryState extends State<ProductGallery> {
               final url = widget.images[index];
               final bool selected = index == _selected;
               return GestureDetector(
+                key: Key('thumbnail_$index'),
                 onTap: () => setState(() => _selected = index),
                 child: Container(
                   width: 72,

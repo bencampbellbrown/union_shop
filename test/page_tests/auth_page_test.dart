@@ -117,10 +117,7 @@ void main() {
     await tester.tap(find.text('Sign in with shop'));
     await tester.pumpAndSettle();
 
-    // Since it removes until '/', and we start at '/', we expect to see the AuthPage again
-    // if we were to rebuild. A real app would have a different structure.
-    // Let's just confirm we find the auth page still.
-    // A better test would involve a mock navigator.
-    expect(find.byType(AuthPage), findsOneWidget);
+    expect(find.text('Home Page'), findsOneWidget);
+    expect(find.byType(AuthPage), findsNothing);
   });
 }
