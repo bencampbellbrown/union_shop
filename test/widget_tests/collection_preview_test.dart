@@ -19,13 +19,19 @@ void main() {
         ],
         child: MaterialApp(
           home: Scaffold(
-            body: CollectionPreview(
-              collectionTitle: collectionTitle,
-              categoryFilter: categoryFilter,
-              itemsToShow: itemsToShow,
-              showViewAllButton: showViewAllButton,
+            body: SingleChildScrollView(
+              child: CollectionPreview(
+                collectionTitle: collectionTitle,
+                categoryFilter: categoryFilter,
+                itemsToShow: itemsToShow,
+                showViewAllButton: showViewAllButton,
+              ),
             ),
           ),
+          routes: {
+            '/collection/clothing': (context) =>
+                const Scaffold(body: Text('Collection Page')),
+          },
         ),
       );
     }

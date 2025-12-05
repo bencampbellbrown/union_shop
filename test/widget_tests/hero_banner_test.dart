@@ -45,9 +45,7 @@ void main() {
 
       expect(find.text('Banner 1 Title'), findsOneWidget);
       expect(find.text('Banner 1 Subtitle'), findsOneWidget);
-      // The button text is derived from the title in the implementation
-      expect(find.widgetWithText(ElevatedButton, 'Banner 1 Title'),
-          findsOneWidget);
+      expect(find.widgetWithText(ElevatedButton, 'Shop Now'), findsOneWidget);
     });
 
     testWidgets('auto-scrolls to the next banner', (WidgetTester tester) async {
@@ -70,7 +68,7 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget(testBanners));
 
-      await tester.tap(find.widgetWithText(ElevatedButton, 'Banner 1 Title'));
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Shop Now'));
       await tester.pumpAndSettle();
 
       expect(find.text('Banner 1 Page'), findsOneWidget);
@@ -84,7 +82,7 @@ void main() {
       expect(find.byType(Icon), findsNWidgets(2));
 
       // Tap the second dot
-      await tester.tap(find.byIcon(Icons.radio_button_unchecked).last);
+      await tester.tap(find.byIcon(Icons.fiber_manual_record).last);
       await tester.pumpAndSettle();
 
       // The second banner should be visible
