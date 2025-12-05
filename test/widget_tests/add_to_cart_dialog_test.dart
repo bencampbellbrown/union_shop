@@ -19,10 +19,10 @@ void main() {
       );
     });
 
-    Widget createTestWidget(Widget dialog) {
+    Widget createTestWidget(Widget dialog, {CartProvider? cartProvider}) {
       return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => CartProvider()),
+          ChangeNotifierProvider(create: (_) => cartProvider ?? CartProvider()),
         ],
         child: MaterialApp(
           home: Scaffold(
@@ -55,19 +55,26 @@ void main() {
 
       expect(find.text('Added to Cart!'), findsOneWidget);
       expect(find.text('Test Product'), findsOneWidget);
-      expect(find.text('Qty: 1'), findsOneWidget);
+      expect(find.text('Quantity: 1'), findsOneWidget);
       expect(find.byType(Image), findsOneWidget);
+      await tester.pump(const Duration(seconds: 4));
     });
 
-    testWidgets('"View My Cart" button navigates to cart page',
+    testWidgets('"View Cart" button navigates to cart page',
         (WidgetTester tester) async {
-      await tester.pumpWidget(
-          createTestWidget(AddToCartDialog(cartItem: testCartItem)));
+      final cartProvider = CartProvider();
+      cartProvider.addItem(testCartItem);
+
+      await tester.pumpWidget(createTestWidget(
+        AddToCartDialog(cartItem: testCartItem),
+        cartProvider: cartProvider,
+      ));
 
       await tester.tap(find.text('Show Dialog'));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('View My Cart (1)'));
+      expect(find.text('Items in cart: 1'), findsOneWidget);
+      await tester.tap(find.text('View Cart'));
       await tester.pumpAndSettle();
 
       expect(find.text('Cart Page'), findsOneWidget);
@@ -92,14 +99,15 @@ void main() {
     testWidgets('dialog auto-closes after 3 seconds',
         (WidgetTester tester) async {
       await tester.pumpWidget(
-          createTestWidget(AddToCartDialog(cartItem: testCartItem)));
+        createTestWidget(AddToCartDialog(cartItem: testCartItem)),
+      );
 
       await tester.tap(find.text('Show Dialog'));
       await tester.pumpAndSettle();
 
       expect(find.byType(AddToCartDialog), findsOneWidget);
 
-      // Wait for the duration of the auto-close timer
+      // Fast-forward time by 3 seconds
       await tester.pump(const Duration(seconds: 3));
       await tester.pumpAndSettle();
 
