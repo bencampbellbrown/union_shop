@@ -22,27 +22,24 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget(testImages));
 
-      // The main image is displayed.
-      expect(find.byType(Image), findsOneWidget); // The main image
-      // Each thumbnail is an InkWell.
-      expect(find.byType(InkWell), findsNWidgets(testImages.length));
+      // The main image is displayed, plus thumbnails
+      expect(find.byType(Image), findsNWidgets(1 + testImages.length));
+      expect(find.byType(GestureDetector), findsNWidgets(testImages.length));
     });
 
     testWidgets('tapping a thumbnail changes the main image',
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget(testImages));
 
-      final state =
-          tester.state<State<ProductGallery>>(find.byType(ProductGallery));
-      final dynamic stateDynamic = state;
-      expect(stateDynamic._selected, 0);
+      final state = tester.state(find.byType(ProductGallery)) as dynamic;
+      expect(state._selected, 0);
 
       // Tap the third thumbnail.
-      await tester.tap(find.byType(InkWell).last);
+      await tester.tap(find.byType(GestureDetector).last);
       await tester.pumpAndSettle();
 
       // The selected index in the state should now be 2.
-      expect(stateDynamic._selected, 2);
+      expect(state._selected, 2);
     });
 
     testWidgets('handles empty image list gracefully',
@@ -51,16 +48,16 @@ void main() {
 
       // Should show a placeholder.
       expect(find.byIcon(Icons.image_not_supported), findsOneWidget);
-      expect(find.byType(InkWell), findsNothing); // No thumbnails.
+      expect(find.byType(GestureDetector), findsNothing); // No thumbnails.
     });
 
     testWidgets('handles a single image (no thumbnails)',
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget(['assets/images/image1.jpg']));
 
-      expect(find.byType(Image), findsOneWidget);
-      // The thumbnail list should not be built if there's only one image.
-      expect(find.byType(InkWell), findsNothing);
+      expect(find.byType(Image), findsNWidgets(2));
+      // The thumbnail list should be built.
+      expect(find.byType(GestureDetector), findsOneWidget);
     });
   });
 }

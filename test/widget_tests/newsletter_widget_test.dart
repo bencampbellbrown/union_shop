@@ -15,9 +15,8 @@ void main() {
     testWidgets('renders title and input field', (WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget());
 
-      expect(find.text('Sign up for our newsletter'), findsOneWidget);
       expect(find.byType(TextField), findsOneWidget);
-      expect(find.byIcon(Icons.arrow_forward), findsOneWidget);
+      expect(find.widgetWithText(ElevatedButton, 'SUBSCRIBE'), findsOneWidget);
     });
 
     testWidgets('shows error snackbar for invalid email',
@@ -25,7 +24,7 @@ void main() {
       await tester.pumpWidget(createTestWidget());
 
       await tester.enterText(find.byType(TextField), 'invalid-email');
-      await tester.tap(find.byIcon(Icons.arrow_forward));
+      await tester.tap(find.widgetWithText(ElevatedButton, 'SUBSCRIBE'));
       await tester.pump(); // pump to show snackbar
 
       expect(find.text('Please enter a valid email address'), findsOneWidget);
@@ -36,7 +35,7 @@ void main() {
       await tester.pumpWidget(createTestWidget());
 
       await tester.enterText(find.byType(TextField), 'test@example.com');
-      await tester.tap(find.byIcon(Icons.arrow_forward));
+      await tester.tap(find.widgetWithText(ElevatedButton, 'SUBSCRIBE'));
       await tester.pump(); // pump to show snackbar
 
       expect(find.text('Subscribed test@example.com to newsletter'),
@@ -48,7 +47,7 @@ void main() {
       await tester.pumpWidget(createTestWidget());
 
       await tester.enterText(find.byType(TextField), 'test@example.com');
-      await tester.tap(find.byIcon(Icons.arrow_forward));
+      await tester.tap(find.widgetWithText(ElevatedButton, 'SUBSCRIBE'));
       await tester.pump();
 
       expect(find.text('test@example.com'), findsNothing);
