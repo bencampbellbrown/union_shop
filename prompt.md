@@ -349,7 +349,7 @@ Use `shared_preferences` or `hive`:
 - [x] Step 6: Add /cart route
 - [x] Step 7: Update SiteScaffold with basket icon and badge
 - [x] Step 8: Wrap app with Provider
-- [ ] Step 9: (Optional) Add local storage persistence
+- [x] Step 9: (Optional) Add local storage persistence
 - [ ] Step 10: Test cart functionality end-to-end
 
 ---

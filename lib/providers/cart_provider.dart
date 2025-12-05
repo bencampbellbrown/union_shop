@@ -1,14 +1,29 @@
 import 'package:flutter/foundation.dart';
 import '../models/cart_item.dart';
+import '../services/cart_storage_service.dart';
 
 class CartProvider extends ChangeNotifier {
-  final List<CartItem> _items = [];
+  final CartStorageService _storageService = CartStorageService();
+  List<CartItem> _items = [];
+
+  CartProvider() {
+    loadCart();
+  }
 
   List<CartItem> get items => _items;
 
   int get itemCount => _items.length;
 
   int get totalQuantity => _items.fold(0, (sum, item) => sum + item.quantity);
+
+  Future<void> _saveCart() async {
+    await _storageService.saveCart(_items);
+  }
+
+  Future<void> loadCart() async {
+    _items = await _storageService.loadCart();
+    notifyListeners();
+  }
 
   /// Add item to cart or update quantity if exists
   void addItem(CartItem cartItem) {
@@ -25,6 +40,7 @@ class CartProvider extends ChangeNotifier {
       // Add new item
       _items.add(cartItem);
     }
+    _saveCart();
     notifyListeners();
   }
 
@@ -32,6 +48,7 @@ class CartProvider extends ChangeNotifier {
   void removeItem(int index) {
     if (index >= 0 && index < _items.length) {
       _items.removeAt(index);
+      _saveCart();
       notifyListeners();
     }
   }
@@ -44,6 +61,7 @@ class CartProvider extends ChangeNotifier {
       } else {
         _items[index] = _items[index].copyWith(quantity: quantity);
       }
+      _saveCart();
       notifyListeners();
     }
   }
@@ -51,6 +69,7 @@ class CartProvider extends ChangeNotifier {
   /// Clear entire cart
   void clearCart() {
     _items.clear();
+    _saveCart();
     notifyListeners();
   }
 

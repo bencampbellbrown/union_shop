@@ -39,4 +39,32 @@ class CartItem {
       isOnSale: isOnSale,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'productId': productId,
+      'title': title,
+      'price': price,
+      'salePrice': salePrice,
+      'quantity': quantity,
+      'selectedColor': selectedColor,
+      'selectedSize': selectedSize,
+      'imageUrl': imageUrl,
+      'isOnSale': isOnSale,
+    };
+  }
+
+  factory CartItem.fromMap(Map<String, dynamic> map) {
+    return CartItem(
+      productId: map['productId'] ?? '',
+      title: map['title'] ?? '',
+      price: map['price'] ?? '',
+      salePrice: map['salePrice'],
+      quantity: map['quantity']?.toInt() ?? 0,
+      selectedColor: map['selectedColor'],
+      selectedSize: map['selectedSize'],
+      imageUrl: map['imageUrl'] ?? '',
+      isOnSale: map['isOnSale'] ?? false,
+    );
+  }
 }
