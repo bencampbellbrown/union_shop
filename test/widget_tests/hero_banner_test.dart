@@ -10,14 +10,14 @@ void main() {
 
     setUp(() {
       testBanners = [
-        banner_model.HeroBannerItem(
+        const banner_model.HeroBannerItem(
           id: '1',
           title: 'Banner 1 Title',
           subtitle: 'Banner 1 Subtitle',
           imageUrl: 'assets/images/banner1.jpg',
           routeName: '/banner1',
         ),
-        banner_model.HeroBannerItem(
+        const banner_model.HeroBannerItem(
           id: '2',
           title: 'Banner 2 Title',
           subtitle: 'Banner 2 Subtitle',
