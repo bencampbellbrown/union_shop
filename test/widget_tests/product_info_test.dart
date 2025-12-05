@@ -47,15 +47,12 @@ void main() {
       // Initial quantity is 1
       expect(find.text('1'), findsOneWidget);
 
-      // Increment quantity
-      await tester.tap(find.byIcon(Icons.add));
-      await tester.pump();
+      // Change quantity
+      await tester.tap(find.text('1'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('2').last);
+      await tester.pumpAndSettle();
       expect(find.text('2'), findsOneWidget);
-
-      // Decrement quantity
-      await tester.tap(find.byIcon(Icons.remove));
-      await tester.pump();
-      expect(find.text('1'), findsOneWidget);
     });
 
     testWidgets('color and size can be selected', (WidgetTester tester) async {
@@ -69,11 +66,11 @@ void main() {
       expect(find.text('Blue'), findsOneWidget);
 
       // Select a size
-      await tester.tap(find.text('S'));
+      await tester.tap(find.text('M'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('M').last);
+      await tester.tap(find.text('L').last);
       await tester.pumpAndSettle();
-      expect(find.text('M'), findsOneWidget);
+      expect(find.text('L'), findsOneWidget);
     });
 
     testWidgets('tapping "Add to Cart" shows confirmation dialog',
@@ -85,6 +82,7 @@ void main() {
 
       expect(find.byType(AddToCartDialog), findsOneWidget);
       expect(find.text('Added to Cart!'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 4));
     });
 
     testWidgets('renders "Buy with Shop" button', (WidgetTester tester) async {

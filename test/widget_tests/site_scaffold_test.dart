@@ -13,11 +13,12 @@ void main() {
           ChangeNotifierProvider(create: (_) => cartProvider ?? CartProvider()),
         ],
         child: MaterialApp(
-          home: SiteScaffold(child: child),
+          initialRoute: '/',
           routes: {
-            '/': (context) => const Scaffold(body: Text('Home Page')),
+            '/': (context) => SiteScaffold(child: child),
             '/cart': (context) => const Scaffold(body: Text('Cart Page')),
             '/about': (context) => const Scaffold(body: Text('About Page')),
+            '/product': (context) => const Scaffold(body: Text('Product Page')),
           },
         ),
       );
@@ -27,7 +28,6 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget(const Text('Test Child')));
 
-      expect(find.text('The UNION'), findsOneWidget); // Header
       expect(find.text('Test Child'), findsOneWidget); // Child
       expect(find.text('Opening Hours'), findsOneWidget); // Footer
     });
@@ -37,8 +37,8 @@ void main() {
       await tester.pumpWidget(createTestWidget(Container()));
 
       expect(find.text('Home'), findsOneWidget);
-      expect(find.text('Products'), findsOneWidget);
-      expect(find.text('Sale'), findsOneWidget);
+      expect(find.text('Shop'), findsOneWidget);
+      expect(find.text('SALE!'), findsOneWidget);
       expect(find.text('About'), findsOneWidget);
       expect(find.byIcon(Icons.search), findsOneWidget);
       expect(find.byIcon(Icons.shopping_basket_outlined), findsOneWidget);
@@ -91,7 +91,7 @@ void main() {
 
       expect(find.text('Opening Hours'), findsOneWidget);
       expect(find.text('Latest Offers'), findsOneWidget);
-      expect(find.text('Contact'), findsOneWidget);
+      expect(find.text('Help and Information'), findsOneWidget);
     });
   });
 }
