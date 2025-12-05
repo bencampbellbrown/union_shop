@@ -31,7 +31,7 @@ class _AuthPageState extends State<AuthPage> {
 
   /// Sign in via the shop button. Does not require email — returns user to home.
   void _signInWithShop() {
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
   }
 
   @override
