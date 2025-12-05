@@ -126,8 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
           // Products Section with Collection Previews
           Container(
             color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 48),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 48, vertical: 48),
               child: Column(
                 children: [
                   // Signature Collection
@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemsToShow: 3,
                     showViewAllButton: true,
                   ),
-                  const SizedBox(height: 56),
+                  SizedBox(height: 56),
 
                   // Clothing Collection
                   CollectionPreview(
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemsToShow: 3,
                     showViewAllButton: true,
                   ),
-                  const SizedBox(height: 56),
+                  SizedBox(height: 56),
 
                   // Merchandise Collection
                   CollectionPreview(
@@ -155,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemsToShow: 3,
                     showViewAllButton: true,
                   ),
-                  const SizedBox(height: 56),
+                  SizedBox(height: 56),
 
                   // Portsmouth Collection
                   CollectionPreview(
@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemsToShow: 3,
                     showViewAllButton: true,
                   ),
-                  const SizedBox(height: 56),
+                  SizedBox(height: 56),
 
                   // Graduation Collection
                   CollectionPreview(

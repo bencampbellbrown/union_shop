@@ -55,19 +55,19 @@ class CollectionPreview extends StatelessWidget {
                     '/collection/$categoryFilter',
                   );
                 },
-                child: Row(
+                child: const Row(
                   children: [
                     Text(
                       'View All',
                       style: TextStyle(
                         fontSize: 14,
-                        color: const Color(0xFF4d2963),
+                        color: Color(0xFF4d2963),
                         fontWeight: FontWeight.w600,
                         decoration: TextDecoration.underline,
                       ),
                     ),
-                    const SizedBox(width: 6),
-                    const Icon(
+                    SizedBox(width: 6),
+                    Icon(
                       Icons.arrow_forward,
                       size: 16,
                       color: Color(0xFF4d2963),

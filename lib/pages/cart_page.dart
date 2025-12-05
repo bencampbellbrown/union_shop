@@ -22,9 +22,9 @@ class CartPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Shopping Cart',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -105,7 +105,7 @@ class CartPage extends StatelessWidget {
                 ),
               if (cart.items.isNotEmpty)
                 Container(
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minHeight: 300,
                   ),
                   color: Colors.white,
